@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.order.mapper.RefundInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.gulimall.order.entity.RefundInfo">
+        <id column="id" property="id" />
+        <result column="order_return_id" property="orderReturnId" />
+        <result column="refund" property="refund" />
+        <result column="refund_sn" property="refundSn" />
+        <result column="refund_status" property="refundStatus" />
+        <result column="refund_channel" property="refundChannel" />
+        <result column="refund_content" property="refundContent" />
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.coupon.mapper.HomeAdvMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.gulimall.coupon.com.gulimall.coupon.entity.HomeAdv">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="pic" property="pic" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="status" property="status" />
+        <result column="click_count" property="clickCount" />
+        <result column="url" property="url" />
+        <result column="note" property="note" />
+        <result column="sort" property="sort" />
+        <result column="publisher_id" property="publisherId" />
+        <result column="auth_id" property="authId" />
+    </resultMap>
+
+</mapper>

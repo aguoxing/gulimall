@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.product.mapper.BrandMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.gulimall.product.entity.Brand">
+        <id column="brand_id" property="brandId" />
+        <result column="name" property="name" />
+        <result column="logo" property="logo" />
+        <result column="descript" property="descript" />
+        <result column="show_status" property="showStatus" />
+        <result column="first_letter" property="firstLetter" />
+        <result column="sort" property="sort" />
+    </resultMap>
+
+</mapper>

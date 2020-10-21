@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.order.mapper.OrderItemMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.gulimall.order.entity.OrderItem">
+        <id column="id" property="id" />
+        <result column="order_id" property="orderId" />
+        <result column="order_sn" property="orderSn" />
+        <result column="spu_id" property="spuId" />
+        <result column="spu_name" property="spuName" />
+        <result column="spu_pic" property="spuPic" />
+        <result column="spu_brand" property="spuBrand" />
+        <result column="category_id" property="categoryId" />
+        <result column="sku_id" property="skuId" />
+        <result column="sku_name" property="skuName" />
+        <result column="sku_pic" property="skuPic" />
+        <result column="sku_price" property="skuPrice" />
+        <result column="sku_quantity" property="skuQuantity" />
+        <result column="sku_attrs_vals" property="skuAttrsVals" />
+        <result column="promotion_amount" property="promotionAmount" />
+        <result column="coupon_amount" property="couponAmount" />
+        <result column="integration_amount" property="integrationAmount" />
+        <result column="real_amount" property="realAmount" />
+        <result column="gift_integration" property="giftIntegration" />
+        <result column="gift_growth" property="giftGrowth" />
+    </resultMap>
+
+</mapper>

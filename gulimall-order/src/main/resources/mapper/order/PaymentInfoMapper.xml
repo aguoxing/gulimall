@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.order.mapper.PaymentInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.gulimall.order.entity.PaymentInfo">
+        <id column="id" property="id" />
+        <result column="order_sn" property="orderSn" />
+        <result column="order_id" property="orderId" />
+        <result column="alipay_trade_no" property="alipayTradeNo" />
+        <result column="total_amount" property="totalAmount" />
+        <result column="subject" property="subject" />
+        <result column="payment_status" property="paymentStatus" />
+        <result column="create_time" property="createTime" />
+        <result column="confirm_time" property="confirmTime" />
+        <result column="callback_content" property="callbackContent" />
+        <result column="callback_time" property="callbackTime" />
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.member.mapper.MemberLevelMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.gulimall.member.entity.MemberLevel">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="growth_point" property="growthPoint" />
+        <result column="default_status" property="defaultStatus" />
+        <result column="free_freight_point" property="freeFreightPoint" />
+        <result column="comment_growth_point" property="commentGrowthPoint" />
+        <result column="priviledge_free_freight" property="priviledgeFreeFreight" />
+        <result column="priviledge_member_price" property="priviledgeMemberPrice" />
+        <result column="priviledge_birthday" property="priviledgeBirthday" />
+        <result column="note" property="note" />
+    </resultMap>
+
+</mapper>

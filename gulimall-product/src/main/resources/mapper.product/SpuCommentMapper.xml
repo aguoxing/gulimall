@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.product.mapper.SpuCommentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.gulimall.product.entity.SpuComment">
+        <id column="id" property="id" />
+        <result column="sku_id" property="skuId" />
+        <result column="spu_id" property="spuId" />
+        <result column="spu_name" property="spuName" />
+        <result column="member_nick_name" property="memberNickName" />
+        <result column="star" property="star" />
+        <result column="member_ip" property="memberIp" />
+        <result column="create_time" property="createTime" />
+        <result column="show_status" property="showStatus" />
+        <result column="spu_attributes" property="spuAttributes" />
+        <result column="likes_count" property="likesCount" />
+        <result column="reply_count" property="replyCount" />
+        <result column="resources" property="resources" />
+        <result column="content" property="content" />
+        <result column="member_icon" property="memberIcon" />
+        <result column="comment_type" property="commentType" />
+    </resultMap>
+
+</mapper>
