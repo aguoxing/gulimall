@@ -17,6 +17,12 @@
         <dependency>
             <groupId>com.gulimall.common</groupId>
             <artifactId>gulimall-common</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.alibaba</groupId>
+                    <artifactId>druid-spring-boot-starter</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
