@@ -8,11 +8,14 @@
 
 package com.gulimall.common.utils;
 
+import lombok.Data;
+
 /**
  * 自定义异常
  *
  * @author Mark sunlightcs@gmail.com
  */
+@Data
 public class RRException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
@@ -40,22 +43,5 @@ public class RRException extends RuntimeException {
         this.msg = msg;
         this.code = code;
     }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
 
 }
