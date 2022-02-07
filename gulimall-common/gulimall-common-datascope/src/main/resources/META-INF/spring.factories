@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.gulimall.common.datascope.aspect.DataScopeAspect
+
+  
