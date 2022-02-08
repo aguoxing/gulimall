@@ -1,23 +1,22 @@
 package com.gulimall.system.api;
 
+import com.gulimall.common.core.constant.ServiceNameConstants;
+import com.gulimall.common.core.domain.R;
+import com.gulimall.system.api.domain.SysFile;
+import com.gulimall.system.api.factory.RemoteFileFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
-import com.gulimall.common.core.constant.ServiceNameConstants;
-import com.gulimall.common.core.domain.R;
-import com.gulimall.system.api.domain.SysFile;
-import com.gulimall.system.api.factory.RemoteFileFallbackFactory;
 
 /**
  * 文件服务
- * 
+ *
  * @author ruoyi
  */
 @FeignClient(contextId = "remoteFileService", value = ServiceNameConstants.FILE_SERVICE, fallbackFactory = RemoteFileFallbackFactory.class)
-public interface RemoteFileService
-{
+public interface RemoteFileService {
     /**
      * 上传文件
      *
