@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.coupon.mapper.HomeAdvMapper">
+    
+    <resultMap type="HomeAdv" id="HomeAdvResult">
+        <result property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="pic" column="pic" />
+        <result property="startTime" column="start_time" />
+        <result property="endTime" column="end_time" />
+        <result property="status" column="status" />
+        <result property="clickCount" column="click_count" />
+        <result property="url" column="url" />
+        <result property="note" column="note" />
+        <result property="sort" column="sort" />
+        <result property="publisherId" column="publisher_id" />
+        <result property="authId" column="auth_id" />
+    </resultMap>
+
+    <sql id="selectHomeAdvVo">
+        select id, name, pic, start_time, end_time, status, click_count, url, note, sort, publisher_id, auth_id from sms_home_adv
+    </sql>
+
+    <select id="selectHomeAdvList" parameterType="HomeAdv" resultMap="HomeAdvResult">
+        <include refid="selectHomeAdvVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="pic != null  and pic != ''"> and pic = #{pic}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="clickCount != null "> and click_count = #{clickCount}</if>
+            <if test="url != null  and url != ''"> and url = #{url}</if>
+            <if test="note != null  and note != ''"> and note = #{note}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+            <if test="publisherId != null "> and publisher_id = #{publisherId}</if>
+            <if test="authId != null "> and auth_id = #{authId}</if>
+        </where>
+    </select>
+
+</mapper>

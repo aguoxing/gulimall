@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.product.mapper.CommentReplayMapper">
+    
+    <resultMap type="CommentReplay" id="CommentReplayResult">
+        <result property="id" column="id" />
+        <result property="commentId" column="comment_id" />
+        <result property="replyId" column="reply_id" />
+    </resultMap>
+
+    <sql id="selectCommentReplayVo">
+        select id, comment_id, reply_id from pms_comment_replay
+    </sql>
+
+    <select id="selectCommentReplayList" parameterType="CommentReplay" resultMap="CommentReplayResult">
+        <include refid="selectCommentReplayVo"/>
+        <where>  
+            <if test="commentId != null "> and comment_id = #{commentId}</if>
+            <if test="replyId != null "> and reply_id = #{replyId}</if>
+        </where>
+    </select>
+
+</mapper>

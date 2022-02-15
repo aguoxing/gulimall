@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.product.mapper.SpuInfoMapper">
+    
+    <resultMap type="SpuInfo" id="SpuInfoResult">
+        <result property="id" column="id" />
+        <result property="spuName" column="spu_name" />
+        <result property="spuDescription" column="spu_description" />
+        <result property="catalogId" column="catalog_id" />
+        <result property="brandId" column="brand_id" />
+        <result property="weight" column="weight" />
+        <result property="publishStatus" column="publish_status" />
+        <result property="createTime" column="create_time" />
+        <result property="updateTime" column="update_time" />
+    </resultMap>
+
+    <sql id="selectSpuInfoVo">
+        select id, spu_name, spu_description, catalog_id, brand_id, weight, publish_status, create_time, update_time from pms_spu_info
+    </sql>
+
+    <select id="selectSpuInfoList" parameterType="SpuInfo" resultMap="SpuInfoResult">
+        <include refid="selectSpuInfoVo"/>
+        <where>  
+            <if test="spuName != null  and spuName != ''"> and spu_name like concat('%', #{spuName}, '%')</if>
+            <if test="spuDescription != null  and spuDescription != ''"> and spu_description = #{spuDescription}</if>
+            <if test="catalogId != null "> and catalog_id = #{catalogId}</if>
+            <if test="brandId != null "> and brand_id = #{brandId}</if>
+            <if test="weight != null "> and weight = #{weight}</if>
+            <if test="publishStatus != null "> and publish_status = #{publishStatus}</if>
+        </where>
+    </select>
+
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.coupon.mapper.SeckillSessionMapper">
+    
+    <resultMap type="SeckillSession" id="SeckillSessionResult">
+        <result property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="startTime" column="start_time" />
+        <result property="endTime" column="end_time" />
+        <result property="status" column="status" />
+        <result property="createTime" column="create_time" />
+    </resultMap>
+
+    <sql id="selectSeckillSessionVo">
+        select id, name, start_time, end_time, status, create_time from sms_seckill_session
+    </sql>
+
+    <select id="selectSeckillSessionList" parameterType="SeckillSession" resultMap="SeckillSessionResult">
+        <include refid="selectSeckillSessionVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="status != null "> and status = #{status}</if>
+        </where>
+    </select>
+
+</mapper>

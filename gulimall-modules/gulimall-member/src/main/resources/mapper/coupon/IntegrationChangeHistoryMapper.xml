@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.member.mapper.IntegrationChangeHistoryMapper">
+    
+    <resultMap type="IntegrationChangeHistory" id="IntegrationChangeHistoryResult">
+        <result property="id" column="id" />
+        <result property="memberId" column="member_id" />
+        <result property="createTime" column="create_time" />
+        <result property="changeCount" column="change_count" />
+        <result property="note" column="note" />
+        <result property="sourceTyoe" column="source_tyoe" />
+    </resultMap>
+
+    <sql id="selectIntegrationChangeHistoryVo">
+        select id, member_id, create_time, change_count, note, source_tyoe from ums_integration_change_history
+    </sql>
+
+    <select id="selectIntegrationChangeHistoryList" parameterType="IntegrationChangeHistory" resultMap="IntegrationChangeHistoryResult">
+        <include refid="selectIntegrationChangeHistoryVo"/>
+        <where>  
+            <if test="memberId != null "> and member_id = #{memberId}</if>
+            <if test="changeCount != null "> and change_count = #{changeCount}</if>
+            <if test="note != null  and note != ''"> and note = #{note}</if>
+            <if test="sourceTyoe != null "> and source_tyoe = #{sourceTyoe}</if>
+        </where>
+    </select>
+
+</mapper>

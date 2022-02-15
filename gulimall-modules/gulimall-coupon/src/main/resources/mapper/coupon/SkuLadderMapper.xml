@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.coupon.mapper.SkuLadderMapper">
+    
+    <resultMap type="SkuLadder" id="SkuLadderResult">
+        <result property="id" column="id" />
+        <result property="skuId" column="sku_id" />
+        <result property="fullCount" column="full_count" />
+        <result property="discount" column="discount" />
+        <result property="price" column="price" />
+        <result property="addOther" column="add_other" />
+    </resultMap>
+
+    <sql id="selectSkuLadderVo">
+        select id, sku_id, full_count, discount, price, add_other from sms_sku_ladder
+    </sql>
+
+    <select id="selectSkuLadderList" parameterType="SkuLadder" resultMap="SkuLadderResult">
+        <include refid="selectSkuLadderVo"/>
+        <where>  
+            <if test="skuId != null "> and sku_id = #{skuId}</if>
+            <if test="fullCount != null "> and full_count = #{fullCount}</if>
+            <if test="discount != null "> and discount = #{discount}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="addOther != null "> and add_other = #{addOther}</if>
+        </where>
+    </select>
+
+</mapper>

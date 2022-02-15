@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.coupon.mapper.CouponHistoryMapper">
+    
+    <resultMap type="CouponHistory" id="CouponHistoryResult">
+        <result property="id" column="id" />
+        <result property="couponId" column="coupon_id" />
+        <result property="memberId" column="member_id" />
+        <result property="memberNickName" column="member_nick_name" />
+        <result property="getType" column="get_type" />
+        <result property="createTime" column="create_time" />
+        <result property="useType" column="use_type" />
+        <result property="useTime" column="use_time" />
+        <result property="orderId" column="order_id" />
+        <result property="orderSn" column="order_sn" />
+    </resultMap>
+
+    <sql id="selectCouponHistoryVo">
+        select id, coupon_id, member_id, member_nick_name, get_type, create_time, use_type, use_time, order_id, order_sn from sms_coupon_history
+    </sql>
+
+    <select id="selectCouponHistoryList" parameterType="CouponHistory" resultMap="CouponHistoryResult">
+        <include refid="selectCouponHistoryVo"/>
+        <where>  
+            <if test="couponId != null "> and coupon_id = #{couponId}</if>
+            <if test="memberId != null "> and member_id = #{memberId}</if>
+            <if test="memberNickName != null  and memberNickName != ''"> and member_nick_name like concat('%', #{memberNickName}, '%')</if>
+            <if test="getType != null "> and get_type = #{getType}</if>
+            <if test="useType != null "> and use_type = #{useType}</if>
+            <if test="useTime != null "> and use_time = #{useTime}</if>
+            <if test="orderId != null "> and order_id = #{orderId}</if>
+            <if test="orderSn != null "> and order_sn = #{orderSn}</if>
+        </where>
+    </select>
+
+</mapper>

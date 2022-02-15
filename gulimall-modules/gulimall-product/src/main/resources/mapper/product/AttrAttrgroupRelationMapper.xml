@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.product.mapper.AttrAttrgroupRelationMapper">
+    
+    <resultMap type="AttrAttrgroupRelation" id="AttrAttrgroupRelationResult">
+        <result property="id" column="id" />
+        <result property="attrId" column="attr_id" />
+        <result property="attrGroupId" column="attr_group_id" />
+        <result property="attrSort" column="attr_sort" />
+    </resultMap>
+
+    <sql id="selectAttrAttrgroupRelationVo">
+        select id, attr_id, attr_group_id, attr_sort from pms_attr_attrgroup_relation
+    </sql>
+
+    <select id="selectAttrAttrgroupRelationList" parameterType="AttrAttrgroupRelation" resultMap="AttrAttrgroupRelationResult">
+        <include refid="selectAttrAttrgroupRelationVo"/>
+        <where>  
+            <if test="attrId != null "> and attr_id = #{attrId}</if>
+            <if test="attrGroupId != null "> and attr_group_id = #{attrGroupId}</if>
+            <if test="attrSort != null "> and attr_sort = #{attrSort}</if>
+        </where>
+    </select>
+
+</mapper>

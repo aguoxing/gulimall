@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.member.mapper.MemberCollectSubjectMapper">
+    
+    <resultMap type="MemberCollectSubject" id="MemberCollectSubjectResult">
+        <result property="id" column="id" />
+        <result property="subjectId" column="subject_id" />
+        <result property="subjectName" column="subject_name" />
+        <result property="subjectImg" column="subject_img" />
+        <result property="subjectUrll" column="subject_urll" />
+    </resultMap>
+
+    <sql id="selectMemberCollectSubjectVo">
+        select id, subject_id, subject_name, subject_img, subject_urll from ums_member_collect_subject
+    </sql>
+
+    <select id="selectMemberCollectSubjectList" parameterType="MemberCollectSubject" resultMap="MemberCollectSubjectResult">
+        <include refid="selectMemberCollectSubjectVo"/>
+        <where>  
+            <if test="subjectId != null "> and subject_id = #{subjectId}</if>
+            <if test="subjectName != null  and subjectName != ''"> and subject_name like concat('%', #{subjectName}, '%')</if>
+            <if test="subjectImg != null  and subjectImg != ''"> and subject_img = #{subjectImg}</if>
+            <if test="subjectUrll != null  and subjectUrll != ''"> and subject_urll = #{subjectUrll}</if>
+        </where>
+    </select>
+
+</mapper>

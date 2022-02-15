@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.product.mapper.BrandMapper">
+    
+    <resultMap type="Brand" id="BrandResult">
+        <result property="brandId" column="brand_id" />
+        <result property="name" column="name" />
+        <result property="logo" column="logo" />
+        <result property="descript" column="descript" />
+        <result property="showStatus" column="show_status" />
+        <result property="firstLetter" column="first_letter" />
+        <result property="sort" column="sort" />
+    </resultMap>
+
+    <sql id="selectBrandVo">
+        select brand_id, name, logo, descript, show_status, first_letter, sort from pms_brand
+    </sql>
+
+    <select id="selectBrandList" parameterType="Brand" resultMap="BrandResult">
+        <include refid="selectBrandVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="logo != null  and logo != ''"> and logo = #{logo}</if>
+            <if test="descript != null  and descript != ''"> and descript = #{descript}</if>
+            <if test="showStatus != null "> and show_status = #{showStatus}</if>
+            <if test="firstLetter != null  and firstLetter != ''"> and first_letter = #{firstLetter}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+        </where>
+    </select>
+
+</mapper>

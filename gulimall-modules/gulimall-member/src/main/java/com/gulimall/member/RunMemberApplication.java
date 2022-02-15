@@ -1,5 +1,8 @@
 package com.gulimall.member;
 
+import com.gulimall.common.security.annotation.EnableCustomConfig;
+import com.gulimall.common.security.annotation.EnableRyFeignClients;
+import com.gulimall.common.swagger.annotation.EnableCustomSwagger2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -8,6 +11,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *
  * @author admin
  */
+@EnableCustomConfig
+@EnableCustomSwagger2
+@EnableRyFeignClients
 @SpringBootApplication
 public class RunMemberApplication {
     public static void main(String[] args) {

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.member.mapper.MemberCollectSpuMapper">
+    
+    <resultMap type="MemberCollectSpu" id="MemberCollectSpuResult">
+        <result property="id" column="id" />
+        <result property="memberId" column="member_id" />
+        <result property="spuId" column="spu_id" />
+        <result property="spuName" column="spu_name" />
+        <result property="spuImg" column="spu_img" />
+        <result property="createTime" column="create_time" />
+    </resultMap>
+
+    <sql id="selectMemberCollectSpuVo">
+        select id, member_id, spu_id, spu_name, spu_img, create_time from ums_member_collect_spu
+    </sql>
+
+    <select id="selectMemberCollectSpuList" parameterType="MemberCollectSpu" resultMap="MemberCollectSpuResult">
+        <include refid="selectMemberCollectSpuVo"/>
+        <where>  
+            <if test="memberId != null "> and member_id = #{memberId}</if>
+            <if test="spuId != null "> and spu_id = #{spuId}</if>
+            <if test="spuName != null  and spuName != ''"> and spu_name like concat('%', #{spuName}, '%')</if>
+            <if test="spuImg != null  and spuImg != ''"> and spu_img = #{spuImg}</if>
+        </where>
+    </select>
+
+</mapper>

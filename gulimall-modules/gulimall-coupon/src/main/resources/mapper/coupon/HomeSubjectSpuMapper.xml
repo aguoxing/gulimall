@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.coupon.mapper.HomeSubjectSpuMapper">
+    
+    <resultMap type="HomeSubjectSpu" id="HomeSubjectSpuResult">
+        <result property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="subjectId" column="subject_id" />
+        <result property="spuId" column="spu_id" />
+        <result property="sort" column="sort" />
+    </resultMap>
+
+    <sql id="selectHomeSubjectSpuVo">
+        select id, name, subject_id, spu_id, sort from sms_home_subject_spu
+    </sql>
+
+    <select id="selectHomeSubjectSpuList" parameterType="HomeSubjectSpu" resultMap="HomeSubjectSpuResult">
+        <include refid="selectHomeSubjectSpuVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="subjectId != null "> and subject_id = #{subjectId}</if>
+            <if test="spuId != null "> and spu_id = #{spuId}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+        </where>
+    </select>
+
+</mapper>

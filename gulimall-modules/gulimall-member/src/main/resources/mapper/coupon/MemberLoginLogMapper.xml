@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.member.mapper.MemberLoginLogMapper">
+    
+    <resultMap type="MemberLoginLog" id="MemberLoginLogResult">
+        <result property="id" column="id" />
+        <result property="memberId" column="member_id" />
+        <result property="createTime" column="create_time" />
+        <result property="ip" column="ip" />
+        <result property="city" column="city" />
+        <result property="loginType" column="login_type" />
+    </resultMap>
+
+    <sql id="selectMemberLoginLogVo">
+        select id, member_id, create_time, ip, city, login_type from ums_member_login_log
+    </sql>
+
+    <select id="selectMemberLoginLogList" parameterType="MemberLoginLog" resultMap="MemberLoginLogResult">
+        <include refid="selectMemberLoginLogVo"/>
+        <where>  
+            <if test="memberId != null "> and member_id = #{memberId}</if>
+            <if test="ip != null  and ip != ''"> and ip = #{ip}</if>
+            <if test="city != null  and city != ''"> and city = #{city}</if>
+            <if test="loginType != null "> and login_type = #{loginType}</if>
+        </where>
+    </select>
+
+</mapper>

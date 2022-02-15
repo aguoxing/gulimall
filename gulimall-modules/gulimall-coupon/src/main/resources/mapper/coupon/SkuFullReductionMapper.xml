@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.coupon.mapper.SkuFullReductionMapper">
+    
+    <resultMap type="SkuFullReduction" id="SkuFullReductionResult">
+        <result property="id" column="id" />
+        <result property="skuId" column="sku_id" />
+        <result property="fullPrice" column="full_price" />
+        <result property="reducePrice" column="reduce_price" />
+        <result property="addOther" column="add_other" />
+    </resultMap>
+
+    <sql id="selectSkuFullReductionVo">
+        select id, sku_id, full_price, reduce_price, add_other from sms_sku_full_reduction
+    </sql>
+
+    <select id="selectSkuFullReductionList" parameterType="SkuFullReduction" resultMap="SkuFullReductionResult">
+        <include refid="selectSkuFullReductionVo"/>
+        <where>  
+            <if test="skuId != null "> and sku_id = #{skuId}</if>
+            <if test="fullPrice != null "> and full_price = #{fullPrice}</if>
+            <if test="reducePrice != null "> and reduce_price = #{reducePrice}</if>
+            <if test="addOther != null "> and add_other = #{addOther}</if>
+        </where>
+    </select>
+
+</mapper>

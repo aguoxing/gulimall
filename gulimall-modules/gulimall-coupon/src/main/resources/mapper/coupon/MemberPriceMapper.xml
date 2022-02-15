@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.coupon.mapper.MemberPriceMapper">
+    
+    <resultMap type="MemberPrice" id="MemberPriceResult">
+        <result property="id" column="id" />
+        <result property="skuId" column="sku_id" />
+        <result property="memberLevelId" column="member_level_id" />
+        <result property="memberLevelName" column="member_level_name" />
+        <result property="memberPrice" column="member_price" />
+        <result property="addOther" column="add_other" />
+    </resultMap>
+
+    <sql id="selectMemberPriceVo">
+        select id, sku_id, member_level_id, member_level_name, member_price, add_other from sms_member_price
+    </sql>
+
+    <select id="selectMemberPriceList" parameterType="MemberPrice" resultMap="MemberPriceResult">
+        <include refid="selectMemberPriceVo"/>
+        <where>  
+            <if test="skuId != null "> and sku_id = #{skuId}</if>
+            <if test="memberLevelId != null "> and member_level_id = #{memberLevelId}</if>
+            <if test="memberLevelName != null  and memberLevelName != ''"> and member_level_name like concat('%', #{memberLevelName}, '%')</if>
+            <if test="memberPrice != null "> and member_price = #{memberPrice}</if>
+            <if test="addOther != null "> and add_other = #{addOther}</if>
+        </where>
+    </select>
+
+</mapper>

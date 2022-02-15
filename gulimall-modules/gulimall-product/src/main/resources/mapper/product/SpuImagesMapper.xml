@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.product.mapper.SpuImagesMapper">
+    
+    <resultMap type="SpuImages" id="SpuImagesResult">
+        <result property="id" column="id" />
+        <result property="spuId" column="spu_id" />
+        <result property="imgName" column="img_name" />
+        <result property="imgUrl" column="img_url" />
+        <result property="imgSort" column="img_sort" />
+        <result property="defaultImg" column="default_img" />
+    </resultMap>
+
+    <sql id="selectSpuImagesVo">
+        select id, spu_id, img_name, img_url, img_sort, default_img from pms_spu_images
+    </sql>
+
+    <select id="selectSpuImagesList" parameterType="SpuImages" resultMap="SpuImagesResult">
+        <include refid="selectSpuImagesVo"/>
+        <where>  
+            <if test="spuId != null "> and spu_id = #{spuId}</if>
+            <if test="imgName != null  and imgName != ''"> and img_name like concat('%', #{imgName}, '%')</if>
+            <if test="imgUrl != null  and imgUrl != ''"> and img_url = #{imgUrl}</if>
+            <if test="imgSort != null "> and img_sort = #{imgSort}</if>
+            <if test="defaultImg != null "> and default_img = #{defaultImg}</if>
+        </where>
+    </select>
+
+</mapper>
