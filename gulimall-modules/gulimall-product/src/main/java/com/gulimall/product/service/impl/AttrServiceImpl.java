@@ -4,10 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.gulimall.product.domain.AttrEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.gulimall.product.mapper.AttrMapper;
-import com.gulimall.product.domain.Attr;
 import com.gulimall.product.service.IAttrService;
 
 /**
@@ -17,7 +17,7 @@ import com.gulimall.product.service.IAttrService;
  * @date 2022-02-14
  */
 @Service
-public class AttrServiceImpl extends ServiceImpl<AttrMapper, Attr> implements IAttrService {
+public class AttrServiceImpl extends ServiceImpl<AttrMapper, AttrEntity> implements IAttrService {
     @Autowired
     private AttrMapper attrMapper;
 
@@ -28,41 +28,41 @@ public class AttrServiceImpl extends ServiceImpl<AttrMapper, Attr> implements IA
      * @return 商品属性
      */
     @Override
-    public Attr selectAttrByAttrId(Long attrId) {
+    public AttrEntity selectAttrByAttrId(Long attrId) {
         return attrMapper.selectById(attrId);
     }
 
     /**
      * 查询商品属性列表
      * 
-     * @param attr 商品属性
+     * @param attrEntity 商品属性
      * @return 商品属性
      */
     @Override
-    public List<Attr> selectAttrList(Attr attr) {
-        return attrMapper.selectAttrList(attr);
+    public List<AttrEntity> selectAttrList(AttrEntity attrEntity) {
+        return attrMapper.selectAttrList(attrEntity);
     }
 
     /**
      * 新增商品属性
      * 
-     * @param attr 商品属性
+     * @param attrEntity 商品属性
      * @return 结果
      */
     @Override
-    public int insertAttr(Attr attr) {
-        return attrMapper.insert(attr);
+    public int insertAttr(AttrEntity attrEntity) {
+        return attrMapper.insert(attrEntity);
     }
 
     /**
      * 修改商品属性
      * 
-     * @param attr 商品属性
+     * @param attrEntity 商品属性
      * @return 结果
      */
     @Override
-    public int updateAttr(Attr attr) {
-        return attrMapper.updateById(attr);
+    public int updateAttr(AttrEntity attrEntity) {
+        return attrMapper.updateById(attrEntity);
     }
 
     /**

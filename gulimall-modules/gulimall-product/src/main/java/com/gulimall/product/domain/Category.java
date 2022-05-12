@@ -3,6 +3,7 @@ package com.gulimall.product.domain;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.gulimall.common.core.annotation.Excel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,6 +13,7 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -85,4 +87,11 @@ public class Category implements Serializable {
 
     @TableField(exist = false)
     private Map<String, Object> params = new HashMap<>();
+
+    /**
+     * 所有子分类
+     */
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @TableField(exist = false)
+    private List<Category> children;
 }

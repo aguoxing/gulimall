@@ -1,168 +1,144 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="分类名称" prop="name">
-        <el-input
-          v-model="queryParams.name"
-          placeholder="请输入分类名称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="父分类id" prop="parentCid">
-        <el-input
-          v-model="queryParams.parentCid"
-          placeholder="请输入父分类id"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="层级" prop="catLevel">
-        <el-input
-          v-model="queryParams.catLevel"
-          placeholder="请输入层级"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="排序" prop="sort">
-        <el-input
-          v-model="queryParams.sort"
-          placeholder="请输入排序"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="图标地址" prop="icon">
-        <el-input
-          v-model="queryParams.icon"
-          placeholder="请输入图标地址"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="计量单位" prop="productUnit">
-        <el-input
-          v-model="queryParams.productUnit"
-          placeholder="请输入计量单位"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="商品数量" prop="productCount">
-        <el-input
-          v-model="queryParams.productCount"
-          placeholder="请输入商品数量"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-      </el-form-item>
-    </el-form>
 
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['product:category:add']"
-        >新增</el-button>
+    <el-row :gutter="10">
+      <el-col :span="4" :xs="24">
+        <div class="head-container">
+          <el-input
+            v-model="categoryName"
+            placeholder="请输入分类名称"
+            clearable
+            size="small"
+            prefix-icon="el-icon-search"
+            style="margin-bottom: 20px"
+          />
+        </div>
+        <div class="head-container">
+          <el-tree
+            :data="categoryOptions"
+            :props="defaultProps"
+            node-key="catId"
+            highlight-current
+            accordion
+            :expand-on-click-node="true"
+            :filter-node-method="filterNode"
+            :default-expanded-keys="defaultExpandedKeys"
+            ref="categoryTree"
+            @node-click="handleNodeClick"
+          />
+        </div>
       </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['product:category:edit']"
-        >修改</el-button>
+      <el-col :span="20" :xs="24">
+        <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+          <el-form-item label="分类名称" prop="name">
+            <el-input
+              v-model="queryParams.name"
+              placeholder="请输入分类名称"
+              clearable
+              size="small"
+              @keyup.enter.native="handleQuery"
+            />
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+          </el-form-item>
+        </el-form>
+
+        <el-row :gutter="10" class="mb8">
+          <el-col :span="1.5">
+            <el-button
+              type="primary"
+              plain
+              icon="el-icon-plus"
+              size="mini"
+              @click="handleAdd"
+              v-hasPermi="['product:category:add']"
+            >新增</el-button>
+          </el-col>
+          <el-col :span="1.5">
+            <el-button
+              type="success"
+              plain
+              icon="el-icon-edit"
+              size="mini"
+              :disabled="single"
+              @click="handleUpdate"
+              v-hasPermi="['product:category:edit']"
+            >修改</el-button>
+          </el-col>
+          <el-col :span="1.5">
+            <el-button
+              type="danger"
+              plain
+              icon="el-icon-delete"
+              size="mini"
+              :disabled="multiple"
+              @click="handleDelete"
+              v-hasPermi="['product:category:remove']"
+            >删除</el-button>
+          </el-col>
+          <el-col :span="1.5">
+            <el-button
+              type="warning"
+              plain
+              icon="el-icon-download"
+              size="mini"
+              @click="handleExport"
+              v-hasPermi="['product:category:export']"
+            >导出</el-button>
+          </el-col>
+          <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+        </el-row>
+
+        <el-table v-loading="loading" :data="categoryList" @selection-change="handleSelectionChange">
+          <el-table-column type="selection" width="55" align="center" />
+          <el-table-column label="分类名称" align="center" prop="name" />
+          <el-table-column label="层级" align="center" prop="catLevel" />
+          <el-table-column label="是否显示" align="center" prop="showStatus">
+            <template v-slot="scope">
+              <dict-tag :options="dict.type.pms_show_status" :value="scope.row.showStatus"></dict-tag>
+            </template>
+          </el-table-column>
+          <el-table-column label="排序" align="center" prop="sort" />
+          <el-table-column label="图标地址" align="center" prop="icon" />
+          <el-table-column label="计量单位" align="center" prop="productUnit" />
+          <el-table-column label="商品数量" align="center" prop="productCount" />
+          <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+            <template slot-scope="scope">
+              <el-button
+                size="mini"
+                type="text"
+                icon="el-icon-edit"
+                @click="handleUpdate(scope.row)"
+                v-hasPermi="['product:category:edit']"
+              >修改</el-button>
+              <el-button
+                size="mini"
+                type="text"
+                icon="el-icon-delete"
+                @click="handleDelete(scope.row)"
+                v-hasPermi="['product:category:remove']"
+              >删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+
+        <pagination
+          v-show="total>0"
+          :total="total"
+          :page.sync="queryParams.pageNum"
+          :limit.sync="queryParams.pageSize"
+          @pagination="getList"
+        />
       </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['product:category:remove']"
-        >删除</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['product:category:export']"
-        >导出</el-button>
-      </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
-
-    <el-table v-loading="loading" :data="categoryList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="分类id" align="center" prop="catId" />
-      <el-table-column label="分类名称" align="center" prop="name" />
-      <el-table-column label="父分类id" align="center" prop="parentCid" />
-      <el-table-column label="层级" align="center" prop="catLevel" />
-      <el-table-column label="是否显示[0-不显示，1显示]" align="center" prop="showStatus" />
-      <el-table-column label="排序" align="center" prop="sort" />
-      <el-table-column label="图标地址" align="center" prop="icon" />
-      <el-table-column label="计量单位" align="center" prop="productUnit" />
-      <el-table-column label="商品数量" align="center" prop="productCount" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['product:category:edit']"
-          >修改</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['product:category:remove']"
-          >删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
 
     <!-- 添加或修改商品三级分类对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="分类名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入分类名称" />
-        </el-form-item>
-        <el-form-item label="父分类id" prop="parentCid">
-          <el-input v-model="form.parentCid" placeholder="请输入父分类id" />
         </el-form-item>
         <el-form-item label="层级" prop="catLevel">
           <el-input v-model="form.catLevel" placeholder="请输入层级" />
@@ -189,10 +165,18 @@
 </template>
 
 <script>
-import { listCategory, getCategory, delCategory, addCategory, updateCategory } from "@/api/product/category";
+import {
+  listCategory,
+  getCategory,
+  delCategory,
+  addCategory,
+  updateCategory,
+  listTreeCategory
+} from "@/api/product/category";
 
 export default {
   name: "Category",
+  dicts: ['pms_show_status'],
   data() {
     return {
       // 遮罩层
@@ -204,7 +188,7 @@ export default {
       // 非多个禁用
       multiple: true,
       // 显示搜索条件
-      showSearch: true,
+      showSearch: false,
       // 总条数
       total: 0,
       // 商品三级分类表格数据
@@ -229,20 +213,53 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {
-      }
+      rules: {},
+
+      categoryName: undefined,
+      categoryOptions: [],
+
+      defaultProps: {
+        children: "children",
+        label: "name"
+      },
+      currentNode: null,
+      defaultExpandedKeys: []
     };
   },
+  watch: {
+    // 根据名称筛选分类树
+    categoryName(val) {
+      this.$refs.categoryTree.filter(val);
+    }
+  },
   created() {
-    this.getList();
+    this.getTreeList();
   },
   methods: {
+    // 筛选节点
+    filterNode(value, data) {
+      if (!value) return true;
+      return data.name.indexOf(value) !== -1;
+    },
+    // 节点单击事件
+    handleNodeClick(data) {
+      this.currentNode = data;
+      this.queryParams.parentCid = data.catId;
+      this.handleQuery();
+    },
     /** 查询商品三级分类列表 */
     getList() {
       this.loading = true;
       listCategory(this.queryParams).then(response => {
         this.categoryList = response.rows;
         this.total = response.total;
+        this.loading = false;
+      });
+    },
+    getTreeList() {
+      this.loading = true;
+      listTreeCategory(this.queryParams).then(response => {
+        this.categoryOptions = response.data;
         this.loading = false;
       });
     },
@@ -256,13 +273,13 @@ export default {
       this.form = {
         catId: null,
         name: null,
-        parentCid: null,
-        catLevel: null,
-        showStatus: 0,
-        sort: null,
+        parentCid: 0,
+        catLevel: 1,
+        showStatus: 1,
+        sort: 0,
         icon: null,
         productUnit: null,
-        productCount: null
+        productCount: 0
       };
       this.resetForm("form");
     },
@@ -285,6 +302,10 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
+      if (this.currentNode !== null) {
+        this.form.parentCid = this.currentNode.catId;
+        this.form.catLevel = this.currentNode.catLevel * 1 + 1;
+      }
       this.open = true;
       this.title = "添加商品三级分类";
     },

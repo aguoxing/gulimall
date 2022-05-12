@@ -3,6 +3,7 @@ package com.gulimall.product.controller;
 import java.util.List;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -91,8 +92,18 @@ public class CategoryController extends BaseController {
      */
     @RequiresPermissions("product:category:remove")
     @Log(title = "商品三级分类", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{catIds}")
+    @DeleteMapping("/{catIds}")
     public AjaxResult remove(@PathVariable Long[] catIds) {
         return toAjax(categoryService.deleteCategoryByCatIds(catIds));
+    }
+
+    /**
+     * 查询出所有分类以及子分类，以树形结构组装起来列表
+     *
+     * @return
+     */
+    @GetMapping("/list/tree")
+    public AjaxResult listCategoryTree() {
+        return AjaxResult.success(categoryService.listCategoryTree());
     }
 }

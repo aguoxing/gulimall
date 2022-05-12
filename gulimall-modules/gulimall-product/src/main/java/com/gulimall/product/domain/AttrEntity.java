@@ -26,7 +26,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Accessors(chain = true)
 @TableName("pms_attr")
-public class Attr implements Serializable {
+public class AttrEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**

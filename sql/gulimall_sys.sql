@@ -349,12 +349,12 @@ INSERT INTO `sys_menu` VALUES (2002, '属性&属性分组关联新增', 2000, 2,
 INSERT INTO `sys_menu` VALUES (2003, '属性&属性分组关联修改', 2000, 3, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attrAttrgroupRelation:edit', '#', 'admin', '2022-02-14 15:31:18', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2004, '属性&属性分组关联删除', 2000, 4, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attrAttrgroupRelation:remove', '#', 'admin', '2022-02-14 15:31:18', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2005, '属性&属性分组关联导出', 2000, 5, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attrAttrgroupRelation:export', '#', 'admin', '2022-02-14 15:31:18', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2006, '规格参数', 2094, 4, 'base-attr', 'product/attr/index', NULL, 1, 0, 'C', '0', '0', 'product:attr:list', '#', 'admin', '2022-02-14 15:31:35', 'admin', '2022-02-14 16:46:54', '商品属性菜单');
-INSERT INTO `sys_menu` VALUES (2007, '商品属性查询', 2006, 1, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attr:query', '#', 'admin', '2022-02-14 15:31:35', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2008, '商品属性新增', 2006, 2, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attr:add', '#', 'admin', '2022-02-14 15:31:35', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2009, '商品属性修改', 2006, 3, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attr:edit', '#', 'admin', '2022-02-14 15:31:35', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2010, '商品属性删除', 2006, 4, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attr:remove', '#', 'admin', '2022-02-14 15:31:35', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2011, '商品属性导出', 2006, 5, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attr:export', '#', 'admin', '2022-02-14 15:31:35', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2006, '规格参数', 2094, 4, 'base-attrEntity', 'product/attrEntity/index', NULL, 1, 0, 'C', '0', '0', 'product:attrEntity:list', '#', 'admin', '2022-02-14 15:31:35', 'admin', '2022-02-14 16:46:54', '商品属性菜单');
+INSERT INTO `sys_menu` VALUES (2007, '商品属性查询', 2006, 1, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attrEntity:query', '#', 'admin', '2022-02-14 15:31:35', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2008, '商品属性新增', 2006, 2, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attrEntity:add', '#', 'admin', '2022-02-14 15:31:35', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2009, '商品属性修改', 2006, 3, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attrEntity:edit', '#', 'admin', '2022-02-14 15:31:35', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2010, '商品属性删除', 2006, 4, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attrEntity:remove', '#', 'admin', '2022-02-14 15:31:35', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2011, '商品属性导出', 2006, 5, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attrEntity:export', '#', 'admin', '2022-02-14 15:31:35', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2012, '品牌管理', 2090, 2, 'brand', 'product/brand/index', NULL, 1, 0, 'C', '0', '0', 'product:brand:list', '#', 'admin', '2022-02-14 15:31:44', 'admin', '2022-02-14 16:38:10', '品牌菜单');
 INSERT INTO `sys_menu` VALUES (2013, '品牌查询', 2012, 1, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:brand:query', '#', 'admin', '2022-02-14 15:31:44', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2014, '品牌新增', 2012, 2, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:brand:add', '#', 'admin', '2022-02-14 15:31:44', '', NULL, '');
@@ -373,7 +373,7 @@ INSERT INTO `sys_menu` VALUES (2026, '商品三级分类新增', 2024, 2, '#', '
 INSERT INTO `sys_menu` VALUES (2027, '商品三级分类修改', 2024, 3, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:category:edit', '#', 'admin', '2022-02-14 15:31:59', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2028, '商品三级分类删除', 2024, 4, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:category:remove', '#', 'admin', '2022-02-14 15:31:59', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2029, '商品三级分类导出', 2024, 5, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:category:export', '#', 'admin', '2022-02-14 15:31:59', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2030, '属性分组', 2094, 3, 'attr-group', 'product/group/index', NULL, 1, 0, 'C', '0', '0', 'product:group:list', '#', 'admin', '2022-02-14 15:32:07', 'admin', '2022-02-14 16:46:44', '属性分组菜单');
+INSERT INTO `sys_menu` VALUES (2030, '属性分组', 2094, 3, 'attrEntity-group', 'product/group/index', NULL, 1, 0, 'C', '0', '0', 'product:group:list', '#', 'admin', '2022-02-14 15:32:07', 'admin', '2022-02-14 16:46:44', '属性分组菜单');
 INSERT INTO `sys_menu` VALUES (2031, '属性分组查询', 2030, 1, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:group:query', '#', 'admin', '2022-02-14 15:32:07', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2032, '属性分组新增', 2030, 2, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:group:add', '#', 'admin', '2022-02-14 15:32:07', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2033, '属性分组修改', 2030, 3, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:group:edit', '#', 'admin', '2022-02-14 15:32:07', '', NULL, '');
@@ -403,7 +403,7 @@ INSERT INTO `sys_menu` VALUES (2056, 'sku信息新增', 2054, 2, '#', '', NULL, 
 INSERT INTO `sys_menu` VALUES (2057, 'sku信息修改', 2054, 3, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:skuInfo:edit', '#', 'admin', '2022-02-14 15:32:37', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2058, 'sku信息删除', 2054, 4, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:skuInfo:remove', '#', 'admin', '2022-02-14 15:32:37', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2059, 'sku信息导出', 2054, 5, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:skuInfo:export', '#', 'admin', '2022-02-14 15:32:37', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2060, '销售属性', 2094, 6, 'sale-attr', 'product/skuSaleAttrValue/index', NULL, 1, 0, 'C', '0', '0', 'product:skuSaleAttrValue:list', '#', 'admin', '2022-02-14 15:32:46', 'admin', '2022-02-14 16:47:05', 'sku销售属性&值菜单');
+INSERT INTO `sys_menu` VALUES (2060, '销售属性', 2094, 6, 'sale-attrEntity', 'product/skuSaleAttrValue/index', NULL, 1, 0, 'C', '0', '0', 'product:skuSaleAttrValue:list', '#', 'admin', '2022-02-14 15:32:46', 'admin', '2022-02-14 16:47:05', 'sku销售属性&值菜单');
 INSERT INTO `sys_menu` VALUES (2061, 'sku销售属性&值查询', 2060, 1, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:skuSaleAttrValue:query', '#', 'admin', '2022-02-14 15:32:46', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2062, 'sku销售属性&值新增', 2060, 2, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:skuSaleAttrValue:add', '#', 'admin', '2022-02-14 15:32:46', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2063, 'sku销售属性&值修改', 2060, 3, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:skuSaleAttrValue:edit', '#', 'admin', '2022-02-14 15:32:46', '', NULL, '');
@@ -437,7 +437,7 @@ INSERT INTO `sys_menu` VALUES (2090, '商品系统', 0, 1, 'product', NULL, NULL
 INSERT INTO `sys_menu` VALUES (2091, '优惠营销', 0, 2, 'coupon', NULL, NULL, 1, 0, 'M', '0', '0', NULL, 'coupon', 'admin', '2022-02-14 16:25:54', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2092, '库存系统', 0, 3, 'ware', NULL, NULL, 1, 0, 'M', '0', '0', NULL, 'ware', 'admin', '2022-02-14 16:27:00', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2093, '订单系统', 0, 4, 'order', NULL, NULL, 1, 0, 'M', '0', '0', NULL, 'order01', 'admin', '2022-02-14 16:28:19', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2094, '平台属性', 2090, 3, 'platform-attr', NULL, NULL, 1, 0, 'M', '0', '0', NULL, 'date', 'admin', '2022-02-14 16:46:19', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2094, '平台属性', 2090, 3, 'platform-attrEntity', NULL, NULL, 1, 0, 'M', '0', '0', NULL, 'date', 'admin', '2022-02-14 16:46:19', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2097, '内容管理', 0, 6, 'content', NULL, NULL, 1, 0, 'M', '0', '0', '', 'excel', 'admin', '2022-02-14 16:51:31', 'admin', '2022-02-15 09:12:33', '');
 INSERT INTO `sys_menu` VALUES (2098, '发放记录', 2091, 2, 'couponHistory', 'coupon/couponHistory/index', NULL, 1, 0, 'C', '0', '0', 'coupon:couponHistory:list', '#', 'admin', '2022-02-14 17:16:21', 'admin', '2022-02-15 08:57:41', '优惠券领取历史记录菜单');
 INSERT INTO `sys_menu` VALUES (2099, '优惠券领取历史记录查询', 2098, 1, '#', '', NULL, 1, 0, 'F', '0', '0', 'coupon:couponHistory:query', '#', 'admin', '2022-02-14 17:16:21', '', NULL, '');

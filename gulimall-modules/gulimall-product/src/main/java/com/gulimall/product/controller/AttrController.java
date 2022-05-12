@@ -1,7 +1,6 @@
 package com.gulimall.product.controller;
 
 import java.util.List;
-import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gulimall.common.log.annotation.Log;
 import com.gulimall.common.log.enums.BusinessType;
 import com.gulimall.common.security.annotation.RequiresPermissions;
-import com.gulimall.product.domain.Attr;
+import com.gulimall.product.domain.AttrEntity;
 import com.gulimall.product.service.IAttrService;
 import com.gulimall.common.core.web.controller.BaseController;
 import com.gulimall.common.core.web.domain.AjaxResult;
@@ -39,9 +38,9 @@ public class AttrController extends BaseController {
      */
     @RequiresPermissions("product:attr:list")
     @GetMapping("/list")
-    public TableDataInfo list(Attr attr) {
+    public TableDataInfo list(AttrEntity attrEntity) {
         startPage();
-        List<Attr> list = attrService.selectAttrList(attr);
+        List<AttrEntity> list = attrService.selectAttrList(attrEntity);
         return getDataTable(list);
     }
 
@@ -51,9 +50,9 @@ public class AttrController extends BaseController {
     @RequiresPermissions("product:attr:export")
     @Log(title = "商品属性", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, Attr attr) {
-        List<Attr> list = attrService.selectAttrList(attr);
-        ExcelUtil<Attr> util = new ExcelUtil<Attr>(Attr.class);
+    public void export(HttpServletResponse response, AttrEntity attrEntity) {
+        List<AttrEntity> list = attrService.selectAttrList(attrEntity);
+        ExcelUtil<AttrEntity> util = new ExcelUtil<AttrEntity>(AttrEntity.class);
         util.exportExcel(response, list, "商品属性数据");
     }
 
@@ -72,8 +71,8 @@ public class AttrController extends BaseController {
     @RequiresPermissions("product:attr:add")
     @Log(title = "商品属性", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody Attr attr) {
-        return toAjax(attrService.insertAttr(attr));
+    public AjaxResult add(@RequestBody AttrEntity attrEntity) {
+        return toAjax(attrService.insertAttr(attrEntity));
     }
 
     /**
@@ -82,8 +81,8 @@ public class AttrController extends BaseController {
     @RequiresPermissions("product:attr:edit")
     @Log(title = "商品属性", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody Attr attr) {
-        return toAjax(attrService.updateAttr(attr));
+    public AjaxResult edit(@RequestBody AttrEntity attrEntity) {
+        return toAjax(attrService.updateAttr(attrEntity));
     }
 
     /**

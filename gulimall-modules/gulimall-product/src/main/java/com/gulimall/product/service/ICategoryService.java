@@ -1,12 +1,15 @@
 package com.gulimall.product.service;
 
 import java.util.List;
+import java.util.Map;
+
 import com.gulimall.product.domain.Category;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.gulimall.product.domain.vo.Catelog2Vo;
 
 /**
  * 商品三级分类Service接口
- * 
+ *
  * @author admin
  * @date 2022-02-14
  */
@@ -21,7 +24,7 @@ public interface ICategoryService extends IService<Category> {
 
     /**
      * 查询商品三级分类列表
-     * 
+     *
      * @param category 商品三级分类
      * @return 商品三级分类集合
      */
@@ -29,7 +32,7 @@ public interface ICategoryService extends IService<Category> {
 
     /**
      * 新增商品三级分类
-     * 
+     *
      * @param category 商品三级分类
      * @return 结果
      */
@@ -37,7 +40,7 @@ public interface ICategoryService extends IService<Category> {
 
     /**
      * 修改商品三级分类
-     * 
+     *
      * @param category 商品三级分类
      * @return 结果
      */
@@ -45,10 +48,30 @@ public interface ICategoryService extends IService<Category> {
 
     /**
      * 批量删除商品三级分类
-     * 
+     *
      * @param catIds 需要删除的商品三级分类主键集合
      * @return 结果
      */
     int deleteCategoryByCatIds(Long[] catIds);
 
+    /**
+     * 查找一级分类
+     *
+     * @return
+     */
+    List<Category> getLevel1CategoryList();
+
+    /**
+     * 查询出所有分类以及子分类，以树形结构组装起来列表
+     *
+     * @return
+     */
+    List<Category> listCategoryTree();
+
+    /**
+     * getCatalogJson
+     *
+     * @return
+     */
+    Map<String, List<Catelog2Vo>> getCatalogJson();
 }

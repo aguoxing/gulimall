@@ -3,7 +3,7 @@ package com.gulimall.product.mapper;
 import java.util.List;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.gulimall.product.domain.Attr;
+import com.gulimall.product.domain.AttrEntity;
 
 /**
  * 商品属性Mapper接口
@@ -11,14 +11,14 @@ import com.gulimall.product.domain.Attr;
  * @author admin
  * @date 2022-02-14
  */
-public interface AttrMapper extends BaseMapper<Attr> {
+public interface AttrMapper extends BaseMapper<AttrEntity> {
 
     /**
      * 查询商品属性列表
      * 
-     * @param attr 商品属性
+     * @param attrEntity 商品属性
      * @return 商品属性集合
      */
-    List<Attr> selectAttrList(Attr attr);
+    List<AttrEntity> selectAttrList(AttrEntity attrEntity);
 
 }

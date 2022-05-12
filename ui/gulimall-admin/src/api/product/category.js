@@ -11,6 +11,15 @@ export function listCategory(query) {
   })
 }
 
+// 查询商品三级分类列表
+export function listTreeCategory(query) {
+  return request({
+    url: `/${service_name}/list/tree`,
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询商品三级分类详细
 export function getCategory(catId) {
   return request({
