@@ -1,6 +1,6 @@
 @echo off
 echo.
-echo [ะลฯข] สนำรJarรüม๎ิหะะAuthนคณฬกฃ
+echo [ไฟกๆฏ] ไฝฟ็”จJarๅ‘ฝไปค่ฟ่กAuthๅทฅ็จใ€
 echo.
 
 cd %~dp0
