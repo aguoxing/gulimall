@@ -1,5 +1,22 @@
-基于RuoYi-Cloud3.4的谷粒商城
+# 基于RuoYi-Cloud3.4的谷粒商城
+> status: WIP
 
+### 参与贡献
+1. Fork 本仓库
+2. 新建 dev_xxx 分支
+3. 提交代码
+4. 新建 Pull Request
+
+### 提交规范
+- feat：新功能（feature）
+- fix：修补bug
+- docs：文档（documentation）
+- style： 格式（不影响代码运行的变动）
+- refactor：重构（即不是新增功能，也不是修改bug的代码变动）
+- test：增加测试
+- chore：构建过程或辅助工具的变动
+
+### 模块说明
 ```text
 gulimall-api -- remote api
 gulimall-auth -- 鉴权服务 6200
