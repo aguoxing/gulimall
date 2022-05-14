@@ -3,30 +3,7 @@
 
     <el-row :gutter="10">
       <el-col :span="4" :xs="24">
-        <div class="head-container">
-          <el-input
-            v-model="categoryName"
-            placeholder="请输入分类名称"
-            clearable
-            size="small"
-            prefix-icon="el-icon-search"
-            style="margin-bottom: 20px"
-          />
-        </div>
-        <div class="head-container">
-          <el-tree
-            :data="categoryOptions"
-            :props="defaultProps"
-            node-key="catId"
-            highlight-current
-            accordion
-            :expand-on-click-node="true"
-            :filter-node-method="filterNode"
-            :default-expanded-keys="defaultExpandedKeys"
-            ref="categoryTree"
-            @node-click="handleNodeClick"
-          />
-        </div>
+        <category-tree ref="categoryTree" @handleQuery="handleQuery"></category-tree>
       </el-col>
       <el-col :span="20" :xs="24">
         <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
@@ -54,6 +31,7 @@
               size="mini"
               @click="handleAdd"
               v-hasPermi="['product:category:add']"
+              :disabled="currentNode !== null && currentNode.catLevel === 3"
             >新增</el-button>
           </el-col>
           <el-col :span="1.5">
@@ -78,7 +56,7 @@
               v-hasPermi="['product:category:remove']"
             >删除</el-button>
           </el-col>
-          <el-col :span="1.5">
+<!--          <el-col :span="1.5">
             <el-button
               type="warning"
               plain
@@ -87,7 +65,7 @@
               @click="handleExport"
               v-hasPermi="['product:category:export']"
             >导出</el-button>
-          </el-col>
+          </el-col>-->
           <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
         </el-row>
 
@@ -134,26 +112,17 @@
       </el-col>
     </el-row>
 
-    <!-- 添加或修改商品三级分类对话框 -->
+    <!-- 添加或修改商品分类对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="分类名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入分类名称" />
-        </el-form-item>
-        <el-form-item label="层级" prop="catLevel">
-          <el-input v-model="form.catLevel" placeholder="请输入层级" />
-        </el-form-item>
-        <el-form-item label="排序" prop="sort">
-          <el-input v-model="form.sort" placeholder="请输入排序" />
         </el-form-item>
         <el-form-item label="图标地址" prop="icon">
           <el-input v-model="form.icon" placeholder="请输入图标地址" />
         </el-form-item>
         <el-form-item label="计量单位" prop="productUnit">
           <el-input v-model="form.productUnit" placeholder="请输入计量单位" />
-        </el-form-item>
-        <el-form-item label="商品数量" prop="productCount">
-          <el-input v-model="form.productCount" placeholder="请输入商品数量" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -171,16 +140,19 @@ import {
   delCategory,
   addCategory,
   updateCategory,
-  listTreeCategory
 } from "@/api/product/category";
+import CategoryTree from "@/views/product/category/CategoryTree";
 
 export default {
   name: "Category",
   dicts: ['pms_show_status'],
+  components: {
+    CategoryTree
+  },
   data() {
     return {
       // 遮罩层
-      loading: true,
+      loading: false,
       // 选中数组
       ids: [],
       // 非单个禁用
@@ -191,7 +163,7 @@ export default {
       showSearch: false,
       // 总条数
       total: 0,
-      // 商品三级分类表格数据
+      // 商品分类表格数据
       categoryList: [],
       // 弹出层标题
       title: "",
@@ -201,65 +173,28 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        name: null,
-        parentCid: null,
-        catLevel: null,
-        showStatus: null,
-        sort: null,
-        icon: null,
-        productUnit: null,
-        productCount: null
       },
       // 表单参数
       form: {},
       // 表单校验
-      rules: {},
-
-      categoryName: undefined,
-      categoryOptions: [],
-
-      defaultProps: {
-        children: "children",
-        label: "name"
+      rules: {
+        name: [
+          {required: true, message: '分类名称不能为空', trigger: 'blur'}
+        ]
       },
-      currentNode: null,
-      defaultExpandedKeys: []
+      currentNode: null
     };
   },
-  watch: {
-    // 根据名称筛选分类树
-    categoryName(val) {
-      this.$refs.categoryTree.filter(val);
-    }
-  },
   created() {
-    this.getTreeList();
+
   },
   methods: {
-    // 筛选节点
-    filterNode(value, data) {
-      if (!value) return true;
-      return data.name.indexOf(value) !== -1;
-    },
-    // 节点单击事件
-    handleNodeClick(data) {
-      this.currentNode = data;
-      this.queryParams.parentCid = data.catId;
-      this.handleQuery();
-    },
-    /** 查询商品三级分类列表 */
+    /** 查询商品分类列表 */
     getList() {
       this.loading = true;
       listCategory(this.queryParams).then(response => {
         this.categoryList = response.rows;
         this.total = response.total;
-        this.loading = false;
-      });
-    },
-    getTreeList() {
-      this.loading = true;
-      listTreeCategory(this.queryParams).then(response => {
-        this.categoryOptions = response.data;
         this.loading = false;
       });
     },
@@ -284,8 +219,12 @@ export default {
       this.resetForm("form");
     },
     /** 搜索按钮操作 */
-    handleQuery() {
+    handleQuery(currentNode) {
       this.queryParams.pageNum = 1;
+      this.currentNode = currentNode;
+      if (currentNode !== null) {
+        this.queryParams.parentCid = currentNode.catId;
+      }
       this.getList();
     },
     /** 重置按钮操作 */
@@ -307,7 +246,7 @@ export default {
         this.form.catLevel = this.currentNode.catLevel * 1 + 1;
       }
       this.open = true;
-      this.title = "添加商品三级分类";
+      this.title = "添加商品分类";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -316,7 +255,7 @@ export default {
       getCategory(catId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改商品三级分类";
+        this.title = "修改商品分类";
       });
     },
     /** 提交按钮 */
@@ -342,7 +281,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const catIds = row.catId || this.ids;
-      this.$modal.confirm('是否确认删除商品三级分类编号为"' + catIds + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除商品分类编号为"' + catIds + '"的数据项？').then(function() {
         return delCategory(catIds);
       }).then(() => {
         this.getList();
