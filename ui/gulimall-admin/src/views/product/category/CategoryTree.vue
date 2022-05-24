@@ -23,6 +23,9 @@
           :default-expanded-keys="defaultExpandedKeys"
           ref="categoryTree"
           @node-click="handleNodeClick"
+          draggable
+          :allow-drop="allowDrop"
+          @node-drog="handleDrop"
         />
       </el-scrollbar>
     </div>
@@ -30,7 +33,7 @@
 </template>
 
 <script>
-import {listTreeCategory} from "@/api/product/category";
+import {categoryChangeSort, listTreeCategory} from "@/api/product/category";
 
 export default {
   name: "CategoryTree",
@@ -47,6 +50,8 @@ export default {
         children: "children",
         label: "name"
       },
+
+      currentId: null,
       defaultExpandedKeys: []
     }
   },
@@ -66,6 +71,10 @@ export default {
         this.categoryOptions = response.data;
         this.loading = false;
       });
+      if (this.currentId !== null) {
+        this.defaultExpandedKeys = [];
+        this.defaultExpandedKeys.push(this.currentId);
+      }
     },
     // 筛选节点
     filterNode(value, data) {
@@ -75,6 +84,25 @@ export default {
     // 节点单击事件
     handleNodeClick(data) {
       this.$emit("handleQuery", data);
+      this.currentId = data.id;
+    },
+    allowDrop(draggingNode, dropNode, type) {
+      if (draggingNode.data.level === dropNode.data.level) {
+        if (draggingNode.data.parentCid === dropNode.data.parentCid) {
+          return type !== 'inner';
+        }
+      } else {
+        return false;
+      }
+    },
+    handleDrop(draggingNode, dropNode, dropType, ev) {
+      let sorted = [];
+      for (let item of dropNode.parent.childNodes) {
+        sorted.push({id: item.data.catId, sort: sorted.length});
+      }
+      categoryChangeSort({sorted: sorted}).then(res => {
+        this.$modal.msgSuccess("操作成功");
+      });
     },
   }
 }

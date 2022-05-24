@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.gulimall.product.domain.Category;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.gulimall.product.domain.dto.CategoryDTO;
 import com.gulimall.product.domain.vo.Catelog2Vo;
 
 /**
@@ -29,6 +30,13 @@ public interface ICategoryService extends IService<Category> {
      * @return 商品三级分类集合
      */
     List<Category> selectCategoryList(Category category);
+
+    /**
+     * 排序
+     *
+     * @param categoryDTO
+     */
+    void categoryChangeSort(CategoryDTO categoryDTO);
 
     /**
      * 新增商品三级分类

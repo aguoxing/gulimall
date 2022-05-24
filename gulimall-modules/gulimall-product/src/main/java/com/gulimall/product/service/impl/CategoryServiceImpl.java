@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gulimall.common.core.utils.StringUtils;
 import com.gulimall.common.redis.service.RedisService;
+import com.gulimall.product.domain.dto.CategoryDTO;
 import com.gulimall.product.domain.vo.Catelog2Vo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -92,7 +93,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
      */
     @Override
     public List<Category> listCategoryTree() {
-        List<Category> categoryList = baseMapper.selectList(null);
+        List<Category> categoryList = baseMapper.selectList(new LambdaQueryWrapper<Category>().orderByAsc(Category::getSort));
         Map<Long, Category> map = categoryList.stream().collect(Collectors.toMap(Category::getCatId, Function.identity()));
         List<Category> resList = new ArrayList<>();
         List<Category> childList;
@@ -137,6 +138,19 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     @Override
     public Map<String, List<Catelog2Vo>> getCatalogJson() {
         return null;
+    }
+
+    /**
+     * 排序
+     *
+     * @param categoryDTO
+     */
+    @Override
+    public void categoryChangeSort(CategoryDTO categoryDTO) {
+        List<Category> categoryList = categoryDTO.getSorted();
+        for (Category category : categoryList) {
+            baseMapper.updateById(category);
+        }
     }
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gulimall.product.domain.dto.CategoryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,6 +45,12 @@ public class CategoryController extends BaseController {
         startPage();
         List<Category> list = categoryService.selectCategoryList(category);
         return getDataTable(list);
+    }
+
+    @PostMapping("/sort")
+    public AjaxResult categoryChangeSort(@RequestBody CategoryDTO categoryDTO) {
+        categoryService.categoryChangeSort(categoryDTO);
+        return AjaxResult.success();
     }
 
     /**

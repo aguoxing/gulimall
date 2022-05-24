@@ -267,12 +267,14 @@ export default {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
+              this.$refs.categoryTree.getTreeList();
             });
           } else {
             addCategory(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
+              this.$refs.categoryTree.getTreeList();
             });
           }
         }
@@ -286,6 +288,7 @@ export default {
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
+        this.$refs.categoryTree.getTreeList();
       }).catch(() => {});
     },
     /** 导出按钮操作 */
