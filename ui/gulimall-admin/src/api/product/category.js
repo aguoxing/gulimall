@@ -20,6 +20,14 @@ export function listTreeCategory(query) {
   })
 }
 
+export function categoryChangeSort(data) {
+  return request({
+    url: `/${service_name}/sort`,
+    method: 'post',
+    data: data
+  })
+}
+
 // 查询商品三级分类详细
 export function getCategory(catId) {
   return request({

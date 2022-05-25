@@ -9,6 +9,7 @@
       :pager-count="pagerCount"
       :total="total"
       v-bind="$attrs"
+      :hide-on-single-page="hideOnSinglePage"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     />
@@ -59,6 +60,10 @@ export default {
     hidden: {
       type: Boolean,
       default: false
+    },
+    hideOnSinglePage: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {

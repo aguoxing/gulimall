@@ -3,15 +3,15 @@
 
  Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 80015
+ Source Server Version : 80027
  Source Host           : localhost:3306
  Source Schema         : gulimall_sys
 
  Target Server Type    : MySQL
- Target Server Version : 80015
+ Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 15/02/2022 09:35:56
+ Date: 14/05/2022 11:29:09
 */
 
 SET NAMES utf8mb4;
@@ -22,7 +22,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_config`;
 CREATE TABLE `sys_config`  (
-  `config_id` int(5) NOT NULL AUTO_INCREMENT COMMENT '参数主键',
+  `config_id` int NOT NULL AUTO_INCREMENT COMMENT '参数主键',
   `config_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '参数名称',
   `config_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '参数键名',
   `config_value` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '参数键值',
@@ -33,7 +33,7 @@ CREATE TABLE `sys_config`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`config_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '参数配置表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '参数配置表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_config
@@ -48,11 +48,11 @@ INSERT INTO `sys_config` VALUES (4, '账号自助-是否开启用户注册功能
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_dept`;
 CREATE TABLE `sys_dept`  (
-  `dept_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '部门id',
-  `parent_id` bigint(20) NULL DEFAULT 0 COMMENT '父部门id',
+  `dept_id` bigint NOT NULL AUTO_INCREMENT COMMENT '部门id',
+  `parent_id` bigint NULL DEFAULT 0 COMMENT '父部门id',
   `ancestors` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '祖级列表',
   `dept_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '部门名称',
-  `order_num` int(4) NULL DEFAULT 0 COMMENT '显示顺序',
+  `order_num` int NULL DEFAULT 0 COMMENT '显示顺序',
   `leader` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '负责人',
   `phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '联系电话',
   `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '邮箱',
@@ -63,7 +63,7 @@ CREATE TABLE `sys_dept`  (
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`dept_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 200 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '部门表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 200 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '部门表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_dept
@@ -84,8 +84,8 @@ INSERT INTO `sys_dept` VALUES (109, 102, '0,100,102', '财务部门', 2, '若依
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_dict_data`;
 CREATE TABLE `sys_dict_data`  (
-  `dict_code` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '字典编码',
-  `dict_sort` int(4) NULL DEFAULT 0 COMMENT '字典排序',
+  `dict_code` bigint NOT NULL AUTO_INCREMENT COMMENT '字典编码',
+  `dict_sort` int NULL DEFAULT 0 COMMENT '字典排序',
   `dict_label` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '字典标签',
   `dict_value` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '字典键值',
   `dict_type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '字典类型',
@@ -99,7 +99,7 @@ CREATE TABLE `sys_dict_data`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`dict_code`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字典数据表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 102 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字典数据表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_dict_data
@@ -132,13 +132,28 @@ INSERT INTO `sys_dict_data` VALUES (25, 8, '生成代码', '8', 'sys_oper_type',
 INSERT INTO `sys_dict_data` VALUES (26, 9, '清空数据', '9', 'sys_oper_type', '', 'danger', 'N', '0', 'admin', '2022-02-08 09:21:46', '', NULL, '清空操作');
 INSERT INTO `sys_dict_data` VALUES (27, 1, '成功', '0', 'sys_common_status', '', 'primary', 'N', '0', 'admin', '2022-02-08 09:21:46', '', NULL, '正常状态');
 INSERT INTO `sys_dict_data` VALUES (28, 2, '失败', '1', 'sys_common_status', '', 'danger', 'N', '0', 'admin', '2022-02-08 09:21:46', '', NULL, '停用状态');
+INSERT INTO `sys_dict_data` VALUES (100, 0, '显示', '1', 'pms_show_status', NULL, 'success', 'N', '0', 'admin', '2022-05-12 09:17:08', 'admin', '2022-05-12 09:30:38', NULL);
+INSERT INTO `sys_dict_data` VALUES (101, 0, '不显示', '0', 'pms_show_status', NULL, 'info', 'N', '0', 'admin', '2022-05-12 09:17:30', 'admin', '2022-05-12 09:30:49', NULL);
+INSERT INTO `sys_dict_data` VALUES (102, 0, '禁用', '0', 'pms_enable_status', NULL, 'danger', 'N', '0', 'admin', '2022-05-14 10:26:52', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (103, 0, '启用', '1', 'pms_enable_status', NULL, 'success', 'N', '0', 'admin', '2022-05-14 10:27:03', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (104, 0, '销售属性', '0', 'pms_attr_type', NULL, 'default', 'N', '0', 'admin', '2022-05-14 10:28:01', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (105, 0, '基本属性', '1', 'pms_attr_type', NULL, 'default', 'N', '0', 'admin', '2022-05-14 10:28:12', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (106, 0, '销售属性&基本属性', '2', 'pms_attr_type', NULL, 'default', 'N', '0', 'admin', '2022-05-14 10:28:31', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (107, 0, '单个值', '0', 'pms_value_type', NULL, 'default', 'N', '0', 'admin', '2022-05-14 10:29:31', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (108, 0, '多个值', '1', 'pms_value_type', NULL, 'default', 'N', '0', 'admin', '2022-05-14 10:29:48', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (109, 0, '不需要', '0', 'pms_search_type', NULL, 'default', 'N', '0', 'admin', '2022-05-14 10:36:02', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (110, 0, '需要', '1', 'pms_search_type', NULL, 'default', 'N', '0', 'admin', '2022-05-14 10:36:09', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (111, 0, '否', '0', 'pms_show_desc', NULL, 'default', 'N', '0', 'admin', '2022-05-14 10:38:12', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (112, 0, '是', '1', 'pms_show_desc', NULL, 'default', 'N', '0', 'admin', '2022-05-14 10:38:18', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (113, 0, '下架', '0', 'pms_publish_status', NULL, 'default', 'N', '0', 'admin', '2022-05-14 10:46:06', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (114, 0, '上架', '1', 'pms_publish_status', NULL, 'default', 'N', '0', 'admin', '2022-05-14 10:46:17', '', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_dict_type
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_dict_type`;
 CREATE TABLE `sys_dict_type`  (
-  `dict_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '字典主键',
+  `dict_id` bigint NOT NULL AUTO_INCREMENT COMMENT '字典主键',
   `dict_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '字典名称',
   `dict_type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '字典类型',
   `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' COMMENT '状态（0正常 1停用）',
@@ -149,7 +164,7 @@ CREATE TABLE `sys_dict_type`  (
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`dict_id`) USING BTREE,
   UNIQUE INDEX `dict_type`(`dict_type`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字典类型表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 101 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字典类型表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_dict_type
@@ -164,13 +179,20 @@ INSERT INTO `sys_dict_type` VALUES (7, '通知类型', 'sys_notice_type', '0', '
 INSERT INTO `sys_dict_type` VALUES (8, '通知状态', 'sys_notice_status', '0', 'admin', '2022-02-08 09:21:46', '', NULL, '通知状态列表');
 INSERT INTO `sys_dict_type` VALUES (9, '操作类型', 'sys_oper_type', '0', 'admin', '2022-02-08 09:21:46', '', NULL, '操作类型列表');
 INSERT INTO `sys_dict_type` VALUES (10, '系统状态', 'sys_common_status', '0', 'admin', '2022-02-08 09:21:46', '', NULL, '登录状态列表');
+INSERT INTO `sys_dict_type` VALUES (100, '显示状态', 'pms_show_status', '0', 'admin', '2022-05-12 09:16:07', '', NULL, NULL);
+INSERT INTO `sys_dict_type` VALUES (101, '启用状态', 'pms_enable_status', '0', 'admin', '2022-05-14 10:26:28', '', NULL, NULL);
+INSERT INTO `sys_dict_type` VALUES (102, '属性类型', 'pms_attr_type', '0', 'admin', '2022-05-14 10:27:41', '', NULL, NULL);
+INSERT INTO `sys_dict_type` VALUES (103, '值类型', 'pms_value_type', '0', 'admin', '2022-05-14 10:29:16', '', NULL, NULL);
+INSERT INTO `sys_dict_type` VALUES (104, '检索类型', 'pms_search_type', '0', 'admin', '2022-05-14 10:35:24', 'admin', '2022-05-14 10:36:58', NULL);
+INSERT INTO `sys_dict_type` VALUES (105, '快速展示', 'pms_show_desc', '0', 'admin', '2022-05-14 10:37:52', '', NULL, NULL);
+INSERT INTO `sys_dict_type` VALUES (106, '上架状态', 'pms_publish_status', '0', 'admin', '2022-05-14 10:45:45', '', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_job
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_job`;
 CREATE TABLE `sys_job`  (
-  `job_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '任务ID',
+  `job_id` bigint NOT NULL AUTO_INCREMENT COMMENT '任务ID',
   `job_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '任务名称',
   `job_group` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'DEFAULT' COMMENT '任务组名',
   `invoke_target` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '调用目标字符串',
@@ -184,7 +206,7 @@ CREATE TABLE `sys_job`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注信息',
   PRIMARY KEY (`job_id`, `job_name`, `job_group`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '定时任务调度表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '定时任务调度表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_job
@@ -198,7 +220,7 @@ INSERT INTO `sys_job` VALUES (3, '系统默认（多参）', 'DEFAULT', 'ryTask.
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_job_log`;
 CREATE TABLE `sys_job_log`  (
-  `job_log_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '任务日志ID',
+  `job_log_id` bigint NOT NULL AUTO_INCREMENT COMMENT '任务日志ID',
   `job_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '任务名称',
   `job_group` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '任务组名',
   `invoke_target` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '调用目标字符串',
@@ -207,7 +229,7 @@ CREATE TABLE `sys_job_log`  (
   `exception_info` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '异常信息',
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`job_log_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '定时任务调度日志表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '定时任务调度日志表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_job_log
@@ -218,33 +240,45 @@ CREATE TABLE `sys_job_log`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_logininfor`;
 CREATE TABLE `sys_logininfor`  (
-  `info_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '访问ID',
+  `info_id` bigint NOT NULL AUTO_INCREMENT COMMENT '访问ID',
   `user_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '用户账号',
   `ipaddr` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '登录IP地址',
   `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' COMMENT '登录状态（0成功 1失败）',
   `msg` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '提示信息',
   `access_time` datetime NULL DEFAULT NULL COMMENT '访问时间',
   PRIMARY KEY (`info_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统访问记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_logininfor
 -- ----------------------------
+INSERT INTO `sys_logininfor` VALUES (3, 'admin', '127.0.0.1', '0', '登录成功', '2022-05-10 16:26:42');
+INSERT INTO `sys_logininfor` VALUES (4, 'admin', '127.0.0.1', '0', '登录成功', '2022-05-12 08:55:14');
+INSERT INTO `sys_logininfor` VALUES (5, 'admin', '127.0.0.1', '0', '退出成功', '2022-05-12 10:06:22');
+INSERT INTO `sys_logininfor` VALUES (6, 'admin', '127.0.0.1', '0', '登录成功', '2022-05-12 10:06:29');
+INSERT INTO `sys_logininfor` VALUES (7, 'admin', '127.0.0.1', '0', '退出成功', '2022-05-12 10:43:40');
+INSERT INTO `sys_logininfor` VALUES (8, 'admin', '127.0.0.1', '0', '登录成功', '2022-05-12 10:43:54');
+INSERT INTO `sys_logininfor` VALUES (9, 'admin', '127.0.0.1', '0', '退出成功', '2022-05-12 10:44:56');
+INSERT INTO `sys_logininfor` VALUES (10, 'admin', '127.0.0.1', '0', '登录成功', '2022-05-12 10:45:25');
+INSERT INTO `sys_logininfor` VALUES (11, 'admin', '127.0.0.1', '0', '退出成功', '2022-05-13 15:34:36');
+INSERT INTO `sys_logininfor` VALUES (12, 'admin', '127.0.0.1', '0', '登录成功', '2022-05-13 15:35:00');
+INSERT INTO `sys_logininfor` VALUES (13, 'admin', '127.0.0.1', '0', '退出成功', '2022-05-14 09:03:35');
+INSERT INTO `sys_logininfor` VALUES (14, 'admin', '127.0.0.1', '0', '登录成功', '2022-05-14 09:03:42');
 
 -- ----------------------------
 -- Table structure for sys_menu
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE `sys_menu`  (
-  `menu_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '菜单ID',
+  `menu_id` bigint NOT NULL AUTO_INCREMENT COMMENT '菜单ID',
   `menu_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '菜单名称',
-  `parent_id` bigint(20) NULL DEFAULT 0 COMMENT '父菜单ID',
-  `order_num` int(4) NULL DEFAULT 0 COMMENT '显示顺序',
+  `parent_id` bigint NULL DEFAULT 0 COMMENT '父菜单ID',
+  `order_num` int NULL DEFAULT 0 COMMENT '显示顺序',
   `path` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '路由地址',
   `component` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '组件路径',
   `query` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '路由参数',
-  `is_frame` int(1) NULL DEFAULT 1 COMMENT '是否为外链（0是 1否）',
-  `is_cache` int(1) NULL DEFAULT 0 COMMENT '是否缓存（0缓存 1不缓存）',
+  `is_frame` int NULL DEFAULT 1 COMMENT '是否为外链（0是 1否）',
+  `is_cache` int NULL DEFAULT 0 COMMENT '是否缓存（0缓存 1不缓存）',
   `menu_type` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '菜单类型（M目录 C菜单 F按钮）',
   `visible` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' COMMENT '菜单状态（0显示 1隐藏）',
   `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' COMMENT '菜单状态（0正常 1停用）',
@@ -256,7 +290,7 @@ CREATE TABLE `sys_menu`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2334 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '菜单权限表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -343,91 +377,37 @@ INSERT INTO `sys_menu` VALUES (1057, '生成删除', 115, 3, '#', '', '', 1, 0, 
 INSERT INTO `sys_menu` VALUES (1058, '导入代码', 115, 2, '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:import', '#', 'admin', '2022-02-08 09:21:46', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1059, '预览代码', 115, 4, '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:preview', '#', 'admin', '2022-02-08 09:21:46', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1060, '生成代码', 115, 5, '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:code', '#', 'admin', '2022-02-08 09:21:46', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2000, '属性&属性分组关联', 2090, 1, 'attrAttrgroupRelation', 'product/attrAttrgroupRelation/index', NULL, 1, 0, 'C', '0', '1', 'product:attrAttrgroupRelation:list', '#', 'admin', '2022-02-14 15:31:18', 'admin', '2022-02-14 16:43:12', '属性&属性分组关联菜单');
-INSERT INTO `sys_menu` VALUES (2001, '属性&属性分组关联查询', 2000, 1, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attrAttrgroupRelation:query', '#', 'admin', '2022-02-14 15:31:18', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2002, '属性&属性分组关联新增', 2000, 2, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attrAttrgroupRelation:add', '#', 'admin', '2022-02-14 15:31:18', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2003, '属性&属性分组关联修改', 2000, 3, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attrAttrgroupRelation:edit', '#', 'admin', '2022-02-14 15:31:18', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2004, '属性&属性分组关联删除', 2000, 4, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attrAttrgroupRelation:remove', '#', 'admin', '2022-02-14 15:31:18', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2005, '属性&属性分组关联导出', 2000, 5, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attrAttrgroupRelation:export', '#', 'admin', '2022-02-14 15:31:18', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2006, '规格参数', 2094, 4, 'base-attrEntity', 'product/attrEntity/index', NULL, 1, 0, 'C', '0', '0', 'product:attrEntity:list', '#', 'admin', '2022-02-14 15:31:35', 'admin', '2022-02-14 16:46:54', '商品属性菜单');
-INSERT INTO `sys_menu` VALUES (2007, '商品属性查询', 2006, 1, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attrEntity:query', '#', 'admin', '2022-02-14 15:31:35', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2008, '商品属性新增', 2006, 2, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attrEntity:add', '#', 'admin', '2022-02-14 15:31:35', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2009, '商品属性修改', 2006, 3, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attrEntity:edit', '#', 'admin', '2022-02-14 15:31:35', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2010, '商品属性删除', 2006, 4, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attrEntity:remove', '#', 'admin', '2022-02-14 15:31:35', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2011, '商品属性导出', 2006, 5, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attrEntity:export', '#', 'admin', '2022-02-14 15:31:35', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2012, '品牌管理', 2090, 2, 'brand', 'product/brand/index', NULL, 1, 0, 'C', '0', '0', 'product:brand:list', '#', 'admin', '2022-02-14 15:31:44', 'admin', '2022-02-14 16:38:10', '品牌菜单');
+INSERT INTO `sys_menu` VALUES (2006, '规格参数', 2094, 4, 'base-attr', 'product/attr/BaseAttr', NULL, 1, 0, 'C', '0', '0', 'product:attr:list', '#', 'admin', '2022-02-14 15:31:35', 'admin', '2022-05-14 10:01:48', '商品属性菜单');
+INSERT INTO `sys_menu` VALUES (2007, '商品属性查询', 2006, 1, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attr:query', '#', 'admin', '2022-02-14 15:31:35', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2008, '商品属性新增', 2006, 2, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attr:add', '#', 'admin', '2022-02-14 15:31:35', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2009, '商品属性修改', 2006, 3, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attr:edit', '#', 'admin', '2022-02-14 15:31:35', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2010, '商品属性删除', 2006, 4, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attr:remove', '#', 'admin', '2022-02-14 15:31:35', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2011, '商品属性导出', 2006, 5, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:attr:export', '#', 'admin', '2022-02-14 15:31:35', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2012, '品牌管理', 2090, 2, 'brand', 'product/brand/index', NULL, 1, 0, 'C', '0', '0', 'product:brand:list', 'pms_brand', 'admin', '2022-02-14 15:31:44', 'admin', '2022-05-12 10:37:40', '品牌菜单');
 INSERT INTO `sys_menu` VALUES (2013, '品牌查询', 2012, 1, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:brand:query', '#', 'admin', '2022-02-14 15:31:44', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2014, '品牌新增', 2012, 2, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:brand:add', '#', 'admin', '2022-02-14 15:31:44', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2015, '品牌修改', 2012, 3, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:brand:edit', '#', 'admin', '2022-02-14 15:31:44', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2016, '品牌删除', 2012, 4, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:brand:remove', '#', 'admin', '2022-02-14 15:31:44', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2017, '品牌导出', 2012, 5, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:brand:export', '#', 'admin', '2022-02-14 15:31:44', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2018, '品牌分类关联', 2090, 1, 'categoryBrandRelation', 'product/categoryBrandRelation/index', NULL, 1, 0, 'C', '0', '1', 'product:categoryBrandRelation:list', '#', 'admin', '2022-02-14 15:31:51', 'admin', '2022-02-14 16:43:16', '品牌分类关联菜单');
-INSERT INTO `sys_menu` VALUES (2019, '品牌分类关联查询', 2018, 1, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:categoryBrandRelation:query', '#', 'admin', '2022-02-14 15:31:51', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2020, '品牌分类关联新增', 2018, 2, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:categoryBrandRelation:add', '#', 'admin', '2022-02-14 15:31:51', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2021, '品牌分类关联修改', 2018, 3, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:categoryBrandRelation:edit', '#', 'admin', '2022-02-14 15:31:51', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2022, '品牌分类关联删除', 2018, 4, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:categoryBrandRelation:remove', '#', 'admin', '2022-02-14 15:31:51', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2023, '品牌分类关联导出', 2018, 5, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:categoryBrandRelation:export', '#', 'admin', '2022-02-14 15:31:51', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2024, '分类维护', 2090, 1, 'category', 'product/category/index', NULL, 1, 0, 'C', '0', '0', 'product:category:list', '#', 'admin', '2022-02-14 15:31:59', 'admin', '2022-02-14 16:38:01', '商品三级分类菜单');
+INSERT INTO `sys_menu` VALUES (2024, '分类维护', 2090, 1, 'category', 'product/category/index', NULL, 1, 0, 'C', '0', '0', 'product:category:list', 'pms_category', 'admin', '2022-02-14 15:31:59', 'admin', '2022-05-12 10:36:16', '商品三级分类菜单');
 INSERT INTO `sys_menu` VALUES (2025, '商品三级分类查询', 2024, 1, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:category:query', '#', 'admin', '2022-02-14 15:31:59', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2026, '商品三级分类新增', 2024, 2, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:category:add', '#', 'admin', '2022-02-14 15:31:59', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2027, '商品三级分类修改', 2024, 3, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:category:edit', '#', 'admin', '2022-02-14 15:31:59', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2028, '商品三级分类删除', 2024, 4, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:category:remove', '#', 'admin', '2022-02-14 15:31:59', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2029, '商品三级分类导出', 2024, 5, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:category:export', '#', 'admin', '2022-02-14 15:31:59', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2030, '属性分组', 2094, 3, 'attrEntity-group', 'product/group/index', NULL, 1, 0, 'C', '0', '0', 'product:group:list', '#', 'admin', '2022-02-14 15:32:07', 'admin', '2022-02-14 16:46:44', '属性分组菜单');
+INSERT INTO `sys_menu` VALUES (2030, '属性分组', 2094, 3, 'attr-group', 'product/attr/index', NULL, 1, 0, 'C', '0', '0', 'product:group:list', '#', 'admin', '2022-02-14 15:32:07', 'admin', '2022-05-14 09:59:13', '属性分组菜单');
 INSERT INTO `sys_menu` VALUES (2031, '属性分组查询', 2030, 1, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:group:query', '#', 'admin', '2022-02-14 15:32:07', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2032, '属性分组新增', 2030, 2, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:group:add', '#', 'admin', '2022-02-14 15:32:07', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2033, '属性分组修改', 2030, 3, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:group:edit', '#', 'admin', '2022-02-14 15:32:07', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2034, '属性分组删除', 2030, 4, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:group:remove', '#', 'admin', '2022-02-14 15:32:07', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2035, '属性分组导出', 2030, 5, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:group:export', '#', 'admin', '2022-02-14 15:32:07', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2036, 'spu属性值', 2090, 1, 'productAttrValue', 'product/productAttrValue/index', NULL, 1, 0, 'C', '0', '1', 'product:productAttrValue:list', '#', 'admin', '2022-02-14 15:32:15', 'admin', '2022-02-14 16:43:37', 'spu属性值菜单');
-INSERT INTO `sys_menu` VALUES (2037, 'spu属性值查询', 2036, 1, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:productAttrValue:query', '#', 'admin', '2022-02-14 15:32:15', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2038, 'spu属性值新增', 2036, 2, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:productAttrValue:add', '#', 'admin', '2022-02-14 15:32:15', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2039, 'spu属性值修改', 2036, 3, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:productAttrValue:edit', '#', 'admin', '2022-02-14 15:32:15', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2040, 'spu属性值删除', 2036, 4, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:productAttrValue:remove', '#', 'admin', '2022-02-14 15:32:15', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2041, 'spu属性值导出', 2036, 5, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:productAttrValue:export', '#', 'admin', '2022-02-14 15:32:15', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2042, '商品评价回复关系', 2090, 1, 'replay', 'product/replay/index', NULL, 1, 0, 'C', '0', '1', 'product:replay:list', '#', 'admin', '2022-02-14 15:32:22', 'admin', '2022-02-14 16:43:42', '商品评价回复关系菜单');
-INSERT INTO `sys_menu` VALUES (2043, '商品评价回复关系查询', 2042, 1, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:replay:query', '#', 'admin', '2022-02-14 15:32:22', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2044, '商品评价回复关系新增', 2042, 2, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:replay:add', '#', 'admin', '2022-02-14 15:32:22', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2045, '商品评价回复关系修改', 2042, 3, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:replay:edit', '#', 'admin', '2022-02-14 15:32:22', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2046, '商品评价回复关系删除', 2042, 4, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:replay:remove', '#', 'admin', '2022-02-14 15:32:22', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2047, '商品评价回复关系导出', 2042, 5, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:replay:export', '#', 'admin', '2022-02-14 15:32:22', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2048, 'sku图片', 2090, 1, 'skuImages', 'product/skuImages/index', NULL, 1, 0, 'C', '0', '1', 'product:skuImages:list', '#', 'admin', '2022-02-14 15:32:29', 'admin', '2022-02-14 16:43:46', 'sku图片菜单');
-INSERT INTO `sys_menu` VALUES (2049, 'sku图片查询', 2048, 1, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:skuImages:query', '#', 'admin', '2022-02-14 15:32:29', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2050, 'sku图片新增', 2048, 2, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:skuImages:add', '#', 'admin', '2022-02-14 15:32:29', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2051, 'sku图片修改', 2048, 3, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:skuImages:edit', '#', 'admin', '2022-02-14 15:32:29', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2052, 'sku图片删除', 2048, 4, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:skuImages:remove', '#', 'admin', '2022-02-14 15:32:29', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2053, 'sku图片导出', 2048, 5, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:skuImages:export', '#', 'admin', '2022-02-14 15:32:29', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2054, 'sku信息', 2090, 1, 'skuInfo', 'product/skuInfo/index', NULL, 1, 0, 'C', '0', '1', 'product:skuInfo:list', '#', 'admin', '2022-02-14 15:32:37', 'admin', '2022-02-14 16:43:49', 'sku信息菜单');
-INSERT INTO `sys_menu` VALUES (2055, 'sku信息查询', 2054, 1, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:skuInfo:query', '#', 'admin', '2022-02-14 15:32:37', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2056, 'sku信息新增', 2054, 2, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:skuInfo:add', '#', 'admin', '2022-02-14 15:32:37', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2057, 'sku信息修改', 2054, 3, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:skuInfo:edit', '#', 'admin', '2022-02-14 15:32:37', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2058, 'sku信息删除', 2054, 4, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:skuInfo:remove', '#', 'admin', '2022-02-14 15:32:37', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2059, 'sku信息导出', 2054, 5, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:skuInfo:export', '#', 'admin', '2022-02-14 15:32:37', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2060, '销售属性', 2094, 6, 'sale-attrEntity', 'product/skuSaleAttrValue/index', NULL, 1, 0, 'C', '0', '0', 'product:skuSaleAttrValue:list', '#', 'admin', '2022-02-14 15:32:46', 'admin', '2022-02-14 16:47:05', 'sku销售属性&值菜单');
+INSERT INTO `sys_menu` VALUES (2060, '销售属性', 2094, 6, 'sale-attr', 'product/attr/SaleAttr', NULL, 1, 0, 'C', '0', '0', 'product:skuSaleAttrValue:list', '#', 'admin', '2022-02-14 15:32:46', 'admin', '2022-05-14 10:02:15', 'sku销售属性&值菜单');
 INSERT INTO `sys_menu` VALUES (2061, 'sku销售属性&值查询', 2060, 1, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:skuSaleAttrValue:query', '#', 'admin', '2022-02-14 15:32:46', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2062, 'sku销售属性&值新增', 2060, 2, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:skuSaleAttrValue:add', '#', 'admin', '2022-02-14 15:32:46', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2063, 'sku销售属性&值修改', 2060, 3, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:skuSaleAttrValue:edit', '#', 'admin', '2022-02-14 15:32:46', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2064, 'sku销售属性&值删除', 2060, 4, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:skuSaleAttrValue:remove', '#', 'admin', '2022-02-14 15:32:46', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2065, 'sku销售属性&值导出', 2060, 5, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:skuSaleAttrValue:export', '#', 'admin', '2022-02-14 15:32:46', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2066, '商品评价', 2090, 1, 'spuComment', 'product/spuComment/index', NULL, 1, 0, 'C', '0', '1', 'product:spuComment:list', '#', 'admin', '2022-02-14 15:32:55', 'admin', '2022-02-14 16:43:54', '商品评价菜单');
-INSERT INTO `sys_menu` VALUES (2067, '商品评价查询', 2066, 1, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:spuComment:query', '#', 'admin', '2022-02-14 15:32:55', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2068, '商品评价新增', 2066, 2, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:spuComment:add', '#', 'admin', '2022-02-14 15:32:55', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2069, '商品评价修改', 2066, 3, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:spuComment:edit', '#', 'admin', '2022-02-14 15:32:55', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2070, '商品评价删除', 2066, 4, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:spuComment:remove', '#', 'admin', '2022-02-14 15:32:55', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2071, '商品评价导出', 2066, 5, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:spuComment:export', '#', 'admin', '2022-02-14 15:32:55', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2072, 'spu图片', 2090, 1, 'spuImages', 'product/spuImages/index', NULL, 1, 0, 'C', '0', '1', 'product:spuImages:list', '#', 'admin', '2022-02-14 15:33:02', 'admin', '2022-02-14 16:43:58', 'spu图片菜单');
-INSERT INTO `sys_menu` VALUES (2073, 'spu图片查询', 2072, 1, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:spuImages:query', '#', 'admin', '2022-02-14 15:33:02', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2074, 'spu图片新增', 2072, 2, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:spuImages:add', '#', 'admin', '2022-02-14 15:33:02', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2075, 'spu图片修改', 2072, 3, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:spuImages:edit', '#', 'admin', '2022-02-14 15:33:02', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2076, 'spu图片删除', 2072, 4, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:spuImages:remove', '#', 'admin', '2022-02-14 15:33:02', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2077, 'spu图片导出', 2072, 5, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:spuImages:export', '#', 'admin', '2022-02-14 15:33:02', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2078, 'spu信息介绍', 2090, 1, 'spuInfoDesc', 'product/spuInfoDesc/index', NULL, 1, 0, 'C', '0', '1', 'product:spuInfoDesc:list', '#', 'admin', '2022-02-14 15:33:09', 'admin', '2022-02-14 16:44:04', 'spu信息介绍菜单');
-INSERT INTO `sys_menu` VALUES (2079, 'spu信息介绍查询', 2078, 1, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:spuInfoDesc:query', '#', 'admin', '2022-02-14 15:33:09', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2080, 'spu信息介绍新增', 2078, 2, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:spuInfoDesc:add', '#', 'admin', '2022-02-14 15:33:09', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2081, 'spu信息介绍修改', 2078, 3, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:spuInfoDesc:edit', '#', 'admin', '2022-02-14 15:33:09', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2082, 'spu信息介绍删除', 2078, 4, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:spuInfoDesc:remove', '#', 'admin', '2022-02-14 15:33:09', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2083, 'spu信息介绍导出', 2078, 5, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:spuInfoDesc:export', '#', 'admin', '2022-02-14 15:33:09', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2084, 'spu管理', 2331, 1, 'spuInfo', 'product/spuInfo/index', NULL, 1, 0, 'C', '0', '0', 'product:spuInfo:list', '#', 'admin', '2022-02-14 15:33:17', 'admin', '2022-02-15 09:19:47', 'spu信息菜单');
+INSERT INTO `sys_menu` VALUES (2084, 'spu管理', 2331, 1, 'spuInfo', 'product/spuInfo/spu', NULL, 1, 0, 'C', '0', '0', 'product:spuInfo:list', '#', 'admin', '2022-02-14 15:33:17', 'admin', '2022-05-14 09:38:23', 'spu信息菜单');
 INSERT INTO `sys_menu` VALUES (2085, 'spu信息查询', 2084, 1, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:spuInfo:query', '#', 'admin', '2022-02-14 15:33:17', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2086, 'spu信息新增', 2084, 2, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:spuInfo:add', '#', 'admin', '2022-02-14 15:33:17', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2087, 'spu信息修改', 2084, 3, '#', '', NULL, 1, 0, 'F', '0', '0', 'product:spuInfo:edit', '#', 'admin', '2022-02-14 15:33:17', '', NULL, '');
@@ -437,7 +417,7 @@ INSERT INTO `sys_menu` VALUES (2090, '商品系统', 0, 1, 'product', NULL, NULL
 INSERT INTO `sys_menu` VALUES (2091, '优惠营销', 0, 2, 'coupon', NULL, NULL, 1, 0, 'M', '0', '0', NULL, 'coupon', 'admin', '2022-02-14 16:25:54', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2092, '库存系统', 0, 3, 'ware', NULL, NULL, 1, 0, 'M', '0', '0', NULL, 'ware', 'admin', '2022-02-14 16:27:00', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2093, '订单系统', 0, 4, 'order', NULL, NULL, 1, 0, 'M', '0', '0', NULL, 'order01', 'admin', '2022-02-14 16:28:19', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2094, '平台属性', 2090, 3, 'platform-attrEntity', NULL, NULL, 1, 0, 'M', '0', '0', NULL, 'date', 'admin', '2022-02-14 16:46:19', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2094, '平台属性', 2090, 3, 'platform-attr', NULL, NULL, 1, 0, 'M', '0', '0', NULL, 'date', 'admin', '2022-02-14 16:46:19', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2097, '内容管理', 0, 6, 'content', NULL, NULL, 1, 0, 'M', '0', '0', '', 'excel', 'admin', '2022-02-14 16:51:31', 'admin', '2022-02-15 09:12:33', '');
 INSERT INTO `sys_menu` VALUES (2098, '发放记录', 2091, 2, 'couponHistory', 'coupon/couponHistory/index', NULL, 1, 0, 'C', '0', '0', 'coupon:couponHistory:list', '#', 'admin', '2022-02-14 17:16:21', 'admin', '2022-02-15 08:57:41', '优惠券领取历史记录菜单');
 INSERT INTO `sys_menu` VALUES (2099, '优惠券领取历史记录查询', 2098, 1, '#', '', NULL, 1, 0, 'F', '0', '0', 'coupon:couponHistory:query', '#', 'admin', '2022-02-14 17:16:21', '', NULL, '');
@@ -672,16 +652,16 @@ INSERT INTO `sys_menu` VALUES (2327, '首页推荐', 2097, 1, 'index', NULL, NUL
 INSERT INTO `sys_menu` VALUES (2328, '分类热门', 2097, 2, 'category', NULL, NULL, 1, 0, 'C', '0', '0', NULL, '#', 'admin', '2022-02-15 08:54:35', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2329, '评论管理', 2097, 3, 'comments', NULL, NULL, 1, 0, 'C', '0', '0', NULL, '#', 'admin', '2022-02-15 08:55:09', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2330, '采购单维护', 2092, 4, 'purchase-manage', NULL, NULL, 1, 0, 'M', '0', '0', NULL, '#', 'admin', '2022-02-15 09:07:09', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2331, '商品维护', 2090, 7, 'spu-manage', NULL, NULL, 1, 0, 'M', '0', '0', NULL, '#', 'admin', '2022-02-15 09:19:34', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2332, '发布商品', 2331, 2, 'todo1', NULL, NULL, 1, 0, 'C', '0', '0', NULL, '#', 'admin', '2022-02-15 09:21:17', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2333, '商品管理', 2331, 3, 'todo2', NULL, NULL, 1, 0, 'C', '0', '0', NULL, '#', 'admin', '2022-02-15 09:21:34', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2331, '商品维护', 2090, 7, 'spu-manage', NULL, NULL, 1, 0, 'M', '0', '0', '', 'pms_product', 'admin', '2022-02-15 09:19:34', 'admin', '2022-05-12 10:38:42', '');
+INSERT INTO `sys_menu` VALUES (2332, '发布商品', 2331, 2, 'spu-add', 'product/spuInfo/SpuAdd', NULL, 1, 0, 'C', '0', '0', '', '#', 'admin', '2022-02-15 09:21:17', 'admin', '2022-05-14 09:40:01', '');
+INSERT INTO `sys_menu` VALUES (2333, '商品管理', 2331, 3, 'spu-manage', 'product/spuInfo/SpuManage', NULL, 1, 0, 'C', '0', '0', '', '#', 'admin', '2022-02-15 09:21:34', 'admin', '2022-05-14 09:41:47', '');
 
 -- ----------------------------
 -- Table structure for sys_notice
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_notice`;
 CREATE TABLE `sys_notice`  (
-  `notice_id` int(4) NOT NULL AUTO_INCREMENT COMMENT '公告ID',
+  `notice_id` int NOT NULL AUTO_INCREMENT COMMENT '公告ID',
   `notice_title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '公告标题',
   `notice_type` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '公告类型（1通知 2公告）',
   `notice_content` longblob NULL COMMENT '公告内容',
@@ -692,7 +672,7 @@ CREATE TABLE `sys_notice`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`notice_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '通知公告表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '通知公告表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_notice
@@ -705,12 +685,12 @@ INSERT INTO `sys_notice` VALUES (2, '维护通知：2018-07-01 若依系统凌�
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_oper_log`;
 CREATE TABLE `sys_oper_log`  (
-  `oper_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '日志主键',
+  `oper_id` bigint NOT NULL AUTO_INCREMENT COMMENT '日志主键',
   `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '模块标题',
-  `business_type` int(2) NULL DEFAULT 0 COMMENT '业务类型（0其它 1新增 2修改 3删除）',
+  `business_type` int NULL DEFAULT 0 COMMENT '业务类型（0其它 1新增 2修改 3删除）',
   `method` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '方法名称',
   `request_method` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '请求方式',
-  `operator_type` int(1) NULL DEFAULT 0 COMMENT '操作类别（0其它 1后台用户 2手机端用户）',
+  `operator_type` int NULL DEFAULT 0 COMMENT '操作类别（0其它 1后台用户 2手机端用户）',
   `oper_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '操作人员',
   `dept_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '部门名称',
   `oper_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '请求URL',
@@ -718,27 +698,68 @@ CREATE TABLE `sys_oper_log`  (
   `oper_location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '操作地点',
   `oper_param` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '请求参数',
   `json_result` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '返回参数',
-  `status` int(1) NULL DEFAULT 0 COMMENT '操作状态（0正常 1异常）',
+  `status` int NULL DEFAULT 0 COMMENT '操作状态（0正常 1异常）',
   `error_msg` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '错误消息',
   `oper_time` datetime NULL DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`oper_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '操作日志记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_oper_log
 -- ----------------------------
 INSERT INTO `sys_oper_log` VALUES (1, '操作日志', 9, 'com.gulimall.system.controller.SysOperlogController.clean()', 'DELETE', 1, 'admin', NULL, '/operlog/clean', '127.0.0.1', '', NULL, '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-02-15 09:35:43');
 INSERT INTO `sys_oper_log` VALUES (2, '登录日志', 3, 'com.gulimall.system.controller.SysLogininforController.clean()', 'DELETE', 1, 'admin', NULL, '/logininfor/clean', '127.0.0.1', '', NULL, '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-02-15 09:35:46');
+INSERT INTO `sys_oper_log` VALUES (7, '商品三级分类', 2, 'com.gulimall.product.controller.CategoryController.edit()', 'PUT', 1, 'admin', NULL, '/category', '127.0.0.1', '', '{\"catId\":2,\"parentCid\":0,\"icon\":\"\",\"name\":\"手机\",\"showStatus\":1,\"sort\":0,\"params\":{},\"productCount\":0,\"catLevel\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-12 09:04:58');
+INSERT INTO `sys_oper_log` VALUES (8, '字典类型', 1, 'com.gulimall.system.controller.SysDictTypeController.add()', 'POST', 1, 'admin', NULL, '/dict/type', '127.0.0.1', '', '{\"createBy\":\"admin\",\"dictName\":\"显示状态\",\"params\":{},\"dictType\":\"pms_show_status\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-12 09:16:07');
+INSERT INTO `sys_oper_log` VALUES (9, '字典数据', 1, 'com.gulimall.system.controller.SysDictDataController.add()', 'POST', 1, 'admin', NULL, '/dict/data', '127.0.0.1', '', '{\"dictValue\":\"不显示\",\"listClass\":\"default\",\"dictSort\":0,\"params\":{},\"dictType\":\"pms_show_status\",\"dictLabel\":\"显示\",\"createBy\":\"admin\",\"default\":false,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-12 09:17:08');
+INSERT INTO `sys_oper_log` VALUES (10, '字典数据', 2, 'com.gulimall.system.controller.SysDictDataController.edit()', 'PUT', 1, 'admin', NULL, '/dict/data', '127.0.0.1', '', '{\"dictValue\":\"1\",\"listClass\":\"default\",\"dictSort\":0,\"params\":{},\"dictType\":\"pms_show_status\",\"dictLabel\":\"显示\",\"createBy\":\"admin\",\"default\":false,\"isDefault\":\"N\",\"createTime\":1652318228000,\"dictCode\":100,\"updateBy\":\"admin\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-12 09:17:17');
+INSERT INTO `sys_oper_log` VALUES (11, '字典数据', 1, 'com.gulimall.system.controller.SysDictDataController.add()', 'POST', 1, 'admin', NULL, '/dict/data', '127.0.0.1', '', '{\"dictValue\":\"0\",\"listClass\":\"default\",\"dictSort\":0,\"params\":{},\"dictType\":\"pms_show_status\",\"dictLabel\":\"不显示\",\"createBy\":\"admin\",\"default\":false,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-12 09:17:30');
+INSERT INTO `sys_oper_log` VALUES (12, '字典数据', 2, 'com.gulimall.system.controller.SysDictDataController.edit()', 'PUT', 1, 'admin', NULL, '/dict/data', '127.0.0.1', '', '{\"dictValue\":\"1\",\"listClass\":\"success\",\"dictSort\":0,\"params\":{},\"dictType\":\"pms_show_status\",\"dictLabel\":\"显示\",\"createBy\":\"admin\",\"default\":false,\"isDefault\":\"N\",\"createTime\":1652318228000,\"dictCode\":100,\"updateBy\":\"admin\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-12 09:30:38');
+INSERT INTO `sys_oper_log` VALUES (13, '字典数据', 2, 'com.gulimall.system.controller.SysDictDataController.edit()', 'PUT', 1, 'admin', NULL, '/dict/data', '127.0.0.1', '', '{\"dictValue\":\"0\",\"listClass\":\"info\",\"dictSort\":0,\"params\":{},\"dictType\":\"pms_show_status\",\"dictLabel\":\"不显示\",\"createBy\":\"admin\",\"default\":false,\"isDefault\":\"N\",\"createTime\":1652318250000,\"dictCode\":101,\"updateBy\":\"admin\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-12 09:30:49');
+INSERT INTO `sys_oper_log` VALUES (14, '商品三级分类', 1, 'com.gulimall.product.controller.CategoryController.add()', 'POST', 1, 'admin', NULL, '/category', '127.0.0.1', '', '{\"catId\":1524576582515736577,\"parentCid\":21,\"name\":\"坦克\",\"showStatus\":0,\"productUnit\":\"辆\",\"sort\":3,\"params\":{},\"productCount\":0,\"catLevel\":2}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-12 10:25:57');
+INSERT INTO `sys_oper_log` VALUES (15, '商品三级分类', 1, 'com.gulimall.product.controller.CategoryController.add()', 'POST', 1, 'admin', NULL, '/category', '127.0.0.1', '', '{\"catId\":1524578023900889090,\"parentCid\":21,\"name\":\"装甲车\",\"showStatus\":1,\"productUnit\":\"辆\",\"sort\":1,\"params\":{},\"productCount\":0,\"catLevel\":2}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-12 10:31:40');
+INSERT INTO `sys_oper_log` VALUES (16, '菜单管理', 2, 'com.gulimall.system.controller.SysMenuController.edit()', 'PUT', 1, 'admin', NULL, '/menu', '127.0.0.1', '', '{\"visible\":\"0\",\"icon\":\"pms_category\",\"orderNum\":1,\"menuName\":\"分类维护\",\"params\":{},\"parentId\":2090,\"isCache\":\"0\",\"path\":\"category\",\"component\":\"product/category/index\",\"children\":[],\"createTime\":1644823919000,\"updateBy\":\"admin\",\"isFrame\":\"1\",\"menuId\":2024,\"menuType\":\"C\",\"perms\":\"product:category:list\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-12 10:36:16');
+INSERT INTO `sys_oper_log` VALUES (17, '菜单管理', 2, 'com.gulimall.system.controller.SysMenuController.edit()', 'PUT', 1, 'admin', NULL, '/menu', '127.0.0.1', '', '{\"visible\":\"0\",\"icon\":\"pms_brand\",\"orderNum\":2,\"menuName\":\"品牌管理\",\"params\":{},\"parentId\":2090,\"isCache\":\"0\",\"path\":\"brand\",\"component\":\"product/brand/index\",\"children\":[],\"createTime\":1644823904000,\"updateBy\":\"admin\",\"isFrame\":\"1\",\"menuId\":2012,\"menuType\":\"C\",\"perms\":\"product:brand:list\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-12 10:37:40');
+INSERT INTO `sys_oper_log` VALUES (18, '菜单管理', 2, 'com.gulimall.system.controller.SysMenuController.edit()', 'PUT', 1, 'admin', NULL, '/menu', '127.0.0.1', '', '{\"visible\":\"0\",\"icon\":\"pms_product\",\"orderNum\":7,\"menuName\":\"商品维护\",\"params\":{},\"parentId\":2090,\"isCache\":\"0\",\"path\":\"spu-manage\",\"children\":[],\"createTime\":1644887974000,\"updateBy\":\"admin\",\"isFrame\":\"1\",\"menuId\":2331,\"menuType\":\"M\",\"perms\":\"\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-12 10:38:42');
+INSERT INTO `sys_oper_log` VALUES (19, '菜单管理', 3, 'com.gulimall.system.controller.SysMenuController.remove()', 'DELETE', 1, 'admin', NULL, '/menu/2000', '127.0.0.1', '', NULL, '{\"msg\":\"存在子菜单,不允许删除\",\"code\":500}', 0, NULL, '2022-05-14 09:30:21');
+INSERT INTO `sys_oper_log` VALUES (20, '菜单管理', 2, 'com.gulimall.system.controller.SysMenuController.edit()', 'PUT', 1, 'admin', NULL, '/menu', '127.0.0.1', '', '{\"visible\":\"0\",\"icon\":\"#\",\"orderNum\":1,\"menuName\":\"spu管理\",\"params\":{},\"parentId\":2331,\"isCache\":\"0\",\"path\":\"spuInfo\",\"component\":\"product/spuInfo/spu\",\"children\":[],\"createTime\":1644823997000,\"updateBy\":\"admin\",\"isFrame\":\"1\",\"menuId\":2084,\"menuType\":\"C\",\"perms\":\"product:spuInfo:list\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 09:38:23');
+INSERT INTO `sys_oper_log` VALUES (21, '菜单管理', 2, 'com.gulimall.system.controller.SysMenuController.edit()', 'PUT', 1, 'admin', NULL, '/menu', '127.0.0.1', '', '{\"visible\":\"0\",\"icon\":\"#\",\"orderNum\":2,\"menuName\":\"发布商品\",\"params\":{},\"parentId\":2331,\"isCache\":\"0\",\"path\":\"spu-add\",\"component\":\"product/spuInfo/SpuAdd\",\"children\":[],\"createTime\":1644888077000,\"updateBy\":\"admin\",\"isFrame\":\"1\",\"menuId\":2332,\"menuType\":\"C\",\"perms\":\"\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 09:40:01');
+INSERT INTO `sys_oper_log` VALUES (22, '菜单管理', 2, 'com.gulimall.system.controller.SysMenuController.edit()', 'PUT', 1, 'admin', NULL, '/menu', '127.0.0.1', '', '{\"visible\":\"0\",\"icon\":\"#\",\"orderNum\":3,\"menuName\":\"商品管理\",\"params\":{},\"parentId\":2331,\"isCache\":\"0\",\"path\":\"spu-manage\",\"component\":\"product/spuInfo/SpuManage\",\"children\":[],\"createTime\":1644888094000,\"updateBy\":\"admin\",\"isFrame\":\"1\",\"menuId\":2333,\"menuType\":\"C\",\"perms\":\"\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 09:41:47');
+INSERT INTO `sys_oper_log` VALUES (23, '品牌', 2, 'com.gulimall.product.controller.BrandController.edit()', 'PUT', 1, 'admin', NULL, '/brand', '127.0.0.1', '', '{\"brandId\":11,\"name\":\"oppo\",\"logo\":\"https://gulimall-hello.oss-cn-beijing.aliyuncs.com/2019-11-18/5c8303f2-8b0c-4a5b-89a6-86513133d758_oppo.png\",\"showStatus\":1,\"sort\":4,\"descript\":\"oppo\",\"params\":{},\"firstLetter\":\"O\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 09:53:51');
+INSERT INTO `sys_oper_log` VALUES (24, '菜单管理', 2, 'com.gulimall.system.controller.SysMenuController.edit()', 'PUT', 1, 'admin', NULL, '/menu', '127.0.0.1', '', '{\"visible\":\"0\",\"icon\":\"#\",\"orderNum\":3,\"menuName\":\"属性分组\",\"params\":{},\"parentId\":2094,\"isCache\":\"0\",\"path\":\"attr-group\",\"component\":\"product/attr/group\",\"children\":[],\"createTime\":1644823927000,\"updateBy\":\"admin\",\"isFrame\":\"1\",\"menuId\":2030,\"menuType\":\"C\",\"perms\":\"product:group:list\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 09:57:45');
+INSERT INTO `sys_oper_log` VALUES (25, '菜单管理', 2, 'com.gulimall.system.controller.SysMenuController.edit()', 'PUT', 1, 'admin', NULL, '/menu', '127.0.0.1', '', '{\"visible\":\"0\",\"icon\":\"#\",\"orderNum\":3,\"menuName\":\"属性分组\",\"params\":{},\"parentId\":2094,\"isCache\":\"0\",\"path\":\"attr-group\",\"component\":\"product/attr/index\",\"children\":[],\"createTime\":1644823927000,\"updateBy\":\"admin\",\"isFrame\":\"1\",\"menuId\":2030,\"menuType\":\"C\",\"perms\":\"product:group:list\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 09:59:13');
+INSERT INTO `sys_oper_log` VALUES (26, '菜单管理', 2, 'com.gulimall.system.controller.SysMenuController.edit()', 'PUT', 1, 'admin', NULL, '/menu', '127.0.0.1', '', '{\"visible\":\"0\",\"icon\":\"#\",\"orderNum\":4,\"menuName\":\"规格参数\",\"params\":{},\"parentId\":2094,\"isCache\":\"0\",\"path\":\"base-attr\",\"component\":\"product/attr/BaseAttr\",\"children\":[],\"createTime\":1644823895000,\"updateBy\":\"admin\",\"isFrame\":\"1\",\"menuId\":2006,\"menuType\":\"C\",\"perms\":\"product:attr:list\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 10:01:48');
+INSERT INTO `sys_oper_log` VALUES (27, '菜单管理', 2, 'com.gulimall.system.controller.SysMenuController.edit()', 'PUT', 1, 'admin', NULL, '/menu', '127.0.0.1', '', '{\"visible\":\"0\",\"icon\":\"#\",\"orderNum\":6,\"menuName\":\"销售属性\",\"params\":{},\"parentId\":2094,\"isCache\":\"0\",\"path\":\"sale-attr\",\"component\":\"product/attr/SaleAttr\",\"children\":[],\"createTime\":1644823966000,\"updateBy\":\"admin\",\"isFrame\":\"1\",\"menuId\":2060,\"menuType\":\"C\",\"perms\":\"product:skuSaleAttrValue:list\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 10:02:15');
+INSERT INTO `sys_oper_log` VALUES (28, '字典类型', 1, 'com.gulimall.system.controller.SysDictTypeController.add()', 'POST', 1, 'admin', NULL, '/dict/type', '127.0.0.1', '', '{\"createBy\":\"admin\",\"dictName\":\"启用状态\",\"params\":{},\"dictType\":\"pms_enable_status\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 10:26:28');
+INSERT INTO `sys_oper_log` VALUES (29, '字典数据', 1, 'com.gulimall.system.controller.SysDictDataController.add()', 'POST', 1, 'admin', NULL, '/dict/data', '127.0.0.1', '', '{\"dictValue\":\"0\",\"listClass\":\"danger\",\"dictSort\":0,\"params\":{},\"dictType\":\"pms_enable_status\",\"dictLabel\":\"禁用\",\"createBy\":\"admin\",\"default\":false,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 10:26:52');
+INSERT INTO `sys_oper_log` VALUES (30, '字典数据', 1, 'com.gulimall.system.controller.SysDictDataController.add()', 'POST', 1, 'admin', NULL, '/dict/data', '127.0.0.1', '', '{\"dictValue\":\"1\",\"listClass\":\"success\",\"dictSort\":0,\"params\":{},\"dictType\":\"pms_enable_status\",\"dictLabel\":\"启用\",\"createBy\":\"admin\",\"default\":false,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 10:27:03');
+INSERT INTO `sys_oper_log` VALUES (31, '字典类型', 1, 'com.gulimall.system.controller.SysDictTypeController.add()', 'POST', 1, 'admin', NULL, '/dict/type', '127.0.0.1', '', '{\"createBy\":\"admin\",\"dictName\":\"属性类型\",\"params\":{},\"dictType\":\"pms_attr_type\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 10:27:41');
+INSERT INTO `sys_oper_log` VALUES (32, '字典数据', 1, 'com.gulimall.system.controller.SysDictDataController.add()', 'POST', 1, 'admin', NULL, '/dict/data', '127.0.0.1', '', '{\"dictValue\":\"0\",\"listClass\":\"default\",\"dictSort\":0,\"params\":{},\"dictType\":\"pms_attr_type\",\"dictLabel\":\"销售属性\",\"createBy\":\"admin\",\"default\":false,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 10:28:01');
+INSERT INTO `sys_oper_log` VALUES (33, '字典数据', 1, 'com.gulimall.system.controller.SysDictDataController.add()', 'POST', 1, 'admin', NULL, '/dict/data', '127.0.0.1', '', '{\"dictValue\":\"1\",\"listClass\":\"default\",\"dictSort\":0,\"params\":{},\"dictType\":\"pms_attr_type\",\"dictLabel\":\"基本属性\",\"createBy\":\"admin\",\"default\":false,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 10:28:12');
+INSERT INTO `sys_oper_log` VALUES (34, '字典数据', 1, 'com.gulimall.system.controller.SysDictDataController.add()', 'POST', 1, 'admin', NULL, '/dict/data', '127.0.0.1', '', '{\"dictValue\":\"2\",\"listClass\":\"default\",\"dictSort\":0,\"params\":{},\"dictType\":\"pms_attr_type\",\"dictLabel\":\"销售属性&基本属性\",\"createBy\":\"admin\",\"default\":false,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 10:28:31');
+INSERT INTO `sys_oper_log` VALUES (35, '字典类型', 1, 'com.gulimall.system.controller.SysDictTypeController.add()', 'POST', 1, 'admin', NULL, '/dict/type', '127.0.0.1', '', '{\"createBy\":\"admin\",\"dictName\":\"值类型\",\"params\":{},\"dictType\":\"pms_value_type\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 10:29:16');
+INSERT INTO `sys_oper_log` VALUES (36, '字典数据', 1, 'com.gulimall.system.controller.SysDictDataController.add()', 'POST', 1, 'admin', NULL, '/dict/data', '127.0.0.1', '', '{\"dictValue\":\"0\",\"listClass\":\"default\",\"dictSort\":0,\"params\":{},\"dictType\":\"pms_value_type\",\"dictLabel\":\"单个值\",\"createBy\":\"admin\",\"default\":false,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 10:29:31');
+INSERT INTO `sys_oper_log` VALUES (37, '字典数据', 1, 'com.gulimall.system.controller.SysDictDataController.add()', 'POST', 1, 'admin', NULL, '/dict/data', '127.0.0.1', '', '{\"dictValue\":\"1\",\"listClass\":\"default\",\"dictSort\":0,\"params\":{},\"dictType\":\"pms_value_type\",\"dictLabel\":\"多个值\",\"createBy\":\"admin\",\"default\":false,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 10:29:48');
+INSERT INTO `sys_oper_log` VALUES (38, '字典类型', 1, 'com.gulimall.system.controller.SysDictTypeController.add()', 'POST', 1, 'admin', NULL, '/dict/type', '127.0.0.1', '', '{\"createBy\":\"admin\",\"dictName\":\"检索状态\",\"params\":{},\"dictType\":\"pms_search_status\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 10:35:24');
+INSERT INTO `sys_oper_log` VALUES (39, '字典数据', 1, 'com.gulimall.system.controller.SysDictDataController.add()', 'POST', 1, 'admin', NULL, '/dict/data', '127.0.0.1', '', '{\"dictValue\":\"0\",\"listClass\":\"default\",\"dictSort\":0,\"params\":{},\"dictType\":\"pms_search_status\",\"dictLabel\":\"不需要\",\"createBy\":\"admin\",\"default\":false,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 10:36:02');
+INSERT INTO `sys_oper_log` VALUES (40, '字典数据', 1, 'com.gulimall.system.controller.SysDictDataController.add()', 'POST', 1, 'admin', NULL, '/dict/data', '127.0.0.1', '', '{\"dictValue\":\"1\",\"listClass\":\"default\",\"dictSort\":0,\"params\":{},\"dictType\":\"pms_search_status\",\"dictLabel\":\"需要\",\"createBy\":\"admin\",\"default\":false,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 10:36:09');
+INSERT INTO `sys_oper_log` VALUES (41, '字典类型', 2, 'com.gulimall.system.controller.SysDictTypeController.edit()', 'PUT', 1, 'admin', NULL, '/dict/type', '127.0.0.1', '', '{\"createBy\":\"admin\",\"createTime\":1652495724000,\"updateBy\":\"admin\",\"dictName\":\"检索类型\",\"dictId\":104,\"params\":{},\"dictType\":\"pms_search_type\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 10:36:58');
+INSERT INTO `sys_oper_log` VALUES (42, '字典类型', 1, 'com.gulimall.system.controller.SysDictTypeController.add()', 'POST', 1, 'admin', NULL, '/dict/type', '127.0.0.1', '', '{\"createBy\":\"admin\",\"dictName\":\"快速展示\",\"params\":{},\"dictType\":\"pms_show_desc\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 10:37:52');
+INSERT INTO `sys_oper_log` VALUES (43, '字典数据', 1, 'com.gulimall.system.controller.SysDictDataController.add()', 'POST', 1, 'admin', NULL, '/dict/data', '127.0.0.1', '', '{\"dictValue\":\"0\",\"listClass\":\"default\",\"dictSort\":0,\"params\":{},\"dictType\":\"pms_show_desc\",\"dictLabel\":\"否\",\"createBy\":\"admin\",\"default\":false,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 10:38:12');
+INSERT INTO `sys_oper_log` VALUES (44, '字典数据', 1, 'com.gulimall.system.controller.SysDictDataController.add()', 'POST', 1, 'admin', NULL, '/dict/data', '127.0.0.1', '', '{\"dictValue\":\"1\",\"listClass\":\"default\",\"dictSort\":0,\"params\":{},\"dictType\":\"pms_show_desc\",\"dictLabel\":\"是\",\"createBy\":\"admin\",\"default\":false,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 10:38:18');
+INSERT INTO `sys_oper_log` VALUES (45, '字典类型', 1, 'com.gulimall.system.controller.SysDictTypeController.add()', 'POST', 1, 'admin', NULL, '/dict/type', '127.0.0.1', '', '{\"createBy\":\"admin\",\"dictName\":\"上架状态\",\"params\":{},\"dictType\":\"pms_publish_status\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 10:45:45');
+INSERT INTO `sys_oper_log` VALUES (46, '字典数据', 1, 'com.gulimall.system.controller.SysDictDataController.add()', 'POST', 1, 'admin', NULL, '/dict/data', '127.0.0.1', '', '{\"dictValue\":\"0\",\"listClass\":\"default\",\"dictSort\":0,\"params\":{},\"dictType\":\"pms_publish_status\",\"dictLabel\":\"下架\",\"createBy\":\"admin\",\"default\":false,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 10:46:06');
+INSERT INTO `sys_oper_log` VALUES (47, '字典数据', 1, 'com.gulimall.system.controller.SysDictDataController.add()', 'POST', 1, 'admin', NULL, '/dict/data', '127.0.0.1', '', '{\"dictValue\":\"1\",\"listClass\":\"default\",\"dictSort\":0,\"params\":{},\"dictType\":\"pms_publish_status\",\"dictLabel\":\"上架\",\"createBy\":\"admin\",\"default\":false,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2022-05-14 10:46:17');
 
 -- ----------------------------
 -- Table structure for sys_post
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_post`;
 CREATE TABLE `sys_post`  (
-  `post_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '岗位ID',
+  `post_id` bigint NOT NULL AUTO_INCREMENT COMMENT '岗位ID',
   `post_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '岗位编码',
   `post_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '岗位名称',
-  `post_sort` int(4) NOT NULL COMMENT '显示顺序',
+  `post_sort` int NOT NULL COMMENT '显示顺序',
   `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '状态（0正常 1停用）',
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '创建者',
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
@@ -746,7 +767,7 @@ CREATE TABLE `sys_post`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`post_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '岗位信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '岗位信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_post
@@ -761,10 +782,10 @@ INSERT INTO `sys_post` VALUES (4, 'user', '普通员工', 4, '0', 'admin', '2022
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE `sys_role`  (
-  `role_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '角色ID',
+  `role_id` bigint NOT NULL AUTO_INCREMENT COMMENT '角色ID',
   `role_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '角色名称',
   `role_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '角色权限字符串',
-  `role_sort` int(4) NOT NULL COMMENT '显示顺序',
+  `role_sort` int NOT NULL COMMENT '显示顺序',
   `data_scope` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '1' COMMENT '数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）',
   `menu_check_strictly` tinyint(1) NULL DEFAULT 1 COMMENT '菜单树选择项是否关联显示',
   `dept_check_strictly` tinyint(1) NULL DEFAULT 1 COMMENT '部门树选择项是否关联显示',
@@ -776,7 +797,7 @@ CREATE TABLE `sys_role`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`role_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role
@@ -789,10 +810,10 @@ INSERT INTO `sys_role` VALUES (2, '普通角色', 'common', 2, '2', 1, 1, '0', '
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role_dept`;
 CREATE TABLE `sys_role_dept`  (
-  `role_id` bigint(20) NOT NULL COMMENT '角色ID',
-  `dept_id` bigint(20) NOT NULL COMMENT '部门ID',
+  `role_id` bigint NOT NULL COMMENT '角色ID',
+  `dept_id` bigint NOT NULL COMMENT '部门ID',
   PRIMARY KEY (`role_id`, `dept_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色和部门关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色和部门关联表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role_dept
@@ -806,10 +827,10 @@ INSERT INTO `sys_role_dept` VALUES (2, 105);
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role_menu`;
 CREATE TABLE `sys_role_menu`  (
-  `role_id` bigint(20) NOT NULL COMMENT '角色ID',
-  `menu_id` bigint(20) NOT NULL COMMENT '菜单ID',
+  `role_id` bigint NOT NULL COMMENT '角色ID',
+  `menu_id` bigint NOT NULL COMMENT '菜单ID',
   PRIMARY KEY (`role_id`, `menu_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色和菜单关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色和菜单关联表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role_menu
@@ -902,8 +923,8 @@ INSERT INTO `sys_role_menu` VALUES (2, 1060);
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user`  (
-  `user_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-  `dept_id` bigint(20) NULL DEFAULT NULL COMMENT '部门ID',
+  `user_id` bigint NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `dept_id` bigint NULL DEFAULT NULL COMMENT '部门ID',
   `user_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户账号',
   `nick_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户昵称',
   `user_type` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '00' COMMENT '用户类型（00系统用户）',
@@ -922,7 +943,7 @@ CREATE TABLE `sys_user`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user
@@ -935,10 +956,10 @@ INSERT INTO `sys_user` VALUES (2, 105, 'ry', '测试', '00', 'test@qq.com', '156
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user_post`;
 CREATE TABLE `sys_user_post`  (
-  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
-  `post_id` bigint(20) NOT NULL COMMENT '岗位ID',
+  `user_id` bigint NOT NULL COMMENT '用户ID',
+  `post_id` bigint NOT NULL COMMENT '岗位ID',
   PRIMARY KEY (`user_id`, `post_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户与岗位关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户与岗位关联表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user_post
@@ -951,10 +972,10 @@ INSERT INTO `sys_user_post` VALUES (2, 2);
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user_role`;
 CREATE TABLE `sys_user_role`  (
-  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
-  `role_id` bigint(20) NOT NULL COMMENT '角色ID',
+  `user_id` bigint NOT NULL COMMENT '用户ID',
+  `role_id` bigint NOT NULL COMMENT '角色ID',
   PRIMARY KEY (`user_id`, `role_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户和角色关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户和角色关联表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user_role

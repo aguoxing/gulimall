@@ -120,6 +120,11 @@ aside {
 }
 
 //main-container全局样式
+.column-btn-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 .app-container {
   padding: 20px;
 }

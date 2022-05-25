@@ -1,6 +1,5 @@
 <template>
   <div class="app-container">
-
     <el-row :gutter="10">
       <el-col :span="4" :xs="24">
         <category-tree
@@ -9,23 +8,21 @@
         ></category-tree>
       </el-col>
       <el-col :span="20" :xs="24">
-        <attr-group
-          :currentNode="currentNode"
-        ></attr-group>
+        <spu-info :currentNode="currentNode"></spu-info>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
+import SpuInfo from "@/views/product/spuInfo/SpuInfo";
 import CategoryTree from "@/views/product/category/CategoryTree";
-import AttrGroup from "@/views/product/attr/AttrGroup";
 
 export default {
-  name: "Attr",
+  name: "SpuInfoIndex",
   components: {
-    CategoryTree,
-    AttrGroup
+    SpuInfo,
+    CategoryTree
   },
   data() {
     return {

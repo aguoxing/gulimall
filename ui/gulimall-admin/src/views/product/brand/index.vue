@@ -10,19 +10,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="检索首字母" prop="firstLetter">
+      <el-form-item label="检索首字母" prop="firstLetter" label-width="100">
         <el-input
           v-model="queryParams.firstLetter"
           placeholder="请输入检索首字母"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="排序" prop="sort">
-        <el-input
-          v-model="queryParams.sort"
-          placeholder="请输入排序"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -67,7 +58,7 @@
           v-hasPermi="['product:brand:remove']"
         >删除</el-button>
       </el-col>
-      <el-col :span="1.5">
+<!--      <el-col :span="1.5">
         <el-button
           type="warning"
           plain
@@ -76,39 +67,51 @@
           @click="handleExport"
           v-hasPermi="['product:brand:export']"
         >导出</el-button>
-      </el-col>
+      </el-col>-->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="brandList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="品牌id" align="center" prop="brandId" />
       <el-table-column label="品牌名" align="center" prop="name" />
-      <el-table-column label="品牌logo地址" align="center" prop="logo" />
+      <el-table-column label="品牌logo" align="center" prop="logo">
+        <template v-slot="scope">
+          <el-image style="width: 50px; height: 50px" :src="scope.row.logo" fit="scale-down"></el-image>
+        </template>
+      </el-table-column>
       <el-table-column label="介绍" align="center" prop="descript" />
-      <el-table-column label="显示状态[0-不显示；1-显示]" align="center" prop="showStatus" />
+      <el-table-column label="显示状态" align="center" prop="showStatus">
+        <template v-slot="scope">
+          <dict-tag :options="dict.type.pms_show_status" :value="scope.row.showStatus"></dict-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="检索首字母" align="center" prop="firstLetter" />
       <el-table-column label="排序" align="center" prop="sort" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['product:brand:edit']"
-          >修改</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['product:brand:remove']"
-          >删除</el-button>
+          <div class="column-btn-container">
+            <category-brand-relation
+              :brandInfo="scope.row"
+            ></category-brand-relation>
+            <el-button
+              size="mini"
+              type="text"
+              icon="el-icon-edit"
+              @click="handleUpdate(scope.row)"
+              v-hasPermi="['product:brand:edit']"
+            >修改</el-button>
+            <el-button
+              size="mini"
+              type="text"
+              icon="el-icon-delete"
+              @click="handleDelete(scope.row)"
+              v-hasPermi="['product:brand:remove']"
+            >删除</el-button>
+          </div>
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -118,22 +121,28 @@
     />
 
     <!-- 添加或修改品牌对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog :title="title" :visible.sync="open" width="650px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="品牌名" prop="name">
           <el-input v-model="form.name" placeholder="请输入品牌名" />
-        </el-form-item>
-        <el-form-item label="品牌logo地址" prop="logo">
-          <el-input v-model="form.logo" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="介绍" prop="descript">
-          <el-input v-model="form.descript" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="检索首字母" prop="firstLetter">
           <el-input v-model="form.firstLetter" placeholder="请输入检索首字母" />
         </el-form-item>
         <el-form-item label="排序" prop="sort">
-          <el-input v-model="form.sort" placeholder="请输入排序" />
+          <el-input-number
+            style="width: 100%"
+            :controls="false"
+            :min="0"
+            v-model="form.sort"
+            placeholder="请输入排序"
+          />
+        </el-form-item>
+        <el-form-item label="介绍" prop="descript">
+          <el-input v-model="form.descript" type="textarea" placeholder="请输入内容" />
+        </el-form-item>
+        <el-form-item label="品牌logo" prop="logo">
+          <single-upload v-model="form.logo"></single-upload>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -146,9 +155,15 @@
 
 <script>
 import { listBrand, getBrand, delBrand, addBrand, updateBrand } from "@/api/product/brand";
+import SingleUpload from "@/views/components/upload/SingleUpload";
+import CategoryBrandRelation from "@/views/product/brand/CategoryBrandRelation";
 
 export default {
   name: "Brand",
+  dicts: ['pms_show_status'],
+  comments: {
+    CategoryBrandRelation
+  },
   data() {
     return {
       // 遮罩层
@@ -160,7 +175,7 @@ export default {
       // 非多个禁用
       multiple: true,
       // 显示搜索条件
-      showSearch: true,
+      showSearch: false,
       // 总条数
       total: 0,
       // 品牌表格数据
@@ -172,20 +187,27 @@ export default {
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 10,
-        name: null,
-        logo: null,
-        descript: null,
-        showStatus: null,
-        firstLetter: null,
-        sort: null
+        pageSize: 10
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
+        name: [
+          {required: true, message: '名称不能为空', trigger: 'blur'}
+        ],
+        descript: [
+          {required: true, message: '介绍不能为空', trigger: 'blur'}
+        ],
+        logo: [
+          {required: true, message: 'logo不能为空', trigger: 'blur'}
+        ]
       }
     };
+  },
+  components: {
+    CategoryBrandRelation,
+    SingleUpload
   },
   created() {
     this.getList();

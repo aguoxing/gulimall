@@ -25,7 +25,7 @@
           @node-click="handleNodeClick"
           draggable
           :allow-drop="allowDrop"
-          @node-drog="handleDrop"
+          @node-drop="handleDrop"
         />
       </el-scrollbar>
     </div>
@@ -98,7 +98,7 @@ export default {
     handleDrop(draggingNode, dropNode, dropType, ev) {
       let sorted = [];
       for (let item of dropNode.parent.childNodes) {
-        sorted.push({id: item.data.catId, sort: sorted.length});
+        sorted.push({catId: item.data.catId, sort: sorted.length});
       }
       categoryChangeSort({sorted: sorted}).then(res => {
         this.$modal.msgSuccess("操作成功");

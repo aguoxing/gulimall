@@ -1,46 +1,10 @@
 <template>
-  <div class="app-container">
+  <div class="attr-group">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="组名" prop="attrGroupName">
         <el-input
           v-model="queryParams.attrGroupName"
           placeholder="请输入组名"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="排序" prop="sort">
-        <el-input
-          v-model="queryParams.sort"
-          placeholder="请输入排序"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="描述" prop="descript">
-        <el-input
-          v-model="queryParams.descript"
-          placeholder="请输入描述"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="组图标" prop="icon">
-        <el-input
-          v-model="queryParams.icon"
-          placeholder="请输入组图标"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="所属分类id" prop="catelogId">
-        <el-input
-          v-model="queryParams.catelogId"
-          placeholder="请输入所属分类id"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -61,6 +25,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['product:group:add']"
+          :disabled="currentNode !== null && currentNode.catLevel !== 3"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -85,7 +50,7 @@
           v-hasPermi="['product:group:remove']"
         >删除</el-button>
       </el-col>
-      <el-col :span="1.5">
+<!--      <el-col :span="1.5">
         <el-button
           type="warning"
           plain
@@ -94,38 +59,38 @@
           @click="handleExport"
           v-hasPermi="['product:group:export']"
         >导出</el-button>
-      </el-col>
+      </el-col>-->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="groupList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="分组id" align="center" prop="attrGroupId" />
       <el-table-column label="组名" align="center" prop="attrGroupName" />
       <el-table-column label="排序" align="center" prop="sort" />
-      <el-table-column label="描述" align="center" prop="descript" />
       <el-table-column label="组图标" align="center" prop="icon" />
-      <el-table-column label="所属分类id" align="center" prop="catelogId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['product:group:edit']"
-          >修改</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['product:group:remove']"
-          >删除</el-button>
+          <div class="column-btn-container">
+            <AttrGroupRelation />
+            <el-button
+              size="mini"
+              type="text"
+              icon="el-icon-edit"
+              @click="handleUpdate(scope.row)"
+              v-hasPermi="['product:group:edit']"
+            >修改</el-button>
+            <el-button
+              size="mini"
+              type="text"
+              icon="el-icon-delete"
+              @click="handleDelete(scope.row)"
+              v-hasPermi="['product:group:remove']"
+            >删除</el-button>
+          </div>
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -149,9 +114,6 @@
         <el-form-item label="组图标" prop="icon">
           <el-input v-model="form.icon" placeholder="请输入组图标" />
         </el-form-item>
-        <el-form-item label="所属分类id" prop="catelogId">
-          <el-input v-model="form.catelogId" placeholder="请输入所属分类id" />
-        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -163,13 +125,23 @@
 
 <script>
 import { listGroup, getGroup, delGroup, addGroup, updateGroup } from "@/api/product/group";
+import AttrGroupRelation from "@/views/product/attr/AttrGroupRelation";
 
 export default {
   name: "Group",
+  components: {
+    AttrGroupRelation
+  },
+  props: {
+    currentNode: {
+      type: Object,
+      default: null
+    }
+  },
   data() {
     return {
       // 遮罩层
-      loading: true,
+      loading: false,
       // 选中数组
       ids: [],
       // 非单个禁用
@@ -177,7 +149,7 @@ export default {
       // 非多个禁用
       multiple: true,
       // 显示搜索条件
-      showSearch: true,
+      showSearch: false,
       // 总条数
       total: 0,
       // 属性分组表格数据
@@ -189,22 +161,22 @@ export default {
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 10,
-        attrGroupName: null,
-        sort: null,
-        descript: null,
-        icon: null,
-        catelogId: null
+        pageSize: 10
       },
       // 表单参数
       form: {},
       // 表单校验
-      rules: {
-      }
+      rules: {}
     };
   },
+  watch: {
+    'currentNode.catId': function (val) {
+      this.queryParams.catelogId = val;
+      this.getList();
+    }
+  },
   created() {
-    this.getList();
+
   },
   methods: {
     /** 查询属性分组列表 */
@@ -269,6 +241,7 @@ export default {
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
+          this.form.catelogId = this.currentNode.catId;
           if (this.form.attrGroupId != null) {
             updateGroup(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");

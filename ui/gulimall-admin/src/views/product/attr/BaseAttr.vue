@@ -1,16 +1,18 @@
 <template>
   <div class="app-container">
-
     <el-row :gutter="10">
       <el-col :span="4" :xs="24">
-        <category-tree ref="categoryTree" @handleQuery="handleQuery"></category-tree>
+        <category-tree
+          ref="categoryTree"
+          @handleQuery="handleQuery"
+        ></category-tree>
       </el-col>
       <el-col :span="20" :xs="24">
         <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-          <el-form-item label="分类名称" prop="name">
+          <el-form-item label="属性名" prop="attrName">
             <el-input
-              v-model="queryParams.name"
-              placeholder="请输入分类名称"
+              v-model="queryParams.attrName"
+              placeholder="请输入属性名"
               clearable
               size="small"
               @keyup.enter.native="handleQuery"
@@ -30,8 +32,7 @@
               icon="el-icon-plus"
               size="mini"
               @click="handleAdd"
-              v-hasPermi="['product:category:add']"
-              :disabled="currentNode !== null && currentNode.catLevel === 3"
+              v-hasPermi="['product:attr:add']"
             >新增</el-button>
           </el-col>
           <el-col :span="1.5">
@@ -42,7 +43,7 @@
               size="mini"
               :disabled="single"
               @click="handleUpdate"
-              v-hasPermi="['product:category:edit']"
+              v-hasPermi="['product:attr:edit']"
             >修改</el-button>
           </el-col>
           <el-col :span="1.5">
@@ -53,35 +54,48 @@
               size="mini"
               :disabled="multiple"
               @click="handleDelete"
-              v-hasPermi="['product:category:remove']"
+              v-hasPermi="['product:attr:remove']"
             >删除</el-button>
           </el-col>
-<!--          <el-col :span="1.5">
-            <el-button
-              type="warning"
-              plain
-              icon="el-icon-download"
-              size="mini"
-              @click="handleExport"
-              v-hasPermi="['product:category:export']"
-            >导出</el-button>
-          </el-col>-->
+          <!--      <el-col :span="1.5">
+                  <el-button
+                    type="warning"
+                    plain
+                    icon="el-icon-download"
+                    size="mini"
+                    @click="handleExport"
+                    v-hasPermi="['product:attr:export']"
+                  >导出</el-button>
+                </el-col>-->
           <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
         </el-row>
 
-        <el-table v-loading="loading" :data="categoryList" @selection-change="handleSelectionChange">
+        <el-table v-loading="loading" :data="attrList" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="55" align="center" />
-          <el-table-column label="分类名称" align="center" prop="name" />
-          <el-table-column label="层级" align="center" prop="catLevel" />
-          <el-table-column label="是否显示" align="center" prop="showStatus">
+          <el-table-column label="属性名" align="center" prop="attrName" />
+          <el-table-column label="是否需要检索" align="center" prop="searchType">
             <template v-slot="scope">
-              <dict-tag :options="dict.type.pms_show_status" :value="scope.row.showStatus"></dict-tag>
+              <dict-tag :options="dict.type.pms_search_type" :value="scope.row.searchType"></dict-tag>
             </template>
           </el-table-column>
-          <el-table-column label="排序" align="center" prop="sort" />
-          <el-table-column label="图标地址" align="center" prop="icon" />
-          <el-table-column label="计量单位" align="center" prop="productUnit" />
-          <el-table-column label="商品数量" align="center" prop="productCount" />
+          <el-table-column label="属性图标" align="center" prop="icon" />
+          <el-table-column label="可选值列表" align="center" prop="valueSelect" />
+          <el-table-column label="属性类型" align="center" prop="attrType">
+            <template v-slot="scope">
+              <dict-tag :options="dict.type.pms_attr_type" :value="scope.row.attrType"></dict-tag>
+            </template>
+          </el-table-column>
+          <el-table-column label="启用状态" align="center" prop="enable">
+            <template v-slot="scope">
+              <dict-tag :options="dict.type.pms_enable_status" :value="scope.row.enable"></dict-tag>
+            </template>
+          </el-table-column>
+          <el-table-column label="所属分类" align="center" prop="catelogId" />
+          <el-table-column label="快速展示" align="center" prop="showDesc">
+            <template v-slot="scope">
+              <dict-tag :options="dict.type.pms_show_desc" :value="scope.row.showDesc"></dict-tag>
+            </template>
+          </el-table-column>
           <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
             <template slot-scope="scope">
               <el-button
@@ -89,14 +103,14 @@
                 type="text"
                 icon="el-icon-edit"
                 @click="handleUpdate(scope.row)"
-                v-hasPermi="['product:category:edit']"
+                v-hasPermi="['product:attr:edit']"
               >修改</el-button>
               <el-button
                 size="mini"
                 type="text"
                 icon="el-icon-delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['product:category:remove']"
+                v-hasPermi="['product:attr:remove']"
               >删除</el-button>
             </template>
           </el-table-column>
@@ -112,20 +126,26 @@
       </el-col>
     </el-row>
 
-    <!-- 添加或修改商品分类对话框 -->
+    <!-- 添加或修改商品属性对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="分类名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入分类名称" />
+        <el-form-item label="属性名" prop="attrName">
+          <el-input v-model="form.attrName" placeholder="请输入属性名" />
         </el-form-item>
-        <el-form-item label="图标地址" prop="icon">
-          <el-input v-model="form.icon" placeholder="请输入图标地址" />
+        <el-form-item label="属性图标" prop="icon">
+          <el-input v-model="form.icon" placeholder="请输入属性图标" />
         </el-form-item>
-        <el-form-item label="计量单位" prop="productUnit">
-          <el-input v-model="form.productUnit" placeholder="请输入计量单位" />
+        <el-form-item label="可选值列表[用逗号分隔]" prop="valueSelect">
+          <el-input v-model="form.valueSelect" placeholder="请输入可选值列表[用逗号分隔]" />
         </el-form-item>
-        <el-form-item v-if="isAdd" label="一级分类">
-          <el-checkbox v-model="this.form.levelOne" />
+        <el-form-item label="启用状态[0 - 禁用，1 - 启用]" prop="enable">
+          <el-input v-model="form.enable" placeholder="请输入启用状态[0 - 禁用，1 - 启用]" />
+        </el-form-item>
+        <el-form-item label="所属分类" prop="catelogId">
+          <el-input v-model="form.catelogId" placeholder="请输入所属分类" />
+        </el-form-item>
+        <el-form-item label="快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整" prop="showDesc">
+          <el-input v-model="form.showDesc" placeholder="请输入快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -137,20 +157,23 @@
 </template>
 
 <script>
-import {
-  listCategory,
-  getCategory,
-  delCategory,
-  addCategory,
-  updateCategory,
-} from "@/api/product/category";
+import { listAttr, getAttr, delAttr, addAttr, updateAttr } from "@/api/product/attr";
 import CategoryTree from "@/views/product/category/CategoryTree";
 
 export default {
-  name: "Category",
-  dicts: ['pms_show_status'],
+  name: "Attr",
+  dicts: ['pms_value_type', 'pms_enable_status', 'pms_attr_type', 'pms_search_type', 'pms_show_desc'],
   components: {
     CategoryTree
+  },
+  props: {
+    catId: String,
+    catName: String
+  },
+  watch: {
+    catId(val) {
+      this.getList();
+    }
   },
   data() {
     return {
@@ -166,8 +189,8 @@ export default {
       showSearch: false,
       // 总条数
       total: 0,
-      // 商品分类表格数据
-      categoryList: [],
+      // 商品属性表格数据
+      attrList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -176,28 +199,23 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
+        attrType: 1
       },
       // 表单参数
       form: {},
       // 表单校验
-      rules: {
-        name: [
-          {required: true, message: '分类名称不能为空', trigger: 'blur'}
-        ]
-      },
-      isAdd: true,
-      currentNode: null
+      rules: {}
     };
   },
   created() {
 
   },
   methods: {
-    /** 查询商品分类列表 */
+    /** 查询商品属性列表 */
     getList() {
       this.loading = true;
-      listCategory(this.queryParams).then(response => {
-        this.categoryList = response.rows;
+      listAttr(this.queryParams).then(response => {
+        this.attrList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
@@ -210,26 +228,22 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        catId: null,
-        name: null,
-        parentCid: 0,
-        catLevel: 1,
-        showStatus: 1,
-        sort: 0,
+        attrId: null,
+        attrName: null,
+        searchType: null,
         icon: null,
-        productUnit: null,
-        productCount: 0,
-        levelOne: false
+        valueSelect: null,
+        attrType: null,
+        enable: null,
+        catelogId: null,
+        showDesc: null
       };
       this.resetForm("form");
     },
     /** 搜索按钮操作 */
-    handleQuery(currentNode) {
+    handleQuery(data) {
+      this.queryParams.catelogId = data.catId;
       this.queryParams.pageNum = 1;
-      this.currentNode = currentNode;
-      if (currentNode !== null) {
-        this.queryParams.parentCid = currentNode.catId;
-      }
       this.getList();
     },
     /** 重置按钮操作 */
@@ -239,52 +253,41 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.catId)
+      this.ids = selection.map(item => item.attrId)
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
     handleAdd() {
-      this.isAdd = true;
       this.reset();
-      if (this.currentNode !== null) {
-        this.form.parentCid = this.currentNode.catId;
-        this.form.catLevel = this.currentNode.catLevel * 1 + 1;
-      }
       this.open = true;
-      this.title = "添加商品分类";
+      this.title = "添加商品属性";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      this.isAdd = false;
-      const catId = row.catId || this.ids;
-      getCategory(catId).then(response => {
+      const attrId = row.attrId || this.ids
+      getAttr(attrId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改商品分类";
+        this.title = "修改商品属性";
       });
     },
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.catId != null) {
-            updateCategory(this.form).then(response => {
+          if (this.form.attrId != null) {
+            updateAttr(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
-              this.$refs.categoryTree.getTreeList();
             });
           } else {
-            if (this.form.levelOne) {
-              this.form.parentCid = 0;
-            }
-            addCategory(this.form).then(response => {
+            addAttr(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
-              this.$refs.categoryTree.getTreeList();
             });
           }
         }
@@ -292,20 +295,19 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const catIds = row.catId || this.ids;
-      this.$modal.confirm('是否确认删除商品分类编号为"' + catIds + '"的数据项？').then(function() {
-        return delCategory(catIds);
+      const attrIds = row.attrId || this.ids;
+      this.$modal.confirm('是否确认删除商品属性编号为"' + attrIds + '"的数据项？').then(function() {
+        return delAttr(attrIds);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
-        this.$refs.categoryTree.getTreeList();
       }).catch(() => {});
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('product/category/export', {
+      this.download('product/attr/export', {
         ...this.queryParams
-      }, `category_${new Date().getTime()}.xlsx`)
+      }, `attr_${new Date().getTime()}.xlsx`)
     }
   }
 };
