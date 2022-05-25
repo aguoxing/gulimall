@@ -18,7 +18,7 @@ public class SpuSaveVo {
     private Long brandId;
     private BigDecimal weight;
     private int publishStatus;
-    private List<String> decript;
+    private List<String> description;
     private List<String> images;
     private Bounds bounds;
     private List<BaseAttrs> baseAttrs;

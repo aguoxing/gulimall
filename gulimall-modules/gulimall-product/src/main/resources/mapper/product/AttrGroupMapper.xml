@@ -3,28 +3,28 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gulimall.product.mapper.AttrGroupMapper">
-    
+
     <resultMap type="AttrGroup" id="AttrGroupResult">
         <result property="attrGroupId" column="attr_group_id" />
         <result property="attrGroupName" column="attr_group_name" />
         <result property="sort" column="sort" />
-        <result property="descript" column="descript" />
+        <result property="description" column="description" />
         <result property="icon" column="icon" />
-        <result property="catelogId" column="catelog_id" />
+        <result property="catalogId" column="catalog_id" />
     </resultMap>
 
     <sql id="selectAttrGroupVo">
-        select attr_group_id, attr_group_name, sort, descript, icon, catelog_id from pms_attr_group
+        select attr_group_id, attr_group_name, sort, description, icon, catalog_id from pms_attr_group
     </sql>
 
     <select id="selectAttrGroupList" parameterType="AttrGroup" resultMap="AttrGroupResult">
         <include refid="selectAttrGroupVo"/>
-        <where>  
+        <where>
             <if test="attrGroupName != null  and attrGroupName != ''"> and attr_group_name like concat('%', #{attrGroupName}, '%')</if>
             <if test="sort != null "> and sort = #{sort}</if>
-            <if test="descript != null  and descript != ''"> and descript = #{descript}</if>
+            <if test="description != null  and description != ''"> and description = #{description}</if>
             <if test="icon != null  and icon != ''"> and icon = #{icon}</if>
-            <if test="catelogId != null "> and catelog_id = #{catelogId}</if>
+            <if test="catalogId != null "> and catalog_id = #{catalogId}</if>
         </where>
     </select>
 

@@ -39,7 +39,7 @@ public class SpuInfoDesc implements Serializable {
      * 商品介绍
      */
     @Excel(name = "商品介绍")
-    private String decript;
+    private String description;
 
     @TableField(exist = false)
     private Map<String, Object> params = new HashMap<>();

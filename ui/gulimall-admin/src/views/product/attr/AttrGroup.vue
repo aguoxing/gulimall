@@ -108,8 +108,8 @@
         <el-form-item label="排序" prop="sort">
           <el-input v-model="form.sort" placeholder="请输入排序" />
         </el-form-item>
-        <el-form-item label="描述" prop="descript">
-          <el-input v-model="form.descript" placeholder="请输入描述" />
+        <el-form-item label="描述" prop="description">
+          <el-input v-model="form.description" placeholder="请输入描述" />
         </el-form-item>
         <el-form-item label="组图标" prop="icon">
           <el-input v-model="form.icon" placeholder="请输入组图标" />
@@ -171,7 +171,7 @@ export default {
   },
   watch: {
     'currentNode.catId': function (val) {
-      this.queryParams.catelogId = val;
+      this.queryParams.catalogId = val;
       this.getList();
     }
   },
@@ -199,9 +199,9 @@ export default {
         attrGroupId: null,
         attrGroupName: null,
         sort: null,
-        descript: null,
+        description: null,
         icon: null,
-        catelogId: null
+        catalogId: null
       };
       this.resetForm("form");
     },
@@ -241,7 +241,7 @@ export default {
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          this.form.catelogId = this.currentNode.catId;
+          this.form.catalogId = this.currentNode.catId;
           if (this.form.attrGroupId != null) {
             updateGroup(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");

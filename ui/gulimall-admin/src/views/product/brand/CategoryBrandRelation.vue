@@ -22,7 +22,7 @@
             size="small"
             filterable
             clearable
-            v-model="form.catelogId"
+            v-model="form.catalogId"
             :options="categoryOptions"
             :props="categoryProps"
             @change="handleCategoryChange"
@@ -47,7 +47,7 @@
       >
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column label="品牌名" align="center" prop="brandName" />
-        <el-table-column label="分类名" align="center" prop="catelogName" />
+        <el-table-column label="分类名" align="center" prop="catalogName" />
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
           <template slot-scope="scope">
             <el-button
@@ -110,9 +110,9 @@ export default {
         pageNum: 1,
         pageSize: 10,
         brandId: null,
-        catelogId: null,
+        catalogId: null,
         brandName: null,
-        catelogName: null
+        catalogName: null
       },
       // 表单参数
       form: {},
@@ -156,9 +156,9 @@ export default {
       this.form = {
         id: null,
         brandId: null,
-        catelogId: null,
+        catalogId: null,
         brandName: null,
-        catelogName: null
+        catalogName: null
       };
       this.resetForm("form");
     },
@@ -184,7 +184,7 @@ export default {
               this.getList();
             });
           } else {
-            this.form.catelogId = this.form.catelogId[this.form.catelogId.length -1];
+            this.form.catalogId = this.form.catalogId[this.form.catalogId.length -1];
             this.form.brandId = this.brandInfo.brandId;
             this.form.brandName = this.brandInfo.name;
             addCategoryBrandRelation(this.form).then(response => {

@@ -11,7 +11,7 @@
  Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 12/05/2022 11:31:43
+ Date: 25/05/2022 17:39:00
 */
 
 SET NAMES utf8mb4;
@@ -27,12 +27,13 @@ CREATE TABLE `pms_attr`  (
   `search_type` tinyint NULL DEFAULT NULL COMMENT '是否需要检索[0-不需要，1-需要]',
   `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '属性图标',
   `value_select` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '可选值列表[用逗号分隔]',
+  `value_type` tinyint(1) NULL DEFAULT NULL COMMENT '值类型[0-为单个值，1-可以选择多个值]',
   `attr_type` tinyint NULL DEFAULT NULL COMMENT '属性类型[0-销售属性，1-基本属性，2-既是销售属性又是基本属性]',
   `enable` bigint NULL DEFAULT NULL COMMENT '启用状态[0 - 禁用，1 - 启用]',
-  `catelog_id` bigint NULL DEFAULT NULL COMMENT '所属分类',
+  `catalog_id` bigint NULL DEFAULT NULL COMMENT '所属分类',
   `show_desc` tinyint NULL DEFAULT NULL COMMENT '快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整',
   PRIMARY KEY (`attr_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品属性' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品属性' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pms_attr
@@ -48,7 +49,7 @@ CREATE TABLE `pms_attr_attrgroup_relation`  (
   `attr_group_id` bigint NULL DEFAULT NULL COMMENT '属性分组id',
   `attr_sort` int NULL DEFAULT NULL COMMENT '属性组内排序',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '属性&属性分组关联' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '属性&属性分组关联' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pms_attr_attrgroup_relation
@@ -69,11 +70,11 @@ CREATE TABLE `pms_attr_group`  (
   `attr_group_id` bigint NOT NULL AUTO_INCREMENT COMMENT '分组id',
   `attr_group_name` char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '组名',
   `sort` int NULL DEFAULT NULL COMMENT '排序',
-  `descript` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
   `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '组图标',
-  `catelog_id` bigint NULL DEFAULT NULL COMMENT '所属分类id',
+  `catalog_id` bigint NULL DEFAULT NULL COMMENT '所属分类id',
   PRIMARY KEY (`attr_group_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '属性分组' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '属性分组' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pms_attr_group
@@ -91,20 +92,20 @@ CREATE TABLE `pms_brand`  (
   `brand_id` bigint NOT NULL AUTO_INCREMENT COMMENT '品牌id',
   `name` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '品牌名',
   `logo` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '品牌logo地址',
-  `descript` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '介绍',
+  `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '介绍',
   `show_status` tinyint NULL DEFAULT NULL COMMENT '显示状态[0-不显示；1-显示]',
   `first_letter` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '检索首字母',
   `sort` int NULL DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`brand_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '品牌' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '品牌' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pms_brand
 -- ----------------------------
-INSERT INTO `pms_brand` VALUES (9, '华为', 'https://gulimall-hello.oss-cn-beijing.aliyuncs.com/2019-11-18/de2426bd-a689-41d0-865a-d45d1afa7cde_huawei.png', '华为', 1, 'H', 1);
-INSERT INTO `pms_brand` VALUES (10, '小米', 'https://gulimall-hello.oss-cn-beijing.aliyuncs.com/2019-11-18/1f9e6968-cf92-462e-869a-4c2331a4113f_xiaomi.png', '小米', 1, 'M', 1);
-INSERT INTO `pms_brand` VALUES (11, 'oppo', 'https://gulimall-hello.oss-cn-beijing.aliyuncs.com/2019-11-18/5c8303f2-8b0c-4a5b-89a6-86513133d758_oppo.png', 'oppo', 1, 'O', 1);
-INSERT INTO `pms_brand` VALUES (12, 'Apple', 'https://gulimall-hello.oss-cn-beijing.aliyuncs.com/2019-11-18/819bb0b1-3ed8-4072-8304-78811a289781_apple.png', '苹果', 1, 'A', 1);
+INSERT INTO `pms_brand` VALUES (1, '华为', NULL, NULL, NULL, 'H', 1);
+INSERT INTO `pms_brand` VALUES (2, '小米', NULL, NULL, NULL, 'M', 2);
+INSERT INTO `pms_brand` VALUES (3, 'OPPO', NULL, NULL, NULL, 'O', 3);
+INSERT INTO `pms_brand` VALUES (4, 'iphone', NULL, NULL, NULL, 'i', 4);
 
 -- ----------------------------
 -- Table structure for pms_category
@@ -127,26 +128,26 @@ CREATE TABLE `pms_category`  (
 -- Records of pms_category
 -- ----------------------------
 INSERT INTO `pms_category` VALUES (1, '图书、音像、电子书刊', 0, 1, 1, 0, NULL, NULL, 0);
-INSERT INTO `pms_category` VALUES (2, '手机', 0, 1, 1, 0, '', NULL, 0);
-INSERT INTO `pms_category` VALUES (3, '家用电器', 0, 1, 1, 0, 'aaa', NULL, 0);
-INSERT INTO `pms_category` VALUES (4, '数码', 0, 1, 1, 0, 'aaa', NULL, 0);
-INSERT INTO `pms_category` VALUES (5, '家居家装', 0, 1, 1, 0, NULL, NULL, 0);
-INSERT INTO `pms_category` VALUES (6, '电脑办公', 0, 1, 1, 0, NULL, NULL, 0);
-INSERT INTO `pms_category` VALUES (7, '厨具', 0, 1, 1, 0, NULL, NULL, 0);
-INSERT INTO `pms_category` VALUES (8, '个护化妆', 0, 1, 1, 0, NULL, NULL, 0);
-INSERT INTO `pms_category` VALUES (9, '服饰内衣', 0, 1, 1, 0, NULL, NULL, 0);
-INSERT INTO `pms_category` VALUES (10, '钟表', 0, 1, 1, 0, NULL, NULL, 0);
-INSERT INTO `pms_category` VALUES (11, '鞋靴', 0, 1, 1, 0, NULL, NULL, 0);
-INSERT INTO `pms_category` VALUES (12, '母婴', 0, 1, 1, 0, NULL, NULL, 0);
-INSERT INTO `pms_category` VALUES (13, '礼品箱包', 0, 1, 1, 0, NULL, NULL, 0);
-INSERT INTO `pms_category` VALUES (14, '食品饮料、保健食品', 0, 1, 1, 0, NULL, NULL, 0);
-INSERT INTO `pms_category` VALUES (15, '珠宝', 0, 1, 1, 0, NULL, NULL, 0);
-INSERT INTO `pms_category` VALUES (16, '汽车用品', 0, 1, 1, 0, NULL, NULL, 0);
-INSERT INTO `pms_category` VALUES (17, '运动健康', 0, 1, 1, 0, NULL, NULL, 0);
-INSERT INTO `pms_category` VALUES (18, '玩具乐器', 0, 1, 1, 0, NULL, NULL, 0);
-INSERT INTO `pms_category` VALUES (19, '彩票、旅行、充值、票务', 0, 1, 1, 0, NULL, NULL, 0);
-INSERT INTO `pms_category` VALUES (20, '生鲜', 0, 1, 1, 0, NULL, NULL, 0);
-INSERT INTO `pms_category` VALUES (21, '整车', 0, 1, 1, 0, NULL, NULL, 0);
+INSERT INTO `pms_category` VALUES (2, '手机', 0, 1, 1, 1, '', NULL, 0);
+INSERT INTO `pms_category` VALUES (3, '家用电器', 0, 1, 1, 3, 'aaa', NULL, 0);
+INSERT INTO `pms_category` VALUES (4, '数码', 0, 1, 1, 2, 'aaa', NULL, 0);
+INSERT INTO `pms_category` VALUES (5, '家居家装', 0, 1, 1, 4, NULL, NULL, 0);
+INSERT INTO `pms_category` VALUES (6, '电脑办公', 0, 1, 1, 5, NULL, NULL, 0);
+INSERT INTO `pms_category` VALUES (7, '厨具', 0, 1, 1, 6, NULL, NULL, 0);
+INSERT INTO `pms_category` VALUES (8, '个护化妆', 0, 1, 1, 7, NULL, NULL, 0);
+INSERT INTO `pms_category` VALUES (9, '服饰内衣', 0, 1, 1, 8, NULL, NULL, 0);
+INSERT INTO `pms_category` VALUES (10, '钟表', 0, 1, 1, 9, NULL, NULL, 0);
+INSERT INTO `pms_category` VALUES (11, '鞋靴', 0, 1, 1, 10, NULL, NULL, 0);
+INSERT INTO `pms_category` VALUES (12, '母婴', 0, 1, 1, 11, NULL, NULL, 0);
+INSERT INTO `pms_category` VALUES (13, '礼品箱包', 0, 1, 1, 12, NULL, NULL, 0);
+INSERT INTO `pms_category` VALUES (14, '食品饮料、保健食品', 0, 1, 1, 17, NULL, NULL, 0);
+INSERT INTO `pms_category` VALUES (15, '珠宝', 0, 1, 1, 13, NULL, NULL, 0);
+INSERT INTO `pms_category` VALUES (16, '汽车用品', 0, 1, 1, 14, NULL, NULL, 0);
+INSERT INTO `pms_category` VALUES (17, '运动健康', 0, 1, 1, 15, NULL, NULL, 0);
+INSERT INTO `pms_category` VALUES (18, '玩具乐器', 0, 1, 1, 16, NULL, NULL, 0);
+INSERT INTO `pms_category` VALUES (19, '彩票、旅行、充值、票务', 0, 1, 1, 18, NULL, NULL, 0);
+INSERT INTO `pms_category` VALUES (20, '生鲜', 0, 1, 1, 19, NULL, NULL, 0);
+INSERT INTO `pms_category` VALUES (21, '整车', 0, 1, 1, 20, NULL, NULL, 0);
 INSERT INTO `pms_category` VALUES (22, '电子书刊', 1, 2, 1, 0, NULL, NULL, 0);
 INSERT INTO `pms_category` VALUES (23, '音像', 1, 2, 1, 0, NULL, NULL, 0);
 INSERT INTO `pms_category` VALUES (24, '英文原版', 1, 2, 1, 0, NULL, NULL, 0);
@@ -1549,8 +1550,8 @@ INSERT INTO `pms_category` VALUES (1420, 'SUV（二手）', 164, 3, 1, 0, NULL, 
 INSERT INTO `pms_category` VALUES (1421, '跑车（二手）', 164, 3, 1, 0, NULL, NULL, 0);
 INSERT INTO `pms_category` VALUES (1422, '皮卡（二手）', 164, 3, 1, 0, NULL, NULL, 0);
 INSERT INTO `pms_category` VALUES (1423, '面包车（二手）', 164, 3, 1, 0, NULL, NULL, 0);
-INSERT INTO `pms_category` VALUES (1524576582515736577, '坦克', 21, 2, 0, 3, NULL, '辆', 0);
-INSERT INTO `pms_category` VALUES (1524578023900889090, '装甲车', 21, 2, 1, 1, NULL, '辆', 0);
+INSERT INTO `pms_category` VALUES (1424, '坦克', 21, 2, 0, 3, NULL, '辆', 0);
+INSERT INTO `pms_category` VALUES (1425, '装甲车', 21, 2, 1, 1, NULL, '辆', 0);
 
 -- ----------------------------
 -- Table structure for pms_category_brand_relation
@@ -1559,15 +1560,19 @@ DROP TABLE IF EXISTS `pms_category_brand_relation`;
 CREATE TABLE `pms_category_brand_relation`  (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `brand_id` bigint NULL DEFAULT NULL COMMENT '品牌id',
-  `catelog_id` bigint NULL DEFAULT NULL COMMENT '分类id',
+  `catalog_id` bigint NULL DEFAULT NULL COMMENT '分类id',
   `brand_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `catelog_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `catalog_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '品牌分类关联' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '品牌分类关联' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pms_category_brand_relation
 -- ----------------------------
+INSERT INTO `pms_category_brand_relation` VALUES (1529368791144378370, 1, 225, '华为', NULL);
+INSERT INTO `pms_category_brand_relation` VALUES (1529369181827018753, 2, 225, '小米', NULL);
+INSERT INTO `pms_category_brand_relation` VALUES (1529369227725287425, 2, 233, '小米', NULL);
+INSERT INTO `pms_category_brand_relation` VALUES (1529395806828400641, 1, 449, '华为', NULL);
 
 -- ----------------------------
 -- Table structure for pms_comment_replay
@@ -1722,7 +1727,7 @@ CREATE TABLE `pms_spu_info`  (
   `create_time` datetime NULL DEFAULT NULL,
   `update_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'spu信息' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'spu信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pms_spu_info
@@ -1734,7 +1739,7 @@ CREATE TABLE `pms_spu_info`  (
 DROP TABLE IF EXISTS `pms_spu_info_desc`;
 CREATE TABLE `pms_spu_info_desc`  (
   `spu_id` bigint NOT NULL COMMENT '商品id',
-  `decript` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '商品介绍',
+  `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '商品介绍',
   PRIMARY KEY (`spu_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'spu信息介绍' ROW_FORMAT = DYNAMIC;
 

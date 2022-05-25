@@ -26,7 +26,7 @@ public class AttrGroupWithAttrsVo {
     /**
      * 描述
      */
-    private String descript;
+    private String description;
     /**
      * 组图标
      */
@@ -34,7 +34,7 @@ public class AttrGroupWithAttrsVo {
     /**
      * 所属分类id
      */
-    private Long catelogId;
+    private Long catalogId;
 
     private List<Attr> attrs;
 }

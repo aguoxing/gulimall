@@ -79,7 +79,7 @@
           <el-image style="width: 50px; height: 50px" :src="scope.row.logo" fit="scale-down"></el-image>
         </template>
       </el-table-column>
-      <el-table-column label="介绍" align="center" prop="descript" />
+      <el-table-column label="介绍" align="center" prop="description" />
       <el-table-column label="显示状态" align="center" prop="showStatus">
         <template v-slot="scope">
           <dict-tag :options="dict.type.pms_show_status" :value="scope.row.showStatus"></dict-tag>
@@ -138,8 +138,8 @@
             placeholder="请输入排序"
           />
         </el-form-item>
-        <el-form-item label="介绍" prop="descript">
-          <el-input v-model="form.descript" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="介绍" prop="description">
+          <el-input v-model="form.description" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="品牌logo" prop="logo">
           <single-upload v-model="form.logo"></single-upload>
@@ -196,7 +196,7 @@ export default {
         name: [
           {required: true, message: '名称不能为空', trigger: 'blur'}
         ],
-        descript: [
+        description: [
           {required: true, message: '介绍不能为空', trigger: 'blur'}
         ],
         logo: [
@@ -233,7 +233,7 @@ export default {
         brandId: null,
         name: null,
         logo: null,
-        descript: null,
+        description: null,
         showStatus: 0,
         firstLetter: null,
         sort: null

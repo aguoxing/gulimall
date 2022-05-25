@@ -51,7 +51,7 @@ public class AttrGroup implements Serializable {
      * 描述
      */
     @Excel(name = "描述")
-    private String descript;
+    private String description;
 
     /**
      * 组图标
@@ -63,7 +63,7 @@ public class AttrGroup implements Serializable {
      * 所属分类id
      */
     @Excel(name = "所属分类id")
-    private Long catelogId;
+    private Long catalogId;
 
     @TableField(exist = false)
     private Map<String, Object> params = new HashMap<>();

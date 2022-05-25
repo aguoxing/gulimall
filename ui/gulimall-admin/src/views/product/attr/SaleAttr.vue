@@ -90,7 +90,7 @@
               <dict-tag :options="dict.type.pms_enable_status" :value="scope.row.enable"></dict-tag>
             </template>
           </el-table-column>
-          <el-table-column label="所属分类" align="center" prop="catelogId" />
+          <el-table-column label="所属分类" align="center" prop="catalogId" />
           <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
             <template slot-scope="scope">
               <el-button
@@ -136,8 +136,8 @@
         <el-form-item label="启用状态[0 - 禁用，1 - 启用]" prop="enable">
           <el-input v-model="form.enable" placeholder="请输入启用状态[0 - 禁用，1 - 启用]" />
         </el-form-item>
-        <el-form-item label="所属分类" prop="catelogId">
-          <el-input v-model="form.catelogId" placeholder="请输入所属分类" />
+        <el-form-item label="所属分类" prop="catalogId">
+          <el-input v-model="form.catalogId" placeholder="请输入所属分类" />
         </el-form-item>
         <el-form-item label="快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整" prop="showDesc">
           <el-input v-model="form.showDesc" placeholder="请输入快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整" />
@@ -230,14 +230,14 @@ export default {
         valueSelect: null,
         attrType: null,
         enable: null,
-        catelogId: null,
+        catalogId: null,
         showDesc: null
       };
       this.resetForm("form");
     },
     /** 搜索按钮操作 */
     handleQuery(data) {
-      this.queryParams.catelogId = data.catId;
+      this.queryParams.catalogId = data.catId;
       this.queryParams.pageNum = 1;
       this.getList();
     },

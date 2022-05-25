@@ -3,20 +3,20 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gulimall.product.mapper.SpuInfoDescMapper">
-    
+
     <resultMap type="SpuInfoDesc" id="SpuInfoDescResult">
         <result property="spuId" column="spu_id" />
-        <result property="decript" column="decript" />
+        <result property="description" column="description" />
     </resultMap>
 
     <sql id="selectSpuInfoDescVo">
-        select spu_id, decript from pms_spu_info_desc
+        select spu_id, description from pms_spu_info_desc
     </sql>
 
     <select id="selectSpuInfoDescList" parameterType="SpuInfoDesc" resultMap="SpuInfoDescResult">
         <include refid="selectSpuInfoDescVo"/>
-        <where>  
-            <if test="decript != null  and decript != ''"> and decript = #{decript}</if>
+        <where>
+            <if test="description != null  and description != ''"> and description = #{description}</if>
         </where>
     </select>
 

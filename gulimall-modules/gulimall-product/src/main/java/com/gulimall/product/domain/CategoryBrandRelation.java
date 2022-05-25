@@ -45,7 +45,7 @@ public class CategoryBrandRelation implements Serializable {
      * 分类id
      */
     @Excel(name = "分类id")
-    private Long catelogId;
+    private Long catalogId;
 
     /**
      * $column.columnComment
@@ -57,7 +57,7 @@ public class CategoryBrandRelation implements Serializable {
      * $column.columnComment
      */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private String catelogName;
+    private String catalogName;
 
     @TableField(exist = false)
     private Map<String, Object> params = new HashMap<>();
