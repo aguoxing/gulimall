@@ -11,6 +11,15 @@ export function listAttr(query) {
   })
 }
 
+// 查询已关联的商品属性列表
+export function listAttrRelation(query) {
+  return request({
+    url: `/${service_name}/attrRelation`,
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询商品属性详细
 export function getAttr(attrId) {
   return request({

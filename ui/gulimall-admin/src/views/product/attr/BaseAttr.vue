@@ -127,25 +127,88 @@
     </el-row>
 
     <!-- 添加或修改商品属性对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog
+      :title="title"
+      :visible.sync="open"
+      width="650px"
+      append-to-body
+    >
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="属性名" prop="attrName">
           <el-input v-model="form.attrName" placeholder="请输入属性名" />
         </el-form-item>
         <el-form-item label="属性图标" prop="icon">
           <el-input v-model="form.icon" placeholder="请输入属性图标" />
         </el-form-item>
-        <el-form-item label="可选值列表[用逗号分隔]" prop="valueSelect">
-          <el-input v-model="form.valueSelect" placeholder="请输入可选值列表[用逗号分隔]" />
+        <el-form-item label="值类型" prop="valType">
+          <el-switch
+            v-model="form.valType"
+            active-text="允许多个值"
+            inactive-text="只能单个值"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            :inactive-value="0"
+            :active-value="1"
+          ></el-switch>
         </el-form-item>
-        <el-form-item label="启用状态[0 - 禁用，1 - 启用]" prop="enable">
-          <el-input v-model="form.enable" placeholder="请输入启用状态[0 - 禁用，1 - 启用]" />
+        <el-form-item label="可选值列表" prop="valueSelect">
+          <el-select
+            style="width: 100%;"
+            v-model="form.valueSelect"
+            multiple
+            filterable
+            allow-create
+            default-first-option
+          >
+            <el-option
+              v-for="(item,index) in valueSelectOptions"
+              :key="index"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="所属分类" prop="catalogId">
-          <el-input v-model="form.catalogId" placeholder="请输入所属分类" />
+<!--        <el-form-item label="所属分类" prop="catalogId">
+          <category-cascader
+            :catalog-id="form.catalogId"
+            @categoryChange="categoryChange"
+          ></category-cascader>
+        </el-form-item>-->
+        <el-form-item label="所属分组" prop="attrGroupId">
+          <el-select
+            style="width: 100%;"
+            v-model="form.attrGroupId"
+            multiple
+            allow-create
+          >
+            <el-option
+              v-for="(item,index) in attrGroupOptions"
+              :key="index"
+              :label="item.attrGroupName"
+              :value="item.attrGroupId"
+            ></el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整" prop="showDesc">
-          <el-input v-model="form.showDesc" placeholder="请输入快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整" />
+        <el-form-item label="可检索" prop="searchType">
+          <el-switch
+            v-model="form.searchType"
+            :inactive-value="0"
+            :active-value="1"
+          ></el-switch>
+        </el-form-item>
+        <el-form-item label="启用状态" prop="enable">
+          <el-switch
+            v-model="form.enable"
+            :inactive-value="0"
+            :active-value="1"
+          ></el-switch>
+        </el-form-item>
+        <el-form-item label="快速展示" prop="showDesc">
+          <el-switch
+            v-model="form.showDesc"
+            :inactive-value="0"
+            :active-value="1"
+          ></el-switch>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -159,12 +222,15 @@
 <script>
 import { listAttr, getAttr, delAttr, addAttr, updateAttr } from "@/api/product/attr";
 import CategoryTree from "@/views/product/category/CategoryTree";
+import CategoryCascader from "@/views/product/category/CategoryCascader";
+import {listGroup} from "@/api/product/group";
 
 export default {
   name: "Attr",
   dicts: ['pms_value_type', 'pms_enable_status', 'pms_attr_type', 'pms_search_type', 'pms_show_desc'],
   components: {
-    CategoryTree
+    CategoryTree,
+    CategoryCascader
   },
   props: {
     catId: String,
@@ -204,7 +270,17 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {}
+      rules: {
+        attrName: [
+          {required: true, message: '属性名不能为空', trigger: 'blur'}
+        ],
+        valueSelect: [
+          {required: true, message: '可选值不能为空', trigger: 'blur'}
+        ]
+      },
+
+      valueSelectOptions: [],
+      attrGroupOptions: []
     };
   },
   created() {
@@ -220,6 +296,11 @@ export default {
         this.loading = false;
       });
     },
+    getAttrGroupList(catId) {
+      listGroup({catalogId: catId}).then(res => {
+        this.attrGroupOptions = res.rows;
+      })
+    },
     // 取消按钮
     cancel() {
       this.open = false;
@@ -233,10 +314,11 @@ export default {
         searchType: null,
         icon: null,
         valueSelect: null,
-        attrType: null,
+        attrType: 1,
         enable: null,
         catalogId: null,
-        showDesc: null
+        showDesc: null,
+        valType: null
       };
       this.resetForm("form");
     },
@@ -245,6 +327,7 @@ export default {
       this.queryParams.catalogId = data.catId;
       this.queryParams.pageNum = 1;
       this.getList();
+      this.getAttrGroupList(data.catId);
     },
     /** 重置按钮操作 */
     resetQuery() {
@@ -260,15 +343,17 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
+      this.form.catalogId = this.queryParams.catalogId;
       this.open = true;
       this.title = "添加商品属性";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const attrId = row.attrId || this.ids
+      const attrId = row.attrId || this.ids;
       getAttr(attrId).then(response => {
         this.form = response.data;
+        this.form.valueSelect = response.data.valueSelect.split(',');
         this.open = true;
         this.title = "修改商品属性";
       });
@@ -277,6 +362,7 @@ export default {
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
+          this.form.valueSelect = this.form.valueSelect.join(",");
           if (this.form.attrId != null) {
             updateAttr(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
@@ -308,6 +394,10 @@ export default {
       this.download('product/attr/export', {
         ...this.queryParams
       }, `attr_${new Date().getTime()}.xlsx`)
+    },
+
+    categoryChange(data) {
+      this.form.catalogId = data;
     }
   }
 };

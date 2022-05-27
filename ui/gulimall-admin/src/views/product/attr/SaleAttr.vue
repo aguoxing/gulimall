@@ -73,9 +73,9 @@
         <el-table v-loading="loading" :data="attrList" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="55" align="center" />
           <el-table-column label="属性名" align="center" prop="attrName" />
-          <el-table-column label="值类型" align="center" prop="valueType">
+          <el-table-column label="值类型" align="center" prop="valType">
             <template v-slot="scope">
-              <dict-tag :options="dict.type.pms_value_type" :value="scope.row.valueType"></dict-tag>
+              <dict-tag :options="dict.type.pms_value_type" :value="scope.row.valType"></dict-tag>
             </template>
           </el-table-column>
           <el-table-column label="属性图标" align="center" prop="icon" />
@@ -122,25 +122,53 @@
     </el-row>
 
     <!-- 添加或修改商品属性对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog
+      :title="title"
+      :visible.sync="open"
+      width="650px"
+      append-to-body
+    >
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="属性名" prop="attrName">
           <el-input v-model="form.attrName" placeholder="请输入属性名" />
         </el-form-item>
         <el-form-item label="属性图标" prop="icon">
           <el-input v-model="form.icon" placeholder="请输入属性图标" />
         </el-form-item>
-        <el-form-item label="可选值列表[用逗号分隔]" prop="valueSelect">
-          <el-input v-model="form.valueSelect" placeholder="请输入可选值列表[用逗号分隔]" />
+        <el-form-item label="值类型" prop="valType">
+          <el-switch
+            v-model="form.valType"
+            active-text="允许多个值"
+            inactive-text="只能单个值"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            :inactive-value="0"
+            :active-value="1"
+          ></el-switch>
         </el-form-item>
-        <el-form-item label="启用状态[0 - 禁用，1 - 启用]" prop="enable">
-          <el-input v-model="form.enable" placeholder="请输入启用状态[0 - 禁用，1 - 启用]" />
+        <el-form-item label="可选值列表" prop="valueSelect">
+          <el-select
+            style="width: 100%;"
+            v-model="form.valueSelect"
+            multiple
+            filterable
+            allow-create
+            default-first-option
+          >
+            <el-option
+              v-for="(item,index) in valueSelectOptions"
+              :key="index"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="所属分类" prop="catalogId">
-          <el-input v-model="form.catalogId" placeholder="请输入所属分类" />
-        </el-form-item>
-        <el-form-item label="快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整" prop="showDesc">
-          <el-input v-model="form.showDesc" placeholder="请输入快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整" />
+        <el-form-item label="启用状态" prop="enable">
+          <el-switch
+            v-model="form.enable"
+            :inactive-value="0"
+            :active-value="1"
+          ></el-switch>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -199,7 +227,9 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {}
+      rules: {},
+
+      valueSelectOptions: []
     };
   },
   created() {
@@ -225,13 +255,13 @@ export default {
       this.form = {
         attrId: null,
         attrName: null,
-        searchType: null,
+        searchType: 0,
         icon: null,
         valueSelect: null,
-        attrType: null,
-        enable: null,
+        attrType: 0,
+        enable: 1,
         catalogId: null,
-        showDesc: null
+        showDesc: 0
       };
       this.resetForm("form");
     },
@@ -256,7 +286,8 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加商品属性";
+      this.form.catalogId = this.queryParams.catalogId;
+      this.title = "添加销售属性";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -264,14 +295,16 @@ export default {
       const attrId = row.attrId || this.ids
       getAttr(attrId).then(response => {
         this.form = response.data;
+        this.form.valueSelect = response.data.valueSelect.split(',');
         this.open = true;
-        this.title = "修改商品属性";
+        this.title = "修改销售属性";
       });
     },
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
+          this.form.valueSelect = this.form.valueSelect.join(',');
           if (this.form.attrId != null) {
             updateAttr(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
@@ -303,6 +336,10 @@ export default {
       this.download('product/attr/export', {
         ...this.queryParams
       }, `attr_${new Date().getTime()}.xlsx`)
+    },
+
+    categoryChange(data) {
+      this.form.catalogId = data;
     }
   }
 };

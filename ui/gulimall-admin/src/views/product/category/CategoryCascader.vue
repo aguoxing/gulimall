@@ -5,7 +5,7 @@
       size="small"
       filterable
       clearable
-      v-model="catelogIds"
+      v-model="catalogIds"
       :options="categoryOptions"
       :props="categoryProps"
       @change="handleChange"
@@ -18,6 +18,12 @@ import {listTreeCategory} from "@/api/product/category";
 
 export default {
   name: "CategoryCascader",
+  props: {
+    catalogId: {
+      type: Number,
+      default: null
+    }
+  },
   data() {
     return {
       categoryOptions: [],
@@ -25,11 +31,20 @@ export default {
         label: 'name',
         value: 'catId'
       },
-      catelogIds: null
     }
   },
   created() {
     this.getCategoryTree();
+  },
+  computed: {
+    catalogIds: {
+      set() {
+        return this.catalogIds;
+      },
+      get() {
+        return this.catalogId;
+      }
+    }
   },
   methods: {
     getCategoryTree() {

@@ -9,47 +9,101 @@
     >关联</el-button>
 
     <!-- 添加或修改属性&属性分组关联对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="属性id" prop="attrId">
-          <el-input v-model="form.attrId" placeholder="请输入属性id" />
-        </el-form-item>
-        <el-form-item label="属性分组id" prop="attrGroupId">
-          <el-input v-model="form.attrGroupId" placeholder="请输入属性分组id" />
-        </el-form-item>
-        <el-form-item label="属性组内排序" prop="attrSort">
-          <el-input v-model="form.attrSort" placeholder="请输入属性组内排序" />
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
-      </div>
+    <el-dialog
+      :title="title"
+      :visible.sync="open"
+      width="850px"
+      append-to-body
+    >
+      <el-row :gutter="10">
+        <el-col :span="12" :xs="24">
+          <el-row :gutter="10" class="mb8">
+            <el-col :span="1.5">
+              <el-button
+                type="danger"
+                plain
+                icon="el-icon-delete"
+                size="mini"
+                @click="handleDelete"
+              >移除</el-button>
+            </el-col>
+          </el-row>
+          <el-table v-loading="loading" :data="attrGroupRelationList" @selection-change="handleSelectionChange">
+            <el-table-column type="selection" width="55" align="center" />
+            <el-table-column label="属性名" align="center" prop="attrName" />
+            <el-table-column label="可选值列表" align="center" prop="valueSelect" />
+          </el-table>
+          <pagination
+            v-show="total>0"
+            :total="total"
+            :page.sync="queryParams.pageNum"
+            :limit.sync="queryParams.pageSize"
+            @pagination="getList"
+          />
+        </el-col>
+        <el-col :span="12" :xs="24">
+          <el-row :gutter="10" class="mb8">
+            <el-col :span="1.5">
+              <el-button
+                type="primary"
+                plain
+                icon="el-icon-plus"
+                size="mini"
+                @click="handleSubmit"
+              >新增</el-button>
+            </el-col>
+          </el-row>
+          <el-table
+            v-loading="loading"
+            :data="attrList"
+            @selection-change="handleAttrSelectionChange"
+          >
+            <el-table-column type="selection" width="55" align="center" />
+            <el-table-column label="属性名" align="center" prop="attrName" />
+            <el-table-column label="可选值列表" align="center" prop="valueSelect" />
+          </el-table>
+          <pagination
+            v-show="attrTotal>0"
+            :total="attrTotal"
+            :page.sync="attrQueryParams.pageNum"
+            :limit.sync="attrQueryParams.pageSize"
+            @pagination="getAttrList"
+          />
+        </el-col>
+      </el-row>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { listAttrAttrgroupRelation, getAttrAttrgroupRelation, delAttrAttrgroupRelation, addAttrAttrgroupRelation, updateAttrAttrgroupRelation } from "@/api/product/attrAttrgroupRelation";
+import { delAttrGroupRelation, addAttrGroupRelation } from "@/api/product/attrGroupRelation";
+import {listAttr, listAttrRelation} from "@/api/product/attr";
 
 export default {
   name: "AttrGroupRelation",
+  props: {
+    attrGroupId: Number,
+    catalogId: Number
+  },
   data() {
     return {
       // 遮罩层
       loading: true,
       // 选中数组
       ids: [],
+      attrIds: [],
       // 非单个禁用
       single: true,
+      attrSingle: true,
       // 非多个禁用
       multiple: true,
-      // 显示搜索条件
-      showSearch: true,
+      attrMultiple: true,
       // 总条数
       total: 0,
+      attrTotal: 0,
       // 属性&属性分组关联表格数据
-      attrAttrgroupRelationList: [],
+      attrGroupRelationList: [],
+      attrList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -57,30 +111,34 @@ export default {
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 10,
-        attrId: null,
-        attrGroupId: null,
-        attrSort: null
+        pageSize: 10
       },
-      // 表单参数
-      form: {},
-      // 表单校验
-      rules: {
+      attrQueryParams: {
+        pageNum: 1,
+        pageSize: 10
       }
     };
   },
   created() {
-    this.getList();
+
   },
   methods: {
     /** 查询属性&属性分组关联列表 */
     getList() {
       this.loading = true;
-      listAttrAttrgroupRelation(this.queryParams).then(response => {
-        this.attrAttrgroupRelationList = response.rows;
+      this.queryParams.attrGroupId = this.attrGroupId;
+      listAttrRelation(this.queryParams).then(response => {
+        this.attrGroupRelationList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
+    },
+    getAttrList() {
+      this.attrQueryParams.catalogId = this.catalogId;
+      listAttr(this.attrQueryParams).then(res => {
+        this.attrList = res.rows;
+        this.attrTotal = res.total;
+      })
     },
     // 取消按钮
     cancel() {
@@ -97,73 +155,42 @@ export default {
       };
       this.resetForm("form");
     },
-    /** 搜索按钮操作 */
-    handleQuery() {
-      this.queryParams.pageNum = 1;
-      this.getList();
-    },
-    /** 重置按钮操作 */
-    resetQuery() {
-      this.resetForm("queryForm");
-      this.handleQuery();
-    },
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
+    handleAttrSelectionChange(selection) {
+      this.attrIds = selection.map(item => item.attrId)
+      this.attrSingle = selection.length!==1
+      this.attrMultiple = !selection.length
+    },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
+      this.getList();
+      this.getAttrList();
       this.open = true;
-      this.title = "添加属性&属性分组关联";
-    },
-    /** 修改按钮操作 */
-    handleUpdate(row) {
-      this.reset();
-      const id = row.id || this.ids
-      getAttrAttrgroupRelation(id).then(response => {
-        this.form = response.data;
-        this.open = true;
-        this.title = "修改属性&属性分组关联";
-      });
+      this.title = "新建关联";
     },
     /** 提交按钮 */
-    submitForm() {
-      this.$refs["form"].validate(valid => {
-        if (valid) {
-          if (this.form.id != null) {
-            updateAttrAttrgroupRelation(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
-          } else {
-            addAttrAttrgroupRelation(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
-          }
-        }
+    handleSubmit() {
+      addAttrGroupRelation({attrGroupId: this.attrGroupId, attrIds: this.attrIds}).then(res => {
+        this.getAttrList();
+        this.getList();
       });
     },
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除属性&属性分组关联编号为"' + ids + '"的数据项？').then(function() {
-        return delAttrAttrgroupRelation(ids);
+      this.$modal.confirm('是否确认删除所选的数据项？').then(() => {
+        return delAttrGroupRelation(ids);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
+        this.getAttrList();
       }).catch(() => {});
-    },
-    /** 导出按钮操作 */
-    handleExport() {
-      this.download('product/attrAttrgroupRelation/export', {
-        ...this.queryParams
-      }, `attrAttrgroupRelation_${new Date().getTime()}.xlsx`)
     }
   }
 };

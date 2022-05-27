@@ -71,7 +71,10 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <div class="column-btn-container">
-            <AttrGroupRelation />
+            <AttrGroupRelation
+              :catalog-id="currentNode.catId"
+              :attr-group-id="scope.row.attrGroupId"
+            />
             <el-button
               size="mini"
               type="text"
@@ -106,10 +109,15 @@
           <el-input v-model="form.attrGroupName" placeholder="请输入组名" />
         </el-form-item>
         <el-form-item label="排序" prop="sort">
-          <el-input v-model="form.sort" placeholder="请输入排序" />
+          <el-input-number
+            style="width: 100%;"
+            :min="0"
+            v-model="form.sort"
+            placeholder="请输入排序"
+          />
         </el-form-item>
         <el-form-item label="描述" prop="description">
-          <el-input v-model="form.description" placeholder="请输入描述" />
+          <el-input type="textarea" v-model="form.description" placeholder="请输入描述" />
         </el-form-item>
         <el-form-item label="组图标" prop="icon">
           <el-input v-model="form.icon" placeholder="请输入组图标" />
@@ -166,7 +174,14 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {}
+      rules: {
+        attrGroupName: [
+          {required: true, message: '组名不能为空', trigger: 'blur'}
+        ],
+        description: [
+          {required: true, message: '描述不能为空', trigger: 'blur'}
+        ]
+      }
     };
   },
   watch: {
@@ -198,7 +213,7 @@ export default {
       this.form = {
         attrGroupId: null,
         attrGroupName: null,
-        sort: null,
+        sort: 0,
         description: null,
         icon: null,
         catalogId: null

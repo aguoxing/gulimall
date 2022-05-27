@@ -17,7 +17,7 @@
               <el-input v-model="spuBaseInfoForm.spuName" placeholder="请输入商品名称" />
             </el-form-item>
             <el-form-item label="商品描述" prop="spuDescription">
-              <el-input v-model="spuBaseInfoForm.spuDescription" placeholder="请输入商品描述" />
+              <el-input type="textarea" v-model="spuBaseInfoForm.spuDescription" placeholder="请输入商品描述" />
             </el-form-item>
             <el-form-item label="分类" prop="catalogId">
               <category-cascader @categoryChange="categoryChange"></category-cascader>
@@ -34,7 +34,12 @@
                 style="width: 100%"
               ></el-input-number>
             </el-form-item>
-            <el-form-item label="商品介绍" prop="description"></el-form-item>
+            <el-form-item label="商品介绍" prop="description">
+              <el-input type="textarea" v-model="spuBaseInfoForm.description"></el-input>
+            </el-form-item>
+            <el-form-item label="商品图集" prop="images">
+              <multi-upload></multi-upload>
+            </el-form-item>
             <el-form-item>
               <el-button type="success" @click="handleSaveSpuBaseInfo">下一步</el-button>
             </el-form-item>
@@ -52,12 +57,14 @@
 <script>
 import CategoryCascader from "@/views/product/category/CategoryCascader";
 import BrandSelect from "@/views/product/brand/BrandSelect";
+import MultiUpload from "@/views/components/upload/MultiUpload";
 
 export default {
   name: "SpuAdd",
   components: {
     CategoryCascader,
-    BrandSelect
+    BrandSelect,
+    MultiUpload
   },
   data() {
     return {
@@ -66,7 +73,16 @@ export default {
       spuBaseInfoFormRules: {}
     }
   },
+  created() {
+    this.handleReset();
+  },
   methods: {
+    handleReset() {
+      this.spuBaseInfoForm = {
+        weight: 0
+      }
+      this.resetForm("spuBaseInfoForm");
+    },
     handleSaveSpuBaseInfo() {
       this.activeSteps = 1;
     },
