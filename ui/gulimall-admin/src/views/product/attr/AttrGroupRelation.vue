@@ -76,8 +76,8 @@
 </template>
 
 <script>
-import { delAttrGroupRelation, addAttrGroupRelation } from "@/api/product/attrGroupRelation";
-import {listAttr, listAttrRelation} from "@/api/product/attr";
+import { addAttrGroupRelation, delRelationByAttrIds } from "@/api/product/attrGroupRelation";
+import { listAttrRelation, listNoAttrRelation } from "@/api/product/attr";
 
 export default {
   name: "AttrGroupRelation",
@@ -135,7 +135,8 @@ export default {
     },
     getAttrList() {
       this.attrQueryParams.catalogId = this.catalogId;
-      listAttr(this.attrQueryParams).then(res => {
+      this.attrQueryParams.attrGroupId = this.attrGroupId;
+      listNoAttrRelation(this.attrQueryParams).then(res => {
         this.attrList = res.rows;
         this.attrTotal = res.total;
       })
@@ -185,7 +186,7 @@ export default {
     handleDelete(row) {
       const ids = row.id || this.ids;
       this.$modal.confirm('是否确认删除所选的数据项？').then(() => {
-        return delAttrGroupRelation(ids);
+        return delRelationByAttrIds({attrGroupId: this.attrGroupId, attrIds: ids});
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");

@@ -61,4 +61,11 @@ public interface IAttrService extends IService<AttrEntity> {
      */
     List<AttrEntity> selectAttrByAttrGroupId(AttrGroupRelation attrGroupRelation);
 
+    /**
+     * 查询未关联的属性
+     *
+     * @param attrGroupRelation
+     * @return
+     */
+    List<AttrEntity> selectNoAttrByAttrGroupId(AttrGroupRelation attrGroupRelation);
 }

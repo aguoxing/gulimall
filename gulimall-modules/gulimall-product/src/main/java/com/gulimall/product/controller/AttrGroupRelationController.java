@@ -89,4 +89,9 @@ public class AttrGroupRelationController extends BaseController {
     public AjaxResult remove(@PathVariable Long[] ids) {
         return toAjax(attrGroupRelationService.deleteAttrGroupRelationByIds(ids));
     }
+
+    @PostMapping("/delRelation")
+    public AjaxResult delRelationByAttrIds(@RequestBody AttrGroupRelationDTO attrGroupRelationDTO) {
+        return toAjax(attrGroupRelationService.delRelationByAttrIds(attrGroupRelationDTO));
+    }
 }

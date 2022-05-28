@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gulimall.product.domain.AttrEntity;
 import com.gulimall.product.domain.AttrGroupRelation;
+import com.gulimall.product.mapper.AttrGroupMapper;
 import com.gulimall.product.mapper.AttrGroupRelationMapper;
 import com.gulimall.product.mapper.AttrMapper;
 import com.gulimall.product.service.IAttrService;
@@ -28,6 +29,8 @@ public class AttrServiceImpl extends ServiceImpl<AttrMapper, AttrEntity> impleme
     private AttrMapper attrMapper;
     @Autowired
     private AttrGroupRelationMapper attrGroupRelationMapper;
+    @Autowired
+    private AttrGroupMapper attrGroupMapper;
 
     /**
      * 查询商品属性
@@ -100,6 +103,23 @@ public class AttrServiceImpl extends ServiceImpl<AttrMapper, AttrEntity> impleme
             attrEntityList = attrMapper.selectBatchIds(attrIds);
         }
         return attrEntityList;
+    }
+
+    /**
+     * 查询未关联的属性
+     *
+     * @param attrGroupRelation
+     * @return
+     */
+    @Override
+    public List<AttrEntity> selectNoAttrByAttrGroupId(AttrGroupRelation attrGroupRelation) {
+        Long catalogId = attrGroupMapper.selectById(attrGroupRelation.getAttrGroupId()).getCatalogId();
+        // 该分类下所有属性
+        List<AttrEntity> attrInfoList = baseMapper.selectList(new LambdaQueryWrapper<AttrEntity>().eq(AttrEntity::getCatalogId, catalogId));
+        // 已关联属性
+        List<AttrEntity> relationAttrList = this.selectAttrByAttrGroupId(attrGroupRelation);
+        attrInfoList.removeAll(relationAttrList);
+        return attrInfoList;
     }
 
 }

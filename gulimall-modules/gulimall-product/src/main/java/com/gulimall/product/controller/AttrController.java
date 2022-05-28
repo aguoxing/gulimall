@@ -39,10 +39,28 @@ public class AttrController extends BaseController {
         return getDataTable(list);
     }
 
+    /**
+     * 查询已关联的属性
+     *
+     * @param attrGroupRelation
+     * @return
+     */
     @GetMapping("/attrRelation")
     public TableDataInfo attrRelation(AttrGroupRelation attrGroupRelation) {
         startPage();
         return getDataTable(attrService.selectAttrByAttrGroupId(attrGroupRelation));
+    }
+
+    /**
+     * 查询未关联的属性
+     *
+     * @param attrGroupRelation
+     * @return
+     */
+    @GetMapping("/noAttrRelation")
+    public TableDataInfo noAttrRelation(AttrGroupRelation attrGroupRelation) {
+        startPage();
+        return getDataTable(attrService.selectNoAttrByAttrGroupId(attrGroupRelation));
     }
 
     /**
@@ -91,7 +109,7 @@ public class AttrController extends BaseController {
      */
     @RequiresPermissions("product:attr:remove")
     @Log(title = "商品属性", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{attrIds}")
+    @DeleteMapping("/{attrIds}")
     public AjaxResult remove(@PathVariable Long[] attrIds) {
         return toAjax(attrService.deleteAttrByAttrIds(attrIds));
     }

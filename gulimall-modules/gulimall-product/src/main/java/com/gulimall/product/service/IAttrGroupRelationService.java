@@ -53,4 +53,6 @@ public interface IAttrGroupRelationService extends IService<AttrGroupRelation> {
      */
     int deleteAttrGroupRelationByIds(Long[] ids);
 
+    int delRelationByAttrIds(AttrGroupRelationDTO attrGroupRelationDTO);
+
 }

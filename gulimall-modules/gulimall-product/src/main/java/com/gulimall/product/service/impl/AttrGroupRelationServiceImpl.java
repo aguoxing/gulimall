@@ -1,5 +1,6 @@
 package com.gulimall.product.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gulimall.product.domain.AttrGroupRelation;
 import com.gulimall.product.domain.dto.AttrGroupRelationDTO;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 属性&属性分组关联Service业务层处理
@@ -84,6 +86,20 @@ public class AttrGroupRelationServiceImpl extends ServiceImpl<AttrGroupRelationM
     @Override
     public int deleteAttrGroupRelationByIds(Long[] ids) {
         return attrGroupRelationMapper.deleteBatchIds(Arrays.asList(ids));
+    }
+
+    @Override
+    public int delRelationByAttrIds(AttrGroupRelationDTO attrGroupRelationDTO) {
+        List<Long> attrIds = attrGroupRelationDTO.getAttrIds();
+        List<Long> ids = new ArrayList<>();
+        for (Long attrId : attrIds) {
+            List<Long> attrGroupRelationIds = attrGroupRelationMapper.selectList(new LambdaQueryWrapper<AttrGroupRelation>()
+                    .eq(AttrGroupRelation::getAttrGroupId, attrGroupRelationDTO.getAttrGroupId())
+                    .eq(AttrGroupRelation::getAttrId, attrId)
+            ).stream().map(AttrGroupRelation::getId).collect(Collectors.toList());
+            ids.addAll(attrGroupRelationIds);
+        }
+        return this.removeByIds(ids) ? 1 : 0;
     }
 
 }

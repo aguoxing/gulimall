@@ -20,6 +20,15 @@ export function listAttrRelation(query) {
   })
 }
 
+// 查询未关联的商品属性列表
+export function listNoAttrRelation(query) {
+  return request({
+    url: `/${service_name}/noAttrRelation`,
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询商品属性详细
 export function getAttr(attrId) {
   return request({

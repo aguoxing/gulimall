@@ -11,10 +11,11 @@ export function addAttrGroupRelation(data) {
   })
 }
 
-// 删除属性&属性分组关联
-export function delAttrGroupRelation(id) {
+// 删除属性组关联
+export function delRelationByAttrIds(data) {
   return request({
-    url: `/${service_name}/` + id,
-    method: 'delete'
+    url: `/${service_name}/delRelation`,
+    method: 'post',
+    data: data
   })
 }

@@ -10,6 +10,18 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="所属分类" prop="catalogId">
+        <category-cascader
+          :catalog-id="queryParams.catalogId"
+          @categoryChange="queryParamsCategoryChange"
+        ></category-cascader>
+      </el-form-item>
+      <el-form-item label="所属品牌" prop="brandId">
+        <brand-select
+          :brand-id="queryParams.brandId"
+          @brandChange="queryParamsBrandChange"
+        ></brand-select>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -102,13 +114,38 @@
     />
 
     <!-- 添加或修改spu信息对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog
+      :title="title"
+      :visible.sync="open"
+      width="650px"
+      append-to-body
+    >
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="商品名称" prop="spuName">
           <el-input v-model="form.spuName" placeholder="请输入商品名称" />
         </el-form-item>
         <el-form-item label="商品描述" prop="spuDescription">
           <el-input v-model="form.spuDescription" type="textarea" placeholder="请输入内容" />
+        </el-form-item>
+        <el-form-item label="所属分类" prop="catalogId">
+          <category-cascader
+            :catalog-id="form.catalogId"
+            @categoryChange="categoryChange"
+          ></category-cascader>
+        </el-form-item>
+        <el-form-item label="所属品牌" prop="brandId">
+          <brand-select
+            :model-brand-id="form.brandId"
+            @brandChange="brandChange"
+          ></brand-select>
+        </el-form-item>
+        <el-form-item label="重量" prop="weight">
+          <el-input-number
+            v-model="form.weight"
+            style="width: 100%"
+            :min="0"
+            :precision="2"
+          ></el-input-number>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -121,10 +158,16 @@
 
 <script>
 import { listSpuInfo, getSpuInfo, delSpuInfo, addSpuInfo, updateSpuInfo } from "@/api/product/spuInfo";
+import BrandSelect from "@/views/product/brand/BrandSelect";
+import CategoryCascader from "@/views/product/category/CategoryCascader";
 
 export default {
   name: "SpuInfo",
   dicts: ['pms_publish_status'],
+  components: {
+    BrandSelect,
+    CategoryCascader
+  },
   props: {
     currentNode: {
       type: Object,
@@ -165,7 +208,17 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {}
+      rules: {
+        spuName: [
+          {required: true, message: '名称不能为空', trigger: 'blur'}
+        ],
+        spuDescription: [
+          {required: true, message: '描述不能为空', trigger: 'blur'}
+        ],
+        catalogId: [
+          {required: true, message: '请选择分类', trigger: 'blur'}
+        ]
+      }
     };
   },
   watch: {
@@ -175,7 +228,7 @@ export default {
     }
   },
   created() {
-
+    this.getList();
   },
   methods: {
     /** 查询spu信息列表 */
@@ -200,8 +253,8 @@ export default {
         spuDescription: null,
         catalogId: null,
         brandId: null,
-        weight: null,
-        publishStatus: 0,
+        weight: 0,
+        publishStatus: 2,
         createTime: null,
         updateTime: null
       };
@@ -274,6 +327,19 @@ export default {
       this.download('product/spuInfo/export', {
         ...this.queryParams
       }, `spuInfo_${new Date().getTime()}.xlsx`)
+    },
+
+    categoryChange(data) {
+      this.form.catalogId = data;
+    },
+    brandChange(data) {
+      this.form.brandId = data;
+    },
+    queryParamsCategoryChange(data) {
+      this.queryParams.catalogId = data;
+    },
+    queryParamsBrandChange(data) {
+      this.queryParams.brandId = data;
     }
   }
 };

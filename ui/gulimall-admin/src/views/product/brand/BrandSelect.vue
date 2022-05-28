@@ -23,16 +23,28 @@ import {listBrand} from "@/api/product/brand";
 export default {
   name: "BrandSelect",
   props: {
-
+    modelBrandId: {
+      type: Number,
+      default: null
+    }
   },
   data() {
     return {
-      brandId: null,
       brandOptions: []
     }
   },
   created() {
     this.getBrandList();
+  },
+  computed: {
+    brandId: {
+      set() {
+        return this.brandId;
+      },
+      get() {
+        return this.modelBrandId;
+      }
+    }
   },
   methods: {
     getBrandList() {
