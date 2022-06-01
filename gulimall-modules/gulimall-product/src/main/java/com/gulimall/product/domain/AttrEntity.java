@@ -34,7 +34,7 @@ public class AttrEntity implements Serializable {
      * 属性id
      */
     @TableId(value = "attr_id", type = IdType.AUTO)
-    private Long attrId;
+    private String attrId;
 
     /**
      * 属性名

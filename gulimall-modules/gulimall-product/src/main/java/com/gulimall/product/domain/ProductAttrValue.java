@@ -33,19 +33,19 @@ public class ProductAttrValue implements Serializable {
      * id
      */
     @TableId(value = "id")
-    private Long id;
+    private String id;
 
     /**
      * 商品id
      */
     @Excel(name = "商品id")
-    private Long spuId;
+    private String spuId;
 
     /**
      * 属性id
      */
     @Excel(name = "属性id")
-    private Long attrId;
+    private String attrId;
 
     /**
      * 属性名

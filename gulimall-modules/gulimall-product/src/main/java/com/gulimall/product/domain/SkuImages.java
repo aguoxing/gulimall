@@ -40,7 +40,7 @@ public class SkuImages implements Serializable {
      * sku_id
      */
     @Excel(name = "sku_id")
-    private Long skuId;
+    private String skuId;
 
     /**
      * 图片地址

@@ -26,7 +26,7 @@ public class ItemController {
      * @return
      */
     @GetMapping("/{skuId}.html")
-    public String skuItem(@PathVariable("skuId") Long skuId, Model model) throws ExecutionException, InterruptedException {
+    public String skuItem(@PathVariable("skuId") String skuId, Model model) throws ExecutionException, InterruptedException {
 
         System.out.println("准备查询" + skuId + "详情");
 

@@ -1,6 +1,5 @@
 package com.gulimall.product.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -33,20 +32,20 @@ public class SkuSaleAttrValue implements Serializable {
     /**
      * id
      */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    @TableId(value = "id")
+    private String id;
 
     /**
      * sku_id
      */
     @Excel(name = "sku_id")
-    private Long skuId;
+    private String skuId;
 
     /**
      * attr_id
      */
     @Excel(name = "attr_id")
-    private Long attrId;
+    private String attrId;
 
     /**
      * 销售属性名
@@ -64,7 +63,7 @@ public class SkuSaleAttrValue implements Serializable {
      * 顺序
      */
     @Excel(name = "顺序")
-    private Long attrSort;
+    private Integer attrSort;
 
     @TableField(exist = false)
     private Map<String, Object> params = new HashMap<>();

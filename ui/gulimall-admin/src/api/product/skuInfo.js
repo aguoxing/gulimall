@@ -44,3 +44,19 @@ export function delSkuInfo(skuId) {
     method: 'delete'
   })
 }
+
+export function genSkuList(data) {
+  return request({
+    url: `/${service_name}/genSkuList`,
+    method: 'post',
+    data: data
+  })
+}
+
+export function saveSkuList(data) {
+  return request({
+    url: `/${service_name}/saveSkuList`,
+    method: 'post',
+    data: data
+  })
+}

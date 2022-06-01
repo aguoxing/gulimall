@@ -33,7 +33,7 @@ public class SpuInfoDesc implements Serializable {
      * 商品id
      */
     @TableId(value = "spu_id")
-    private Long spuId;
+    private String spuId;
 
     /**
      * 商品介绍

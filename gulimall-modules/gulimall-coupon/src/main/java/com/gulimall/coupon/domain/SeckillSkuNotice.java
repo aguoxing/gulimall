@@ -1,21 +1,20 @@
 package com.gulimall.coupon.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.gulimall.common.core.annotation.Excel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import com.gulimall.common.core.annotation.Excel;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
+
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Map;
 import java.util.HashMap;
-import java.math.BigDecimal;
+import java.util.Map;
 
 /**
  * 秒杀商品通知订阅对象 sms_seckill_sku_notice
@@ -42,7 +41,7 @@ public class SeckillSkuNotice implements Serializable {
 
     /** sku_id */
     @Excel(name = "sku_id")
-    private Long skuId;
+    private String skuId;
 
     /** 活动场次id */
     @Excel(name = "活动场次id")

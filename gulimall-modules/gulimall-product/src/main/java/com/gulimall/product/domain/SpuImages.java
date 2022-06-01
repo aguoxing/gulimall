@@ -40,7 +40,7 @@ public class SpuImages implements Serializable {
      * spu_id
      */
     @Excel(name = "spu_id")
-    private Long spuId;
+    private String spuId;
 
     /**
      * 图片名

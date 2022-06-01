@@ -1,21 +1,19 @@
 package com.gulimall.coupon.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.gulimall.common.core.annotation.Excel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import com.gulimall.common.core.annotation.Excel;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
+
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Map;
-import java.util.HashMap;
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 商品阶梯价格对象 sms_sku_ladder
@@ -38,7 +36,7 @@ public class SkuLadder implements Serializable {
 
     /** spu_id */
     @Excel(name = "spu_id")
-    private Long skuId;
+    private String skuId;
 
     /** 满几件 */
     @Excel(name = "满几件")

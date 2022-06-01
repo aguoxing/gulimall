@@ -1,6 +1,5 @@
 package com.gulimall.product.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -34,14 +33,14 @@ public class SkuInfo implements Serializable {
     /**
      * skuId
      */
-    @TableId(value = "sku_id", type = IdType.AUTO)
-    private Long skuId;
+    @TableId(value = "sku_id")
+    private String skuId;
 
     /**
      * spuId
      */
     @Excel(name = "spuId")
-    private Long spuId;
+    private String spuId;
 
     /**
      * sku名称

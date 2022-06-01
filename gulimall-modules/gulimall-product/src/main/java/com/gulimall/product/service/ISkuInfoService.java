@@ -2,6 +2,8 @@ package com.gulimall.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.gulimall.product.domain.SkuInfo;
+import com.gulimall.product.domain.dto.GenSkuDTO;
+import com.gulimall.product.domain.vo.SkuInfoVO;
 import com.gulimall.product.domain.vo.SkuItemVo;
 
 import java.util.List;
@@ -54,10 +56,26 @@ public interface ISkuInfoService extends IService<SkuInfo> {
     int deleteSkuInfoBySkuIds(Long[] skuIds);
 
     /**
+     * 生成sku列表
+     *
+     * @param genSkuDTO
+     * @return
+     */
+    List<SkuInfoVO> genSkuList(GenSkuDTO genSkuDTO);
+
+    /**
+     * 保存
+     *
+     * @param skuInfoVOList
+     * @return
+     */
+    int saveSkuList(List<SkuInfoVO> skuInfoVOList);
+
+    /**
      * 查询商品详情
      *
      * @param skuId
      * @return
      */
-    SkuItemVo item(Long skuId);
+    SkuItemVo item(String skuId);
 }

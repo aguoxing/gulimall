@@ -41,13 +41,13 @@ public class SpuComment implements Serializable {
      * sku_id
      */
     @Excel(name = "sku_id")
-    private Long skuId;
+    private String skuId;
 
     /**
      * spu_id
      */
     @Excel(name = "spu_id")
-    private Long spuId;
+    private String spuId;
 
     /**
      * 商品名字
