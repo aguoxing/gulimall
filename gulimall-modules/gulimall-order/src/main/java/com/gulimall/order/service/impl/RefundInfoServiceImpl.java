@@ -1,17 +1,18 @@
 package com.gulimall.order.service.impl;
 
-import java.util.Arrays;
-import java.util.List;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.gulimall.order.domain.RefundInfo;
+import com.gulimall.order.mapper.RefundInfoMapper;
+import com.gulimall.order.service.IRefundInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.gulimall.order.mapper.RefundInfoMapper;
-import com.gulimall.order.domain.RefundInfo;
-import com.gulimall.order.service.IRefundInfoService;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 退款信息Service业务层处理
- * 
+ *
  * @author admin
  * @date 2022-02-15
  */
@@ -22,7 +23,7 @@ public class RefundInfoServiceImpl extends ServiceImpl<RefundInfoMapper, RefundI
 
     /**
      * 查询退款信息
-     * 
+     *
      * @param id 退款信息主键
      * @return 退款信息
      */
@@ -33,7 +34,7 @@ public class RefundInfoServiceImpl extends ServiceImpl<RefundInfoMapper, RefundI
 
     /**
      * 查询退款信息列表
-     * 
+     *
      * @param refundInfo 退款信息
      * @return 退款信息
      */
@@ -44,7 +45,7 @@ public class RefundInfoServiceImpl extends ServiceImpl<RefundInfoMapper, RefundI
 
     /**
      * 新增退款信息
-     * 
+     *
      * @param refundInfo 退款信息
      * @return 结果
      */
@@ -55,7 +56,7 @@ public class RefundInfoServiceImpl extends ServiceImpl<RefundInfoMapper, RefundI
 
     /**
      * 修改退款信息
-     * 
+     *
      * @param refundInfo 退款信息
      * @return 结果
      */
@@ -66,7 +67,7 @@ public class RefundInfoServiceImpl extends ServiceImpl<RefundInfoMapper, RefundI
 
     /**
      * 批量删除退款信息
-     * 
+     *
      * @param ids 需要删除的退款信息主键
      * @return 结果
      */

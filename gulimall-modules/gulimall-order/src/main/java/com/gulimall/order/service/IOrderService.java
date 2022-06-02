@@ -1,12 +1,13 @@
 package com.gulimall.order.service;
 
-import java.util.List;
-import com.gulimall.order.domain.Order;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.gulimall.order.domain.Order;
+
+import java.util.List;
 
 /**
  * 订单Service接口
- * 
+ *
  * @author admin
  * @date 2022-02-15
  */
@@ -21,7 +22,7 @@ public interface IOrderService extends IService<Order> {
 
     /**
      * 查询订单列表
-     * 
+     *
      * @param order 订单
      * @return 订单集合
      */
@@ -29,7 +30,7 @@ public interface IOrderService extends IService<Order> {
 
     /**
      * 新增订单
-     * 
+     *
      * @param order 订单
      * @return 结果
      */
@@ -37,7 +38,7 @@ public interface IOrderService extends IService<Order> {
 
     /**
      * 修改订单
-     * 
+     *
      * @param order 订单
      * @return 结果
      */
@@ -45,7 +46,7 @@ public interface IOrderService extends IService<Order> {
 
     /**
      * 批量删除订单
-     * 
+     *
      * @param ids 需要删除的订单主键集合
      * @return 结果
      */

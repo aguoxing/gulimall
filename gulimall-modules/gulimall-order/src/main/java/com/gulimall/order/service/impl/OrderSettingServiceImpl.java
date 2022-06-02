@@ -1,17 +1,18 @@
 package com.gulimall.order.service.impl;
 
-import java.util.Arrays;
-import java.util.List;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.gulimall.order.domain.OrderSetting;
+import com.gulimall.order.mapper.OrderSettingMapper;
+import com.gulimall.order.service.IOrderSettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.gulimall.order.mapper.OrderSettingMapper;
-import com.gulimall.order.domain.OrderSetting;
-import com.gulimall.order.service.IOrderSettingService;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 订单配置信息Service业务层处理
- * 
+ *
  * @author admin
  * @date 2022-02-15
  */
@@ -22,7 +23,7 @@ public class OrderSettingServiceImpl extends ServiceImpl<OrderSettingMapper, Ord
 
     /**
      * 查询订单配置信息
-     * 
+     *
      * @param id 订单配置信息主键
      * @return 订单配置信息
      */
@@ -33,7 +34,7 @@ public class OrderSettingServiceImpl extends ServiceImpl<OrderSettingMapper, Ord
 
     /**
      * 查询订单配置信息列表
-     * 
+     *
      * @param orderSetting 订单配置信息
      * @return 订单配置信息
      */
@@ -44,7 +45,7 @@ public class OrderSettingServiceImpl extends ServiceImpl<OrderSettingMapper, Ord
 
     /**
      * 新增订单配置信息
-     * 
+     *
      * @param orderSetting 订单配置信息
      * @return 结果
      */
@@ -55,7 +56,7 @@ public class OrderSettingServiceImpl extends ServiceImpl<OrderSettingMapper, Ord
 
     /**
      * 修改订单配置信息
-     * 
+     *
      * @param orderSetting 订单配置信息
      * @return 结果
      */
@@ -66,7 +67,7 @@ public class OrderSettingServiceImpl extends ServiceImpl<OrderSettingMapper, Ord
 
     /**
      * 批量删除订单配置信息
-     * 
+     *
      * @param ids 需要删除的订单配置信息主键
      * @return 结果
      */

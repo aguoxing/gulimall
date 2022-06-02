@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.order.mapper.AlipayConfigMapper">
+    
+    <resultMap type="AlipayConfig" id="AlipayConfigResult">
+        <result property="configId" column="config_id" />
+        <result property="sysServiceProviderId" column="sys_service_provider_id" />
+        <result property="appId" column="app_id" />
+        <result property="charset" column="charset" />
+        <result property="format" column="format" />
+        <result property="gatewayUrl" column="gateway_url" />
+        <result property="notifyUrl" column="notify_url" />
+        <result property="privateKey" column="private_key" />
+        <result property="publicKey" column="public_key" />
+        <result property="returnUrl" column="return_url" />
+        <result property="signType" column="sign_type" />
+    </resultMap>
+
+    <sql id="selectAlipayConfigVo">
+        select config_id, sys_service_provider_id, app_id, charset, format, gateway_url, notify_url, private_key, public_key, return_url, sign_type from oms_alipay_config
+    </sql>
+
+    <select id="selectAlipayConfigList" parameterType="AlipayConfig" resultMap="AlipayConfigResult">
+        <include refid="selectAlipayConfigVo"/>
+        <where>  
+            <if test="sysServiceProviderId != null  and sysServiceProviderId != ''"> and sys_service_provider_id = #{sysServiceProviderId}</if>
+            <if test="appId != null  and appId != ''"> and app_id = #{appId}</if>
+            <if test="charset != null  and charset != ''"> and charset = #{charset}</if>
+            <if test="format != null  and format != ''"> and format = #{format}</if>
+            <if test="gatewayUrl != null  and gatewayUrl != ''"> and gateway_url = #{gatewayUrl}</if>
+            <if test="notifyUrl != null  and notifyUrl != ''"> and notify_url = #{notifyUrl}</if>
+            <if test="privateKey != null  and privateKey != ''"> and private_key = #{privateKey}</if>
+            <if test="publicKey != null  and publicKey != ''"> and public_key = #{publicKey}</if>
+            <if test="returnUrl != null  and returnUrl != ''"> and return_url = #{returnUrl}</if>
+            <if test="signType != null  and signType != ''"> and sign_type = #{signType}</if>
+        </where>
+    </select>
+
+</mapper>

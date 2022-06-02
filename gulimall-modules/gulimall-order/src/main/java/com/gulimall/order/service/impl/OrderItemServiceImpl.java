@@ -1,17 +1,18 @@
 package com.gulimall.order.service.impl;
 
-import java.util.Arrays;
-import java.util.List;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.gulimall.order.domain.OrderItem;
+import com.gulimall.order.mapper.OrderItemMapper;
+import com.gulimall.order.service.IOrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.gulimall.order.mapper.OrderItemMapper;
-import com.gulimall.order.domain.OrderItem;
-import com.gulimall.order.service.IOrderItemService;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 订单项信息Service业务层处理
- * 
+ *
  * @author admin
  * @date 2022-02-15
  */
@@ -22,7 +23,7 @@ public class OrderItemServiceImpl extends ServiceImpl<OrderItemMapper, OrderItem
 
     /**
      * 查询订单项信息
-     * 
+     *
      * @param id 订单项信息主键
      * @return 订单项信息
      */
@@ -33,7 +34,7 @@ public class OrderItemServiceImpl extends ServiceImpl<OrderItemMapper, OrderItem
 
     /**
      * 查询订单项信息列表
-     * 
+     *
      * @param orderItem 订单项信息
      * @return 订单项信息
      */
@@ -44,7 +45,7 @@ public class OrderItemServiceImpl extends ServiceImpl<OrderItemMapper, OrderItem
 
     /**
      * 新增订单项信息
-     * 
+     *
      * @param orderItem 订单项信息
      * @return 结果
      */
@@ -55,7 +56,7 @@ public class OrderItemServiceImpl extends ServiceImpl<OrderItemMapper, OrderItem
 
     /**
      * 修改订单项信息
-     * 
+     *
      * @param orderItem 订单项信息
      * @return 结果
      */
@@ -66,7 +67,7 @@ public class OrderItemServiceImpl extends ServiceImpl<OrderItemMapper, OrderItem
 
     /**
      * 批量删除订单项信息
-     * 
+     *
      * @param ids 需要删除的订单项信息主键
      * @return 结果
      */

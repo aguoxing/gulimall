@@ -1,12 +1,13 @@
 package com.gulimall.order.service;
 
-import java.util.List;
-import com.gulimall.order.domain.OrderReturnReason;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.gulimall.order.domain.OrderReturnReason;
+
+import java.util.List;
 
 /**
  * 退货原因Service接口
- * 
+ *
  * @author admin
  * @date 2022-02-15
  */
@@ -21,7 +22,7 @@ public interface IOrderReturnReasonService extends IService<OrderReturnReason> {
 
     /**
      * 查询退货原因列表
-     * 
+     *
      * @param orderReturnReason 退货原因
      * @return 退货原因集合
      */
@@ -29,7 +30,7 @@ public interface IOrderReturnReasonService extends IService<OrderReturnReason> {
 
     /**
      * 新增退货原因
-     * 
+     *
      * @param orderReturnReason 退货原因
      * @return 结果
      */
@@ -37,7 +38,7 @@ public interface IOrderReturnReasonService extends IService<OrderReturnReason> {
 
     /**
      * 修改退货原因
-     * 
+     *
      * @param orderReturnReason 退货原因
      * @return 结果
      */
@@ -45,7 +46,7 @@ public interface IOrderReturnReasonService extends IService<OrderReturnReason> {
 
     /**
      * 批量删除退货原因
-     * 
+     *
      * @param ids 需要删除的退货原因主键集合
      * @return 结果
      */

@@ -1,18 +1,19 @@
 package com.gulimall.order.service.impl;
 
-import java.util.Arrays;
-import java.util.List;
-import com.gulimall.common.core.utils.DateUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.gulimall.common.core.utils.DateUtils;
+import com.gulimall.order.domain.OrderReturnReason;
+import com.gulimall.order.mapper.OrderReturnReasonMapper;
+import com.gulimall.order.service.IOrderReturnReasonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.gulimall.order.mapper.OrderReturnReasonMapper;
-import com.gulimall.order.domain.OrderReturnReason;
-import com.gulimall.order.service.IOrderReturnReasonService;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 退货原因Service业务层处理
- * 
+ *
  * @author admin
  * @date 2022-02-15
  */
@@ -23,7 +24,7 @@ public class OrderReturnReasonServiceImpl extends ServiceImpl<OrderReturnReasonM
 
     /**
      * 查询退货原因
-     * 
+     *
      * @param id 退货原因主键
      * @return 退货原因
      */
@@ -34,7 +35,7 @@ public class OrderReturnReasonServiceImpl extends ServiceImpl<OrderReturnReasonM
 
     /**
      * 查询退货原因列表
-     * 
+     *
      * @param orderReturnReason 退货原因
      * @return 退货原因
      */
@@ -45,7 +46,7 @@ public class OrderReturnReasonServiceImpl extends ServiceImpl<OrderReturnReasonM
 
     /**
      * 新增退货原因
-     * 
+     *
      * @param orderReturnReason 退货原因
      * @return 结果
      */
@@ -57,7 +58,7 @@ public class OrderReturnReasonServiceImpl extends ServiceImpl<OrderReturnReasonM
 
     /**
      * 修改退货原因
-     * 
+     *
      * @param orderReturnReason 退货原因
      * @return 结果
      */
@@ -68,7 +69,7 @@ public class OrderReturnReasonServiceImpl extends ServiceImpl<OrderReturnReasonM
 
     /**
      * 批量删除退货原因
-     * 
+     *
      * @param ids 需要删除的退货原因主键
      * @return 结果
      */

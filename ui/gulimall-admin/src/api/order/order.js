@@ -44,3 +44,11 @@ export function delOrder(id) {
     method: 'delete'
   })
 }
+
+export function demoPay(query) {
+  return request({
+    url: `/order/pc/pay`,
+    method: 'get',
+    params: query
+  })
+}
