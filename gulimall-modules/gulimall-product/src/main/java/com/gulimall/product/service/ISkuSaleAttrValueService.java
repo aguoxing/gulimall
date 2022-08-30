@@ -1,12 +1,13 @@
 package com.gulimall.product.service;
 
-import java.util.List;
-import com.gulimall.product.domain.SkuSaleAttrValue;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.gulimall.product.domain.SkuSaleAttrValue;
+
+import java.util.List;
 
 /**
  * sku销售属性&值Service接口
- * 
+ *
  * @author admin
  * @date 2022-02-14
  */
@@ -21,7 +22,7 @@ public interface ISkuSaleAttrValueService extends IService<SkuSaleAttrValue> {
 
     /**
      * 查询sku销售属性&值列表
-     * 
+     *
      * @param skuSaleAttrValue sku销售属性&值
      * @return sku销售属性&值集合
      */
@@ -29,7 +30,7 @@ public interface ISkuSaleAttrValueService extends IService<SkuSaleAttrValue> {
 
     /**
      * 新增sku销售属性&值
-     * 
+     *
      * @param skuSaleAttrValue sku销售属性&值
      * @return 结果
      */
@@ -37,7 +38,7 @@ public interface ISkuSaleAttrValueService extends IService<SkuSaleAttrValue> {
 
     /**
      * 修改sku销售属性&值
-     * 
+     *
      * @param skuSaleAttrValue sku销售属性&值
      * @return 结果
      */
@@ -45,7 +46,7 @@ public interface ISkuSaleAttrValueService extends IService<SkuSaleAttrValue> {
 
     /**
      * 批量删除sku销售属性&值
-     * 
+     *
      * @param ids 需要删除的sku销售属性&值主键集合
      * @return 结果
      */

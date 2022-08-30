@@ -41,6 +41,11 @@ public class AttrDTO implements Serializable {
     private String valueSelect;
 
     /**
+     * 值类型
+     */
+    private Integer valType;
+
+    /**
      * 属性类型[0-销售属性，1-基本属性，2-既是销售属性又是基本属性]
      */
     private Integer attrType;

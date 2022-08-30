@@ -45,9 +45,9 @@ export function delSkuInfo(skuId) {
   })
 }
 
-export function genSkuList(data) {
+export function descartesSkuList(data) {
   return request({
-    url: `/${service_name}/genSkuList`,
+    url: `/${service_name}/descartesSkuList`,
     method: 'post',
     data: data
   })

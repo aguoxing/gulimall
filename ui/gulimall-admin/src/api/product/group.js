@@ -44,3 +44,12 @@ export function delGroup(attrGroupId) {
     method: 'delete'
   })
 }
+
+// 查询属性分组Vo
+export function getAttrGroupWithAttrVo(query) {
+  return request({
+    url: `/${service_name}/getAttrGroupWithAttrVo`,
+    method: 'get',
+    params: query
+  })
+}

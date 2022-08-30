@@ -1,12 +1,13 @@
 package com.gulimall.product.service;
 
-import java.util.List;
-import com.gulimall.product.domain.SpuComment;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.gulimall.product.domain.SpuComment;
+
+import java.util.List;
 
 /**
  * 商品评价Service接口
- * 
+ *
  * @author admin
  * @date 2022-02-14
  */
@@ -21,7 +22,7 @@ public interface ISpuCommentService extends IService<SpuComment> {
 
     /**
      * 查询商品评价列表
-     * 
+     *
      * @param spuComment 商品评价
      * @return 商品评价集合
      */
@@ -29,7 +30,7 @@ public interface ISpuCommentService extends IService<SpuComment> {
 
     /**
      * 新增商品评价
-     * 
+     *
      * @param spuComment 商品评价
      * @return 结果
      */
@@ -37,7 +38,7 @@ public interface ISpuCommentService extends IService<SpuComment> {
 
     /**
      * 修改商品评价
-     * 
+     *
      * @param spuComment 商品评价
      * @return 结果
      */
@@ -45,7 +46,7 @@ public interface ISpuCommentService extends IService<SpuComment> {
 
     /**
      * 批量删除商品评价
-     * 
+     *
      * @param ids 需要删除的商品评价主键集合
      * @return 结果
      */

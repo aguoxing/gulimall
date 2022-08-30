@@ -1,18 +1,18 @@
 package com.gulimall.product.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.gulimall.product.domain.SkuSaleAttrValue;
+import com.gulimall.product.mapper.SkuSaleAttrValueMapper;
+import com.gulimall.product.service.ISkuSaleAttrValueService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.Arrays;
 import java.util.List;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.gulimall.product.mapper.SkuSaleAttrValueMapper;
-import com.gulimall.product.domain.SkuSaleAttrValue;
-import com.gulimall.product.service.ISkuSaleAttrValueService;
-
 /**
  * sku销售属性&值Service业务层处理
- * 
+ *
  * @author admin
  * @date 2022-02-14
  */
@@ -23,7 +23,7 @@ public class SkuSaleAttrValueServiceImpl extends ServiceImpl<SkuSaleAttrValueMap
 
     /**
      * 查询sku销售属性&值
-     * 
+     *
      * @param id sku销售属性&值主键
      * @return sku销售属性&值
      */
@@ -34,7 +34,7 @@ public class SkuSaleAttrValueServiceImpl extends ServiceImpl<SkuSaleAttrValueMap
 
     /**
      * 查询sku销售属性&值列表
-     * 
+     *
      * @param skuSaleAttrValue sku销售属性&值
      * @return sku销售属性&值
      */
@@ -45,7 +45,7 @@ public class SkuSaleAttrValueServiceImpl extends ServiceImpl<SkuSaleAttrValueMap
 
     /**
      * 新增sku销售属性&值
-     * 
+     *
      * @param skuSaleAttrValue sku销售属性&值
      * @return 结果
      */
@@ -56,7 +56,7 @@ public class SkuSaleAttrValueServiceImpl extends ServiceImpl<SkuSaleAttrValueMap
 
     /**
      * 修改sku销售属性&值
-     * 
+     *
      * @param skuSaleAttrValue sku销售属性&值
      * @return 结果
      */
@@ -67,7 +67,7 @@ public class SkuSaleAttrValueServiceImpl extends ServiceImpl<SkuSaleAttrValueMap
 
     /**
      * 批量删除sku销售属性&值
-     * 
+     *
      * @param ids 需要删除的sku销售属性&值主键
      * @return 结果
      */

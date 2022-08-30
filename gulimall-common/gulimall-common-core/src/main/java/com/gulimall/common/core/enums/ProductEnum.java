@@ -8,6 +8,9 @@ public enum ProductEnum {
     SHANGJIA("1", "上架"),
     XIAJIA("0", "下架"),
 
+    SALEATTR("0", "销售属性"),
+    BASEATTR("1", "基本属性")
+
     ;
 
     private final String code;

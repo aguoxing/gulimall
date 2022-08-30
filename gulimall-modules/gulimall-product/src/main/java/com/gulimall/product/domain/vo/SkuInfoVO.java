@@ -1,7 +1,6 @@
 package com.gulimall.product.domain.vo;
 
 import com.gulimall.product.domain.SkuSaleAttrValue;
-import com.gulimall.product.domain.dto.AttrDTO;
 import lombok.Data;
 import lombok.ToString;
 
@@ -77,5 +76,4 @@ public class SkuInfoVO implements Serializable {
 
     private List<SkuSaleAttrValue> skuSaleAttrValueList;
 
-    private List<AttrDTO> baseAttrInfoList;
 }

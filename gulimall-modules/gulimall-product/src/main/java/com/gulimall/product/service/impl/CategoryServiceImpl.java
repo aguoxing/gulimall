@@ -1,5 +1,17 @@
 package com.gulimall.product.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.gulimall.common.core.utils.StringUtils;
+import com.gulimall.common.redis.service.RedisService;
+import com.gulimall.product.domain.Category;
+import com.gulimall.product.domain.dto.CategoryDTO;
+import com.gulimall.product.domain.vo.Catelog2Vo;
+import com.gulimall.product.mapper.CategoryMapper;
+import com.gulimall.product.service.ICategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -7,18 +19,6 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.gulimall.common.core.utils.StringUtils;
-import com.gulimall.common.redis.service.RedisService;
-import com.gulimall.product.domain.dto.CategoryDTO;
-import com.gulimall.product.domain.vo.Catelog2Vo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.gulimall.product.mapper.CategoryMapper;
-import com.gulimall.product.domain.Category;
-import com.gulimall.product.service.ICategoryService;
 
 /**
  * 商品三级分类Service业务层处理

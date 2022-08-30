@@ -3,14 +3,15 @@ package com.gulimall.product.service.impl;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gulimall.common.core.enums.ProductEnum;
+import com.gulimall.common.core.utils.StringUtils;
 import com.gulimall.common.core.utils.bean.BeanUtils;
 import com.gulimall.product.domain.ProductAttrValue;
 import com.gulimall.product.domain.SkuInfo;
 import com.gulimall.product.domain.SkuSaleAttrValue;
 import com.gulimall.product.domain.SpuInfo;
 import com.gulimall.product.domain.dto.AttrDTO;
-import com.gulimall.product.domain.dto.AttrGroupWithAttrDTO;
 import com.gulimall.product.domain.dto.GenSkuDTO;
+import com.gulimall.product.domain.dto.SaveSkuListDTO;
 import com.gulimall.product.domain.vo.SkuInfoVO;
 import com.gulimall.product.domain.vo.SkuItemVo;
 import com.gulimall.product.mapper.ProductAttrValueMapper;
@@ -22,8 +23,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * sku信息Service业务层处理
@@ -104,33 +105,36 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> impl
      * @return
      */
     @Override
-    public List<SkuInfoVO> genSkuList(GenSkuDTO genSkuDTO) {
+    public List<SkuInfoVO> descartesSkuList(GenSkuDTO genSkuDTO) {
         List<SkuInfoVO> skuInfoVOList = new ArrayList<>();
-        List<AttrGroupWithAttrDTO> attrGroupWithAttrVoList = genSkuDTO.getAttrGroupWithAttrDtoList();
         Map<String, List<String>> map = new HashMap<>();
-        List<AttrDTO> attrInfoDTOList = new ArrayList<>();
-        for (AttrGroupWithAttrDTO attrGroupWithAttrVo : attrGroupWithAttrVoList) {
-            attrInfoDTOList.addAll(attrGroupWithAttrVo.getSaleAttrInfoList());
-        }
+        List<AttrDTO> saleAttrInfoDTOList = genSkuDTO.getSaleAttrInfoList();
 
-        for (AttrDTO attrInfoDTO : attrInfoDTOList) {
+        for (AttrDTO attrInfoDTO : saleAttrInfoDTOList) {
             if (attrInfoDTO.getAttrValues().size() > 0) {
                 map.put(attrInfoDTO.getAttrId(), attrInfoDTO.getAttrValues());
             }
         }
 
-        List<String> list = descartes(new ArrayList<>(map.values()));
+        List<String> list = StringUtils.descartes(new ArrayList<>(map.values()));
         for (String s : list) {
             List<String> tmp = Arrays.asList(s.split(","));
             SkuInfoVO skuInfoVO = new SkuInfoVO();
             List<SkuSaleAttrValue> skuSaleAttrValueList = new ArrayList<>();
             for (int i = 0; i < tmp.size(); i++) {
                 SkuSaleAttrValue skuSaleAttrValue = new SkuSaleAttrValue();
-                skuSaleAttrValue.setAttrId(attrInfoDTOList.get(i).getAttrId());
-                skuSaleAttrValue.setAttrName(attrInfoDTOList.get(i).getAttrName());
+                skuSaleAttrValue.setAttrId(saleAttrInfoDTOList.get(i).getAttrId());
+                skuSaleAttrValue.setAttrName(saleAttrInfoDTOList.get(i).getAttrName());
                 skuSaleAttrValue.setAttrValue(tmp.get(i));
                 skuSaleAttrValueList.add(skuSaleAttrValue);
             }
+
+            skuInfoVO.setCatalogId(genSkuDTO.getCatalogId());
+            skuInfoVO.setBrandId(genSkuDTO.getBrandId());
+            skuInfoVO.setSaleCount(0L);
+            skuInfoVO.setSkuName(genSkuDTO.getSkuName() + " " + s);
+            skuInfoVO.setPrice(new BigDecimal(0));
+
             skuInfoVO.setSkuSaleAttrValueList(skuSaleAttrValueList);
             skuInfoVOList.add(skuInfoVO);
         }
@@ -139,12 +143,30 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> impl
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public int saveSkuList(List<SkuInfoVO> skuInfoVOList) {
-        for (SkuInfoVO skuInfoVO : skuInfoVOList) {
+    public int saveSkuList(SaveSkuListDTO saveSkuListDTO) {
+        SpuInfo spuInfo = new SpuInfo();
+        BeanUtils.copyProperties(saveSkuListDTO.getSpuInfoDTO(), spuInfo);
+        String spuId = IdWorker.getIdStr();
+        spuInfo.setId(spuId);
+        spuInfo.setPublishStatus(Integer.valueOf(ProductEnum.SHANGJIA.getCode()));
+        spuInfoMapper.insert(spuInfo);
+
+        if (saveSkuListDTO.getBaseAttrInfoList().size() > 0) {
+            for (AttrDTO attrInfoDTO : saveSkuListDTO.getBaseAttrInfoList()) {
+                ProductAttrValue spuAttrValue = new ProductAttrValue();
+                BeanUtils.copyProperties(attrInfoDTO, spuAttrValue);
+                spuAttrValue.setId(IdWorker.getIdStr());
+                spuAttrValue.setSpuId(spuId);
+                productAttrValueMapper.insert(spuAttrValue);
+            }
+        }
+
+        for (SkuInfoVO skuInfoVO : saveSkuListDTO.getSkuInfoVoList()) {
             String skuId = IdWorker.getIdStr();
             SkuInfo skuInfo = new SkuInfo();
             BeanUtils.copyProperties(skuInfoVO, skuInfo);
             skuInfo.setSkuId(skuId);
+            skuInfo.setSpuId(spuId);
             for (SkuSaleAttrValue skuSaleAttrValue : skuInfoVO.getSkuSaleAttrValueList()) {
                 skuSaleAttrValue.setId(IdWorker.getIdStr());
                 skuSaleAttrValue.setSkuId(skuId);
@@ -152,31 +174,7 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> impl
             }
             skuInfoMapper.insert(skuInfo);
         }
-        if (skuInfoVOList.size() > 0) {
-            for (AttrDTO attrInfoDTO : skuInfoVOList.get(0).getBaseAttrInfoList()) {
-                ProductAttrValue spuAttrValue = new ProductAttrValue();
-                BeanUtils.copyProperties(attrInfoDTO, spuAttrValue);
-                spuAttrValue.setId(IdWorker.getIdStr());
-                spuAttrValue.setSpuId(skuInfoVOList.get(0).getSpuId());
-                productAttrValueMapper.insert(spuAttrValue);
-            }
-            SpuInfo spuInfo = spuInfoMapper.selectById(skuInfoVOList.get(0).getSpuId());
-            spuInfo.setPublishStatus(Integer.valueOf(ProductEnum.SHANGJIA.getCode()));
-            spuInfoMapper.updateById(spuInfo);
-        }
         return 1;
-    }
-
-    public static List<String> descartes(List<List<String>> lists) {
-        List<String> tempList = new ArrayList<>();
-        for (List<String> list : lists) {
-            if (tempList.isEmpty()) {
-                tempList = list;
-            } else {
-                tempList = tempList.stream().flatMap(item -> list.stream().map(item2 -> item + "," + item2)).collect(Collectors.toList());
-            }
-        }
-        return tempList;
     }
 
     /**

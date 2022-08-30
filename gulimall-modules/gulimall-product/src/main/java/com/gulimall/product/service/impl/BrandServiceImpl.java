@@ -1,18 +1,18 @@
 package com.gulimall.product.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.gulimall.product.domain.Brand;
+import com.gulimall.product.mapper.BrandMapper;
+import com.gulimall.product.service.IBrandService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.Arrays;
 import java.util.List;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.gulimall.product.mapper.BrandMapper;
-import com.gulimall.product.domain.Brand;
-import com.gulimall.product.service.IBrandService;
-
 /**
  * 品牌Service业务层处理
- * 
+ *
  * @author admin
  * @date 2022-02-14
  */
@@ -23,7 +23,7 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
 
     /**
      * 查询品牌
-     * 
+     *
      * @param brandId 品牌主键
      * @return 品牌
      */
@@ -34,7 +34,7 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
 
     /**
      * 查询品牌列表
-     * 
+     *
      * @param brand 品牌
      * @return 品牌
      */
@@ -45,7 +45,7 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
 
     /**
      * 新增品牌
-     * 
+     *
      * @param brand 品牌
      * @return 结果
      */
@@ -56,7 +56,7 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
 
     /**
      * 修改品牌
-     * 
+     *
      * @param brand 品牌
      * @return 结果
      */
@@ -67,7 +67,7 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
 
     /**
      * 批量删除品牌
-     * 
+     *
      * @param brandIds 需要删除的品牌主键
      * @return 结果
      */

@@ -1,12 +1,13 @@
 package com.gulimall.product.service;
 
-import java.util.List;
-import com.gulimall.product.domain.ProductAttrValue;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.gulimall.product.domain.ProductAttrValue;
+
+import java.util.List;
 
 /**
  * spu属性值Service接口
- * 
+ *
  * @author admin
  * @date 2022-02-14
  */
@@ -21,7 +22,7 @@ public interface IProductAttrValueService extends IService<ProductAttrValue> {
 
     /**
      * 查询spu属性值列表
-     * 
+     *
      * @param productAttrValue spu属性值
      * @return spu属性值集合
      */
@@ -29,7 +30,7 @@ public interface IProductAttrValueService extends IService<ProductAttrValue> {
 
     /**
      * 新增spu属性值
-     * 
+     *
      * @param productAttrValue spu属性值
      * @return 结果
      */
@@ -37,7 +38,7 @@ public interface IProductAttrValueService extends IService<ProductAttrValue> {
 
     /**
      * 修改spu属性值
-     * 
+     *
      * @param productAttrValue spu属性值
      * @return 结果
      */
@@ -45,7 +46,7 @@ public interface IProductAttrValueService extends IService<ProductAttrValue> {
 
     /**
      * 批量删除spu属性值
-     * 
+     *
      * @param ids 需要删除的spu属性值主键集合
      * @return 结果
      */

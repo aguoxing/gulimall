@@ -2,6 +2,7 @@
   <div class="attr-group-relation">
 
     <el-button
+      size="mini"
       style="margin-right: 10px"
       type="text"
       icon="el-icon-share"
@@ -24,6 +25,7 @@
                 plain
                 icon="el-icon-delete"
                 size="mini"
+                :disabled="multiple"
                 @click="handleDelete"
               >移除</el-button>
             </el-col>
@@ -49,6 +51,7 @@
                 plain
                 icon="el-icon-plus"
                 size="mini"
+                :disabled="attrMultiple"
                 @click="handleSubmit"
               >新增</el-button>
             </el-col>
@@ -158,7 +161,7 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
+      this.ids = selection.map(item => item.attrId)
       this.single = selection.length!==1
       this.multiple = !selection.length
     },

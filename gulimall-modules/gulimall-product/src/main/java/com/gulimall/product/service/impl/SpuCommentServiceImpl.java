@@ -1,19 +1,19 @@
 package com.gulimall.product.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.gulimall.common.core.utils.DateUtils;
+import com.gulimall.product.domain.SpuComment;
+import com.gulimall.product.mapper.SpuCommentMapper;
+import com.gulimall.product.service.ISpuCommentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.Arrays;
 import java.util.List;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.gulimall.common.core.utils.DateUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.gulimall.product.mapper.SpuCommentMapper;
-import com.gulimall.product.domain.SpuComment;
-import com.gulimall.product.service.ISpuCommentService;
-
 /**
  * 商品评价Service业务层处理
- * 
+ *
  * @author admin
  * @date 2022-02-14
  */
@@ -24,7 +24,7 @@ public class SpuCommentServiceImpl extends ServiceImpl<SpuCommentMapper, SpuComm
 
     /**
      * 查询商品评价
-     * 
+     *
      * @param id 商品评价主键
      * @return 商品评价
      */
@@ -35,7 +35,7 @@ public class SpuCommentServiceImpl extends ServiceImpl<SpuCommentMapper, SpuComm
 
     /**
      * 查询商品评价列表
-     * 
+     *
      * @param spuComment 商品评价
      * @return 商品评价
      */
@@ -46,7 +46,7 @@ public class SpuCommentServiceImpl extends ServiceImpl<SpuCommentMapper, SpuComm
 
     /**
      * 新增商品评价
-     * 
+     *
      * @param spuComment 商品评价
      * @return 结果
      */
@@ -58,7 +58,7 @@ public class SpuCommentServiceImpl extends ServiceImpl<SpuCommentMapper, SpuComm
 
     /**
      * 修改商品评价
-     * 
+     *
      * @param spuComment 商品评价
      * @return 结果
      */
@@ -69,7 +69,7 @@ public class SpuCommentServiceImpl extends ServiceImpl<SpuCommentMapper, SpuComm
 
     /**
      * 批量删除商品评价
-     * 
+     *
      * @param ids 需要删除的商品评价主键
      * @return 结果
      */

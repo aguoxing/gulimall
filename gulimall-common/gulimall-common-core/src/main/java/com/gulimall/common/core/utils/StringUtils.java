@@ -4,9 +4,11 @@ import com.gulimall.common.core.constant.Constants;
 import com.gulimall.common.core.text.StrFormatter;
 import org.springframework.util.AntPathMatcher;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 字符串工具类
@@ -414,5 +416,23 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     @SuppressWarnings("unchecked")
     public static <T> T cast(Object obj) {
         return (T) obj;
+    }
+
+    /**
+     * 笛卡尔积
+     *
+     * @param lists
+     * @return
+     */
+    public static List<String> descartes(List<List<String>> lists) {
+        List<String> tempList = new ArrayList<>();
+        for (List<String> list : lists) {
+            if (tempList.isEmpty()) {
+                tempList = list;
+            } else {
+                tempList = tempList.stream().flatMap(item -> list.stream().map(item2 -> item + "," + item2)).collect(Collectors.toList());
+            }
+        }
+        return tempList;
     }
 }

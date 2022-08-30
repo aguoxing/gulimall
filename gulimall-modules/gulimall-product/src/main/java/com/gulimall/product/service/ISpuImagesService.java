@@ -1,12 +1,13 @@
 package com.gulimall.product.service;
 
-import java.util.List;
-import com.gulimall.product.domain.SpuImages;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.gulimall.product.domain.SpuImages;
+
+import java.util.List;
 
 /**
  * spu图片Service接口
- * 
+ *
  * @author admin
  * @date 2022-02-14
  */
@@ -21,7 +22,7 @@ public interface ISpuImagesService extends IService<SpuImages> {
 
     /**
      * 查询spu图片列表
-     * 
+     *
      * @param spuImages spu图片
      * @return spu图片集合
      */
@@ -29,7 +30,7 @@ public interface ISpuImagesService extends IService<SpuImages> {
 
     /**
      * 新增spu图片
-     * 
+     *
      * @param spuImages spu图片
      * @return 结果
      */
@@ -37,7 +38,7 @@ public interface ISpuImagesService extends IService<SpuImages> {
 
     /**
      * 修改spu图片
-     * 
+     *
      * @param spuImages spu图片
      * @return 结果
      */
@@ -45,7 +46,7 @@ public interface ISpuImagesService extends IService<SpuImages> {
 
     /**
      * 批量删除spu图片
-     * 
+     *
      * @param ids 需要删除的spu图片主键集合
      * @return 结果
      */

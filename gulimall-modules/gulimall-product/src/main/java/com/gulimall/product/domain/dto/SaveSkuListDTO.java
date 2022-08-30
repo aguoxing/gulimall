@@ -14,5 +14,9 @@ import java.util.List;
 @Data
 @ToString
 public class SaveSkuListDTO implements Serializable {
+    private SpuInfoDTO spuInfoDTO;
+
+    private List<AttrDTO> baseAttrInfoList;
+
     List<SkuInfoVO> skuInfoVoList;
 }

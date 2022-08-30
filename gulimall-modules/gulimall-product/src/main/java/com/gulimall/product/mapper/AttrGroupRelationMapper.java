@@ -1,7 +1,6 @@
 package com.gulimall.product.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.gulimall.product.domain.AttrEntity;
 import com.gulimall.product.domain.AttrGroupRelation;
 
 import java.util.List;

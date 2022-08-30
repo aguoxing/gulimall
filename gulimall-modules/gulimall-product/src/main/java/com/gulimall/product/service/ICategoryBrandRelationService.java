@@ -1,12 +1,13 @@
 package com.gulimall.product.service;
 
-import java.util.List;
-import com.gulimall.product.domain.CategoryBrandRelation;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.gulimall.product.domain.CategoryBrandRelation;
+
+import java.util.List;
 
 /**
  * 品牌分类关联Service接口
- * 
+ *
  * @author admin
  * @date 2022-02-14
  */
@@ -21,7 +22,7 @@ public interface ICategoryBrandRelationService extends IService<CategoryBrandRel
 
     /**
      * 查询品牌分类关联列表
-     * 
+     *
      * @param categoryBrandRelation 品牌分类关联
      * @return 品牌分类关联集合
      */
@@ -29,7 +30,7 @@ public interface ICategoryBrandRelationService extends IService<CategoryBrandRel
 
     /**
      * 新增品牌分类关联
-     * 
+     *
      * @param categoryBrandRelation 品牌分类关联
      * @return 结果
      */
@@ -37,7 +38,7 @@ public interface ICategoryBrandRelationService extends IService<CategoryBrandRel
 
     /**
      * 修改品牌分类关联
-     * 
+     *
      * @param categoryBrandRelation 品牌分类关联
      * @return 结果
      */
@@ -45,7 +46,7 @@ public interface ICategoryBrandRelationService extends IService<CategoryBrandRel
 
     /**
      * 批量删除品牌分类关联
-     * 
+     *
      * @param ids 需要删除的品牌分类关联主键集合
      * @return 结果
      */

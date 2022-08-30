@@ -1,12 +1,14 @@
 package com.gulimall.product.service;
 
-import java.util.List;
-import com.gulimall.product.domain.AttrGroup;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.gulimall.product.domain.AttrGroup;
+import com.gulimall.product.domain.vo.AttrGroupWithAttrVO;
+
+import java.util.List;
 
 /**
  * 属性分组Service接口
- * 
+ *
  * @author admin
  * @date 2022-02-14
  */
@@ -21,7 +23,7 @@ public interface IAttrGroupService extends IService<AttrGroup> {
 
     /**
      * 查询属性分组列表
-     * 
+     *
      * @param attrGroup 属性分组
      * @return 属性分组集合
      */
@@ -29,7 +31,7 @@ public interface IAttrGroupService extends IService<AttrGroup> {
 
     /**
      * 新增属性分组
-     * 
+     *
      * @param attrGroup 属性分组
      * @return 结果
      */
@@ -37,7 +39,7 @@ public interface IAttrGroupService extends IService<AttrGroup> {
 
     /**
      * 修改属性分组
-     * 
+     *
      * @param attrGroup 属性分组
      * @return 结果
      */
@@ -45,10 +47,17 @@ public interface IAttrGroupService extends IService<AttrGroup> {
 
     /**
      * 批量删除属性分组
-     * 
+     *
      * @param attrGroupIds 需要删除的属性分组主键集合
      * @return 结果
      */
     int deleteAttrGroupByAttrGroupIds(Long[] attrGroupIds);
 
+    /**
+     * 获取属性组&属性信息
+     *
+     * @param attrGroup
+     * @return
+     */
+    AttrGroupWithAttrVO getAttrGroupWithAttrVo(AttrGroup attrGroup);
 }

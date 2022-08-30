@@ -2,6 +2,7 @@
   <div class="category-brand-relation">
 
     <el-button
+      size="mini"
       style="margin-right: 10px"
       type="text"
       icon="el-icon-share"
@@ -200,7 +201,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除关联的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除关联的数据项？').then(() => {
         return delCategoryBrandRelation(ids);
       }).then(() => {
         this.getList();

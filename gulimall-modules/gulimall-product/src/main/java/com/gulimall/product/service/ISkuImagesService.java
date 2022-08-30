@@ -1,12 +1,13 @@
 package com.gulimall.product.service;
 
-import java.util.List;
-import com.gulimall.product.domain.SkuImages;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.gulimall.product.domain.SkuImages;
+
+import java.util.List;
 
 /**
  * sku图片Service接口
- * 
+ *
  * @author admin
  * @date 2022-02-14
  */
@@ -21,7 +22,7 @@ public interface ISkuImagesService extends IService<SkuImages> {
 
     /**
      * 查询sku图片列表
-     * 
+     *
      * @param skuImages sku图片
      * @return sku图片集合
      */
@@ -29,7 +30,7 @@ public interface ISkuImagesService extends IService<SkuImages> {
 
     /**
      * 新增sku图片
-     * 
+     *
      * @param skuImages sku图片
      * @return 结果
      */
@@ -37,7 +38,7 @@ public interface ISkuImagesService extends IService<SkuImages> {
 
     /**
      * 修改sku图片
-     * 
+     *
      * @param skuImages sku图片
      * @return 结果
      */
@@ -45,7 +46,7 @@ public interface ISkuImagesService extends IService<SkuImages> {
 
     /**
      * 批量删除sku图片
-     * 
+     *
      * @param ids 需要删除的sku图片主键集合
      * @return 结果
      */

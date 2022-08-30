@@ -1,18 +1,18 @@
 package com.gulimall.product.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.gulimall.product.domain.SpuInfoDesc;
+import com.gulimall.product.mapper.SpuInfoDescMapper;
+import com.gulimall.product.service.ISpuInfoDescService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.Arrays;
 import java.util.List;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.gulimall.product.mapper.SpuInfoDescMapper;
-import com.gulimall.product.domain.SpuInfoDesc;
-import com.gulimall.product.service.ISpuInfoDescService;
-
 /**
  * spu信息介绍Service业务层处理
- * 
+ *
  * @author admin
  * @date 2022-02-14
  */
@@ -23,7 +23,7 @@ public class SpuInfoDescServiceImpl extends ServiceImpl<SpuInfoDescMapper, SpuIn
 
     /**
      * 查询spu信息介绍
-     * 
+     *
      * @param spuId spu信息介绍主键
      * @return spu信息介绍
      */
@@ -34,7 +34,7 @@ public class SpuInfoDescServiceImpl extends ServiceImpl<SpuInfoDescMapper, SpuIn
 
     /**
      * 查询spu信息介绍列表
-     * 
+     *
      * @param spuInfoDesc spu信息介绍
      * @return spu信息介绍
      */
@@ -45,7 +45,7 @@ public class SpuInfoDescServiceImpl extends ServiceImpl<SpuInfoDescMapper, SpuIn
 
     /**
      * 新增spu信息介绍
-     * 
+     *
      * @param spuInfoDesc spu信息介绍
      * @return 结果
      */
@@ -56,7 +56,7 @@ public class SpuInfoDescServiceImpl extends ServiceImpl<SpuInfoDescMapper, SpuIn
 
     /**
      * 修改spu信息介绍
-     * 
+     *
      * @param spuInfoDesc spu信息介绍
      * @return 结果
      */
@@ -67,7 +67,7 @@ public class SpuInfoDescServiceImpl extends ServiceImpl<SpuInfoDescMapper, SpuIn
 
     /**
      * 批量删除spu信息介绍
-     * 
+     *
      * @param spuIds 需要删除的spu信息介绍主键
      * @return 结果
      */

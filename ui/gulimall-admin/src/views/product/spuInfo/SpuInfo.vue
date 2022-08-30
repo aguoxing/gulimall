@@ -18,7 +18,7 @@
       </el-form-item>
       <el-form-item label="所属品牌" prop="brandId">
         <brand-select
-          :brand-id="queryParams.brandId"
+          :model-brand-id="queryParams.brandId"
           @brandChange="queryParamsBrandChange"
         ></brand-select>
       </el-form-item>

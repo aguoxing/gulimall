@@ -86,18 +86,18 @@ public class SkuInfoController extends BaseController {
      */
     @RequiresPermissions("product:skuInfo:remove")
     @Log(title = "sku信息", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{skuIds}")
+    @DeleteMapping("/{skuIds}")
     public AjaxResult remove(@PathVariable Long[] skuIds) {
         return toAjax(skuInfoService.deleteSkuInfoBySkuIds(skuIds));
     }
 
-    @PostMapping("/genSkuList")
+    @PostMapping("/descartesSkuList")
     public AjaxResult genSkuList(@RequestBody GenSkuDTO genSkuDTO) {
-        return AjaxResult.success(skuInfoService.genSkuList(genSkuDTO));
+        return AjaxResult.success(skuInfoService.descartesSkuList(genSkuDTO));
     }
 
     @PostMapping("/saveSkuList")
     public AjaxResult saveSkuList(@RequestBody SaveSkuListDTO saveSkuListDTO) {
-        return AjaxResult.success(skuInfoService.saveSkuList(saveSkuListDTO.getSkuInfoVoList()));
+        return AjaxResult.success(skuInfoService.saveSkuList(saveSkuListDTO));
     }
 }

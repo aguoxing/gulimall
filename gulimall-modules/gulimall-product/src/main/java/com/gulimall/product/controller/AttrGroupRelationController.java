@@ -85,7 +85,7 @@ public class AttrGroupRelationController extends BaseController {
      */
     @RequiresPermissions("product:attrGroupRelation:remove")
     @Log(title = "属性&属性分组关联", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
+    @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids) {
         return toAjax(attrGroupRelationService.deleteAttrGroupRelationByIds(ids));
     }

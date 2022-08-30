@@ -31,12 +31,12 @@ public class GenSkuDTO implements Serializable {
     /**
      * 分类id
      */
-    private String catalogId;
+    private Long catalogId;
 
     /**
      * 品牌id
      */
-    private String brandId;
+    private Long brandId;
 
-    List<AttrGroupWithAttrDTO> attrGroupWithAttrDtoList;
+    List<AttrDTO> saleAttrInfoList;
 }
