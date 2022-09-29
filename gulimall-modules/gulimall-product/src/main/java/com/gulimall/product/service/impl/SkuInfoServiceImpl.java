@@ -2,29 +2,25 @@ package com.gulimall.product.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.gulimall.common.core.enums.ProductEnum;
 import com.gulimall.common.core.utils.StringUtils;
 import com.gulimall.common.core.utils.bean.BeanUtils;
-import com.gulimall.product.domain.ProductAttrValue;
 import com.gulimall.product.domain.SkuInfo;
 import com.gulimall.product.domain.SkuSaleAttrValue;
 import com.gulimall.product.domain.SpuInfo;
 import com.gulimall.product.domain.dto.AttrDTO;
 import com.gulimall.product.domain.dto.GenSkuDTO;
-import com.gulimall.product.domain.dto.SaveSkuListDTO;
 import com.gulimall.product.domain.vo.SkuInfoVO;
 import com.gulimall.product.domain.vo.SkuItemVo;
-import com.gulimall.product.mapper.ProductAttrValueMapper;
 import com.gulimall.product.mapper.SkuInfoMapper;
-import com.gulimall.product.mapper.SkuSaleAttrValueMapper;
-import com.gulimall.product.mapper.SpuInfoMapper;
 import com.gulimall.product.service.ISkuInfoService;
+import com.gulimall.product.service.ISkuSaleAttrValueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * sku信息Service业务层处理
@@ -37,11 +33,7 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> impl
     @Autowired
     private SkuInfoMapper skuInfoMapper;
     @Autowired
-    private SpuInfoMapper spuInfoMapper;
-    @Autowired
-    private ProductAttrValueMapper productAttrValueMapper;
-    @Autowired
-    private SkuSaleAttrValueMapper skuSaleAttrValueMapper;
+    private ISkuSaleAttrValueService skuSaleAttrValueService;
 
     /**
      * 查询sku信息
@@ -141,40 +133,48 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> impl
         return skuInfoVOList;
     }
 
-    @Transactional(rollbackFor = Exception.class)
+    /**
+     * 保存sku信息
+     *
+     * @param spuInfo
+     * @param skuInfoVOList
+     */
     @Override
-    public int saveSkuList(SaveSkuListDTO saveSkuListDTO) {
-        SpuInfo spuInfo = new SpuInfo();
-        BeanUtils.copyProperties(saveSkuListDTO.getSpuInfoDTO(), spuInfo);
-        String spuId = IdWorker.getIdStr();
-        spuInfo.setId(spuId);
-        spuInfo.setPublishStatus(Integer.valueOf(ProductEnum.SHANGJIA.getCode()));
-        spuInfoMapper.insert(spuInfo);
+    public void saveSkuInfo(SpuInfo spuInfo, List<SkuInfoVO> skuInfoVOList) {
+        if (!CollectionUtils.isEmpty(skuInfoVOList)) {
+            skuInfoVOList.forEach(sku -> {
+                // 获取当前sku默认图片
+                String defaultImg = null;
+                /*for (Images img : sku.getSkuDefaultImg()) {
+                    if (ObjectConstant.BooleanIntEnum.YES.getCode().equals(img.getDefaultImg())) {
+                        defaultImg = img.getImgUrl();
+                        break;
+                    }
+                }*/
 
-        if (saveSkuListDTO.getBaseAttrInfoList().size() > 0) {
-            for (AttrDTO attrInfoDTO : saveSkuListDTO.getBaseAttrInfoList()) {
-                ProductAttrValue spuAttrValue = new ProductAttrValue();
-                BeanUtils.copyProperties(attrInfoDTO, spuAttrValue);
-                spuAttrValue.setId(IdWorker.getIdStr());
-                spuAttrValue.setSpuId(spuId);
-                productAttrValueMapper.insert(spuAttrValue);
-            }
-        }
+                // 1、sku的基本信息：pms_sku_info
+                String skuId = IdWorker.getIdStr();
+                SkuInfo skuInfo = new SkuInfo();
+                BeanUtils.copyProperties(sku, skuInfo);
+                skuInfo.setSkuId(skuId);
+                skuInfo.setSpuId(spuInfo.getId());
+                skuInfoMapper.insert(skuInfo);
 
-        for (SkuInfoVO skuInfoVO : saveSkuListDTO.getSkuInfoVoList()) {
-            String skuId = IdWorker.getIdStr();
-            SkuInfo skuInfo = new SkuInfo();
-            BeanUtils.copyProperties(skuInfoVO, skuInfo);
-            skuInfo.setSkuId(skuId);
-            skuInfo.setSpuId(spuId);
-            for (SkuSaleAttrValue skuSaleAttrValue : skuInfoVO.getSkuSaleAttrValueList()) {
-                skuSaleAttrValue.setId(IdWorker.getIdStr());
-                skuSaleAttrValue.setSkuId(skuId);
-                skuSaleAttrValueMapper.insert(skuSaleAttrValue);
-            }
-            skuInfoMapper.insert(skuInfo);
+                // 2、sku的图片信息：pms_sku_images【未选中的图片不保存】
+
+                // 3、sku的销售属性值：pms_sku_sale_attr_value
+                List<SkuSaleAttrValue> skuSaleAttrValueEntities = sku.getSkuSaleAttrValueList().stream().map(attr -> {
+                    SkuSaleAttrValue skuSaleAttrValue = new SkuSaleAttrValue();
+                    org.springframework.beans.BeanUtils.copyProperties(attr, skuSaleAttrValue);
+                    skuSaleAttrValue.setSkuId(skuId);
+                    return skuSaleAttrValue;
+                }).collect(Collectors.toList());
+                skuSaleAttrValueService.saveBatch(skuSaleAttrValueEntities);
+
+                // 4、sku的打折（买几件打几折）、满减信息（满多少减多少）、会员价格：
+                // sms_sku_ladder\sms_sku_full_reduction\sms_member_price
+            });
         }
-        return 1;
     }
 
     /**

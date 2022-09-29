@@ -1,6 +1,7 @@
 package com.gulimall.product.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.gulimall.common.core.utils.StringUtils;
 import com.gulimall.product.domain.SpuImages;
 import com.gulimall.product.mapper.SpuImagesMapper;
 import com.gulimall.product.service.ISpuImagesService;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * spu图片Service业务层处理
@@ -74,6 +76,25 @@ public class SpuImagesServiceImpl extends ServiceImpl<SpuImagesMapper, SpuImages
     @Override
     public int deleteSpuImagesByIds(Long[] ids) {
         return spuImagesMapper.deleteBatchIds(Arrays.asList(ids));
+    }
+
+    /**
+     * 保存spu图片
+     *
+     * @param spuId
+     * @param images
+     */
+    @Override
+    public void saveImages(String spuId, List<String> images) {
+        if (StringUtils.isNotEmpty(images)) {
+            List<SpuImages> collect = images.stream().map(img -> {
+                SpuImages spuImagesEntity = new SpuImages();
+                spuImagesEntity.setSpuId(spuId);
+                spuImagesEntity.setImgUrl(img);
+                return spuImagesEntity;
+            }).collect(Collectors.toList());
+            this.saveBatch(collect);
+        }
     }
 
 }

@@ -9,7 +9,6 @@ import com.gulimall.common.log.enums.BusinessType;
 import com.gulimall.common.security.annotation.RequiresPermissions;
 import com.gulimall.product.domain.SkuInfo;
 import com.gulimall.product.domain.dto.GenSkuDTO;
-import com.gulimall.product.domain.dto.SaveSkuListDTO;
 import com.gulimall.product.service.ISkuInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -91,13 +90,15 @@ public class SkuInfoController extends BaseController {
         return toAjax(skuInfoService.deleteSkuInfoBySkuIds(skuIds));
     }
 
+    /**
+     * 笛卡尔积生成skus
+     *
+     * @param genSkuDTO
+     * @return
+     */
     @PostMapping("/descartesSkuList")
     public AjaxResult genSkuList(@RequestBody GenSkuDTO genSkuDTO) {
         return AjaxResult.success(skuInfoService.descartesSkuList(genSkuDTO));
     }
 
-    @PostMapping("/saveSkuList")
-    public AjaxResult saveSkuList(@RequestBody SaveSkuListDTO saveSkuListDTO) {
-        return AjaxResult.success(skuInfoService.saveSkuList(saveSkuListDTO));
-    }
 }

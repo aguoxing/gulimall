@@ -52,11 +52,3 @@ export function descartesSkuList(data) {
     data: data
   })
 }
-
-export function saveSkuList(data) {
-  return request({
-    url: `/${service_name}/saveSkuList`,
-    method: 'post',
-    data: data
-  })
-}

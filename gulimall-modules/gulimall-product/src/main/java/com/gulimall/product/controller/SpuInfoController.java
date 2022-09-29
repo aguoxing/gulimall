@@ -8,6 +8,7 @@ import com.gulimall.common.log.annotation.Log;
 import com.gulimall.common.log.enums.BusinessType;
 import com.gulimall.common.security.annotation.RequiresPermissions;
 import com.gulimall.product.domain.SpuInfo;
+import com.gulimall.product.domain.dto.SaveSkuListDTO;
 import com.gulimall.product.service.ISpuInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -87,5 +88,17 @@ public class SpuInfoController extends BaseController {
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids) {
         return toAjax(spuInfoService.deleteSpuInfoByIds(ids));
+    }
+
+    /**
+     * 发布商品
+     *
+     * @param saveSkuListDTO
+     * @return
+     */
+    @PostMapping("/saveSpu")
+    public AjaxResult saveSkuList(@RequestBody SaveSkuListDTO saveSkuListDTO) {
+        spuInfoService.saveSkuList(saveSkuListDTO);
+        return AjaxResult.success();
     }
 }

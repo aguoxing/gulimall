@@ -2,6 +2,7 @@ package com.gulimall.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.gulimall.product.domain.SpuInfo;
+import com.gulimall.product.domain.dto.SaveSkuListDTO;
 
 import java.util.List;
 
@@ -51,5 +52,13 @@ public interface ISpuInfoService extends IService<SpuInfo> {
      * @return 结果
      */
     int deleteSpuInfoByIds(Long[] ids);
+
+    /**
+     * 发布商品
+     *
+     * @param saveSkuListDTO
+     * @return
+     */
+    void saveSkuList(SaveSkuListDTO saveSkuListDTO);
 
 }

@@ -10,6 +10,7 @@
 
     <modules>
         <module>gulimall-api-system</module>
+        <module>gulimall-api-coupon</module>
     </modules>
 
     <artifactId>gulimall-api</artifactId>

@@ -44,3 +44,12 @@ export function delSpuInfo(id) {
     method: 'delete'
   })
 }
+
+// 发布商品
+export function saveSpu(data) {
+  return request({
+    url: `/${service_name}/saveSpu`,
+    method: 'post',
+    data: data
+  })
+}

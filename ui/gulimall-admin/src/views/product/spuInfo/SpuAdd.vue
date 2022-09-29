@@ -287,7 +287,7 @@ export default {
         baseAttrInfoList: this.attrGroupWithAttrVo.attrGroupWithBaseAttrVOList,
         skuInfoVoList: this.skuInfoVOList
       }
-      saveSkuList(spuDto).then(res => {
+      saveSpu(spuDto).then(res => {
         this.$modal.msg("添加成功");
       });
       this.activeSteps = 4;

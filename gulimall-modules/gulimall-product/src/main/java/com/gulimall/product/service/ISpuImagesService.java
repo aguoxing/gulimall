@@ -52,4 +52,12 @@ public interface ISpuImagesService extends IService<SpuImages> {
      */
     int deleteSpuImagesByIds(Long[] ids);
 
+    /**
+     * 保存spu图片
+     *
+     * @param spuId
+     * @param images
+     */
+    void saveImages(String spuId, List<String> images);
+
 }

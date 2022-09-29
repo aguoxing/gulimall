@@ -2,8 +2,8 @@ package com.gulimall.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.gulimall.product.domain.SkuInfo;
+import com.gulimall.product.domain.SpuInfo;
 import com.gulimall.product.domain.dto.GenSkuDTO;
-import com.gulimall.product.domain.dto.SaveSkuListDTO;
 import com.gulimall.product.domain.vo.SkuInfoVO;
 import com.gulimall.product.domain.vo.SkuItemVo;
 
@@ -65,18 +65,18 @@ public interface ISkuInfoService extends IService<SkuInfo> {
     List<SkuInfoVO> descartesSkuList(GenSkuDTO genSkuDTO);
 
     /**
-     * 保存
-     *
-     * @param saveSkuListDTO
-     * @return
-     */
-    int saveSkuList(SaveSkuListDTO saveSkuListDTO);
-
-    /**
      * 查询商品详情
      *
      * @param skuId
      * @return
      */
     SkuItemVo item(String skuId);
+
+    /**
+     * 保存sku信息
+     *
+     * @param spuInfo
+     * @param skuInfoVOList
+     */
+    void saveSkuInfo(SpuInfo spuInfo, List<SkuInfoVO> skuInfoVOList);
 }
